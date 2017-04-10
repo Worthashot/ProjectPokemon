@@ -76,6 +76,7 @@
     <ClCompile Include="..\..\pokemonproject\pokemonproject\pokemonproject\MapList.cpp" />
     <ClCompile Include="..\..\pokemonproject\pokemonproject\pokemonproject\TileType.cpp" />
     <ClCompile Include="..\..\pokemonproject\pokemonproject\pokemonproject\UsefulTypes.cpp" />
+    <ClCompile Include="Helper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\pokemonproject\pokemonproject\pokemonproject\MainTest.h" />
@@ -83,6 +84,7 @@
     <ClInclude Include="..\..\pokemonproject\pokemonproject\pokemonproject\MapList.h" />
     <ClInclude Include="..\..\pokemonproject\pokemonproject\pokemonproject\TileType.h" />
     <ClInclude Include="..\..\pokemonproject\pokemonproject\pokemonproject\UsefulTypes.h" />
+    <ClInclude Include="Helper.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
