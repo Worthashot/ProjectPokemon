@@ -12,6 +12,7 @@ private:
 	UsefulTypes ut;
 	int encounterCode;
 	map<string, TileType> customTiles;
+
 public:
 	Map();
 	Map(int xDim, int yDim);

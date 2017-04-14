@@ -9,5 +9,6 @@ public:
 	Helper();
 	static vector<string> split(const string&, char);
 	~Helper();
+	static const int tilePars = 10;
 };
 

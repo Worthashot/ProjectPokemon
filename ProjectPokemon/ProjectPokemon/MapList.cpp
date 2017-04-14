@@ -32,19 +32,31 @@ Map MapList::readMap(string map){
 
 	string line;
 	getline(file, line);
+	vector<string> dimensions = Helper::split(line, ' ');
+	Map output = Map(atoi(dimensions[0].c_str()), stoi(dimensions[1].c_str()));
+
 	int i = 0;
 	int c = atoi(line.c_str());
 	while (i < c){
 		getline(file, line);
-		Helper::split(line, ' ');
-		//TODO use line of paramaters to create the custom tile tipes for this map
+		readTile(output, line);
 	}
 }
 
+void readTile(Map map, string par){
+	vector<string> pars = Helper::split(par, ' ');
+	if (pars.size() != Helper::tilePars){
+		cerr << "invalid number of paramaters in map";
+		throw("invalid number of paramarets");
+	}
+	TileType newType = TileType();
+	newType.setAll(pars);
+	map.addTile(pars[0], newType);
+}
 //first lookup header file. This tells the number of maps and their names.
 //lookup the map with that code, create the tiles located at the start of the file then create the map useing these tiles
 //frst draft file format
-//first line - number of custom tiles
+//first line - x*y co-ordinates separated by a space
 //each custom tile peramater will be seperated by a space and assigned a number, each tile will be seperated by a newline
 //after custom tiles, the next line will give dimentions of the map x*y
 //the next y lines will have x numbers. These corespond to the tiles id assigned previously. Each tile will be seperated by a space

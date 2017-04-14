@@ -1,11 +1,14 @@
 #include "TileType.h"
 #include <iostream>
 #include <string>
+#include "Helper.h"
 using namespace std;
 
 
 	//TODO maybe add trainer sight radius, will see how it turns out
 
+
+	//MAYBE change this structure to simply a vector of strings and add more functions when its necasery 
 TileType::TileType(){
 	name = "";
 	passable = 0;
@@ -16,6 +19,7 @@ TileType::TileType(){
 	cutable = 0;
 	doorwayLocation = 0;
 	npcID = 0;
+	tileset = "";
 	}
 
 void TileType::setName(string name){ this->name = name; }
@@ -56,7 +60,7 @@ void TileType::setAll(string name, int passable, int surfable, int doorway, int 
 }
 
 void TileType::setAll(vector<string> par){
-	int pars [8];
+	int pars [Helper::tilePars - 1];
 	for (int i = 1; i < 9; i++){
 		pars[i - 1] = atoi(par[i].c_str());
 	}

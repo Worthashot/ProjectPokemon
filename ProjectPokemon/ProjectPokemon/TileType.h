@@ -6,7 +6,7 @@ using namespace std;
 class TileType
 {
 private:
-	std::string name;
+	string name;
 	bool passable;		 //can tile be walked through normaly
 	bool surfable;
 	bool doorway;
@@ -15,7 +15,7 @@ private:
 	bool cutable;
 	int doorwayLocation;  //these are only assigned when appropriate flags are true
 	int npcID;
-	std::string tileset;
+	string tileset;
 
 public:
 	TileType();
