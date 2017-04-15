@@ -32,8 +32,10 @@ Map MapList::readMap(string map){
 
 	string line;
 	getline(file, line);
-	vector<string> dimensions = Helper::split(line, ' ');
-	Map output = Map(atoi(dimensions[0].c_str()), stoi(dimensions[1].c_str()));
+	int dimensions[1];
+	dimensions[0] = atoi(Helper::split(line, ' ')[0].c_str());
+	dimensions[1] = atoi(Helper::split(line, ' ')[1].c_str());
+	Map output = Map(dimensions[0], dimensions[1]);
 
 	int i = 0;
 	int c = atoi(line.c_str());
@@ -41,6 +43,20 @@ Map MapList::readMap(string map){
 		getline(file, line);
 		readTile(output, line);
 	}
+
+	for (int i = 0; i < dimensions[1]; i++){
+		getline(file, line);
+		vector<string> tiles = Helper::split(line, ' ');
+
+		if (tiles.size() != dimensions[0]){
+			cerr << "invalid map";
+			throw("map size does not match expected size");
+		}
+
+		output.setSpaces(i, tiles);
+	}
+
+	return output;
 }
 
 void readTile(Map map, string par){

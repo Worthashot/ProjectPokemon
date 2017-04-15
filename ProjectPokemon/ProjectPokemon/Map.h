@@ -15,10 +15,11 @@ private:
 
 public:
 	Map();
+    ~Map();
 	Map(int xDim, int yDim);
 	Map(int xDim, int yDim, int encounter);
-	void setSpace(int xCord, int yCord, TileType setSpace);
-	void setSpaces(int size, int * xCord, int * yCord, TileType * spaces);
+	void setSpace(int xCord, int yCord, string setSpace);
+	void setSpaces(int xCord, vector<string> spaces);
 	void setEncounterCode(int encounter);
 	void addTile(string, TileType);
 };

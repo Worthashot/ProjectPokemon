@@ -34,12 +34,14 @@ Map::Map(int xDim, int yDim, int encounter){	//sets the size of the map and allo
 	}
 }
 
-void Map::setSpace(int xCord, int yCord, TileType setSpace){	//sets a specific co-ordinate
-	mapComp[xCord][yCord] = setSpace; }
+void Map::setSpace(int xCord, int yCord, string setSpace){	//sets a specific co-ordinate
+	mapComp[xCord][yCord] = customTiles[setSpace];
+}
 
-void Map::setSpaces(int size, int * xCord, int * yCord, TileType * spaces){	//sets a list of co-ordiantes
-	for (int i = 0; i < size; i++){
-		setSpace(*xCord++, *yCord++, *spaces++); 
+//sets all the spaces for a given x co-ordinate
+void Map::setSpaces(int  xCord, vector<string> spaces){	
+	for (int i = 0; i < spaces.size(); i++){
+		setSpace(xCord, i, spaces[i]); 
 	}
 }
 

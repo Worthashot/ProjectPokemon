@@ -59,6 +59,7 @@ void TileType::setAll(string name, int passable, int surfable, int doorway, int 
 	setTileset(tileset);
 }
 
+//Maybe make able to add new paramaters easily
 void TileType::setAll(vector<string> par){
 	int pars [Helper::tilePars - 1];
 	for (int i = 1; i < 9; i++){
