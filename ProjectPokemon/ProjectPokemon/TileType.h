@@ -19,7 +19,6 @@ private:
 
 public:
 	TileType();
-	~TileType();
 	void setAll(string, int, int, int, int, int, int, int, int, string);
 	void setAll(vector<string>);
 	void setName(std::string name);

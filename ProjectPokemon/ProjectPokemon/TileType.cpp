@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include "Helper.h"
+#include <fstream>
 using namespace std;
 
 
@@ -63,9 +64,8 @@ void TileType::setAll(string name, int passable, int surfable, int doorway, int 
 void TileType::setAll(vector<string> par){
 	int pars [Helper::tilePars - 1];
 	for (int i = 1; i < 9; i++){
-		pars[i - 1] = atoi(par[i].c_str());
+		pars[i - 1] = atoi(par[i-1].c_str());
 	}
-
 	setAll(par[0], pars[0], pars[1], pars[2], pars[3], pars[4], pars[5], pars[6], pars[7], par[9]);
 }
 std::string TileType::getName(){ return name; }

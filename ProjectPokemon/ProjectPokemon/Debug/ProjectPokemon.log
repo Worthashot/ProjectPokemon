@@ -1,32 +1,17 @@
-﻿Build started 4/14/2017 11:02:20 PM.
+﻿Build started 4/24/2017 8:51:37 PM.
      1>Project "D:\Git\ProjectPokemon\ProjectPokemon\ProjectPokemon\ProjectPokemon\ProjectPokemon.vcxproj" on node 2 (Build target(s)).
-     1>ClCompile:
-         D:\visual studio\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Helper.cpp MainTest.cpp Map.cpp MapList.cpp TileType.cpp UsefulTypes.cpp
-         UsefulTypes.cpp
-         TileType.cpp
-     1>d:\git\projectpokemon\projectpokemon\projectpokemon\projectpokemon\tiletype.cpp(23): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
-     1>d:\git\projectpokemon\projectpokemon\projectpokemon\projectpokemon\tiletype.cpp(25): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
-     1>d:\git\projectpokemon\projectpokemon\projectpokemon\projectpokemon\tiletype.cpp(27): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
-     1>d:\git\projectpokemon\projectpokemon\projectpokemon\projectpokemon\tiletype.cpp(29): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
-     1>d:\git\projectpokemon\projectpokemon\projectpokemon\projectpokemon\tiletype.cpp(31): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
-     1>d:\git\projectpokemon\projectpokemon\projectpokemon\projectpokemon\tiletype.cpp(33): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
-         MapList.cpp
-         Map.cpp
-         MainTest.cpp
-         Helper.cpp
-         Generating Code...
-     1>d:\git\projectpokemon\projectpokemon\projectpokemon\projectpokemon\maplist.cpp(42): warning C4715: 'MapList::readMap' : not all control paths return a value
-       Link:
+     1>Link:
          D:\visual studio\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Git\ProjectPokemon\ProjectPokemon\ProjectPokemon\Debug\ProjectPokemon.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\Git\ProjectPokemon\ProjectPokemon\ProjectPokemon\Debug\ProjectPokemon.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Git\ProjectPokemon\ProjectPokemon\ProjectPokemon\Debug\ProjectPokemon.lib" /MACHINE:X86 Debug\Helper.obj
          Debug\MainTest.obj
          Debug\Map.obj
          Debug\MapList.obj
+         Debug\tests.obj
          Debug\TileType.obj
+         Debug\tile_type_test.obj
          Debug\UsefulTypes.obj
-     1>MapList.obj : error LNK2019: unresolved external symbol "public: static class std::vector<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,class std::allocator<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > > > __cdecl Helper::split(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,char)" (?split@Helper@@SA?AV?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@3@D@Z) referenced in function "private: class Map __thiscall MapList::readMap(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?readMap@MapList@@AAE?AVMap@@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z)
-     1>D:\Git\ProjectPokemon\ProjectPokemon\ProjectPokemon\Debug\ProjectPokemon.exe : fatal error LNK1120: 1 unresolved externals
-     1>Done Building Project "D:\Git\ProjectPokemon\ProjectPokemon\ProjectPokemon\ProjectPokemon\ProjectPokemon.vcxproj" (Build target(s)) -- FAILED.
+         ProjectPokemon.vcxproj -> D:\Git\ProjectPokemon\ProjectPokemon\ProjectPokemon\Debug\ProjectPokemon.exe
+     1>Done Building Project "D:\Git\ProjectPokemon\ProjectPokemon\ProjectPokemon\ProjectPokemon\ProjectPokemon.vcxproj" (Build target(s)).
 
-Build FAILED.
+Build succeeded.
 
-Time Elapsed 00:00:03.30
+Time Elapsed 00:00:00.34

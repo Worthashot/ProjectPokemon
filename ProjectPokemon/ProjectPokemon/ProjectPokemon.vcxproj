@@ -68,10 +68,13 @@
     <ClCompile Include="MainTest.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapList.cpp" />
+    <ClCompile Include="tests.cpp" />
     <ClCompile Include="TileType.cpp" />
+    <ClCompile Include="tile_type_test.cpp" />
     <ClCompile Include="UsefulTypes.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="catch.hpp" />
     <ClInclude Include="Helper.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapList.h" />

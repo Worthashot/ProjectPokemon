@@ -1,10 +1,11 @@
-#pragma once
+#/*pragma once
 #include "mapList.h"
 #include <iostream>
 int main(){
 	UsefulTypes usefulTypes;
-	MapList();
-	std::string name = usefulTypes.getBase().getName();
-	std::cout << "tile is not recognised as NPC, cannot assign ID. \n" + name;
-	std::cin >> name;
+	MapList maps = MapList();
+	cout << maps.getMap("test").getTile(0, 0);
+	string junk;
+	cin >> junk;
 }
+*/

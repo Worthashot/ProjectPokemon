@@ -51,3 +51,6 @@ void Map::addTile(string name, TileType tile){
 	customTiles.insert(pair<string, TileType>(name, tile));
 }
 	
+string Map::getTile(int x, int y){
+	return mapComp[x][y].getName();
+}

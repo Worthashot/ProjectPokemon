@@ -7,7 +7,7 @@ Helper::Helper()
 {
 }
 
-vector<string> split(const string &text, char sep) {
+vector<string> Helper::split(const string &text, char sep) {
 	vector<string> tokens;
 	size_t start = 0, end = 0;
 	while ((end = text.find(sep, start)) != string::npos) {
@@ -16,8 +16,4 @@ vector<string> split(const string &text, char sep) {
 	}
 	tokens.push_back(text.substr(start));
 	return tokens;
-}
-
-Helper::~Helper()
-{
 }

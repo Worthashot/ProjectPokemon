@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="tests">
+      <UniqueIdentifier>{4e42b67c-d017-4f4d-9e9f-90110bcbd0fc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="UsefulTypes.cpp">
@@ -33,6 +36,12 @@
     <ClCompile Include="TileType.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="tests.cpp">
+      <Filter>tests</Filter>
+    </ClCompile>
+    <ClCompile Include="tile_type_test.cpp">
+      <Filter>tests</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Map.h">
@@ -49,6 +58,9 @@
     </ClInclude>
     <ClInclude Include="UsefulTypes.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="catch.hpp">
+      <Filter>Resource Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
