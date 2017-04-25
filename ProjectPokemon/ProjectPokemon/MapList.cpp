@@ -84,7 +84,7 @@ void MapList::readTile(Map map, string par){
 	newType.setAll(pars);
 
 	//adds a new tiletype to the map idendified by its name
-	map.addTile(pars[0], newType);
+	map.addTile(newType);
 }
 
 Map MapList::getMap(string map){

@@ -42,6 +42,9 @@
     <ClCompile Include="tile_type_test.cpp">
       <Filter>tests</Filter>
     </ClCompile>
+    <ClCompile Include="map_test.cpp">
+      <Filter>tests</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Map.h">

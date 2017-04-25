@@ -11,46 +11,62 @@ using namespace std;
 Map::Map(){
 }
 
-Map::Map(int xDim, int yDim){	//sets the size of the map and allocates an unpassable wall as defalt
-	ut = UsefulTypes();
+//sets the size of the map and allocates an unpassable wall as defalt
+Map::Map(int xDim, int yDim){	
+	TileType wall = TileType();
+	wall.setName("wall");
+	addTile(wall);
 	mapComp.resize(xDim);
 	for (int i = 0; i < xDim; i++){
 		mapComp[i].resize(yDim);
 		for (int j = 0; j < yDim; j++){
-			mapComp[i][j] = ut.getWall(); 
+			mapComp[i][j] = "wall"; 
 		}		
 	}
 }
 
-Map::Map(int xDim, int yDim, int encounter){	//sets the size of the map and allocates an unpassable wall as defalt and the encounter code
+//sets the size of the map and allocates an unpassable wall as defalt and the encounter code
+Map::Map(int xDim, int yDim, int encounter){	
+	TileType wall = TileType();
+	wall.setName("wall");
+	addTile(wall);
 	setEncounterCode(encounter);
-	ut = UsefulTypes();
 	mapComp.resize(xDim);
 	for (int i = 0; i < xDim; i++){
 		mapComp[i].resize(yDim);
 		for (int j = 0; j < yDim; j++){
-			mapComp[i][j] = ut.getWall();
+			mapComp[i][j] = "wall";
 		}
 	}
 }
 
 void Map::setSpace(int xCord, int yCord, string setSpace){	//sets a specific co-ordinate
-	mapComp[xCord][yCord] = customTiles[setSpace];
+	if (customTiles.count(setSpace)){
+		mapComp[xCord][yCord] = setSpace;
+	}
+	else{
+		//keep as is, maybe throw error or log
+	}
 }
 
 //sets all the spaces for a given x co-ordinate
 void Map::setSpaces(int  xCord, vector<string> spaces){	
 	for (int i = 0; i < spaces.size(); i++){
-		setSpace(xCord, i, spaces[i]); 
+		if (customTiles.count(spaces[i])){
+			mapComp[xCord][i] = spaces[i];
+		}
+		else {
+			//keep as is, maybe throw error or log
+		}
 	}
 }
 
 void Map::setEncounterCode(int encounter){ encounterCode = encounter; }
 
-void Map::addTile(string name, TileType tile){
-	customTiles.insert(pair<string, TileType>(name, tile));
+void Map::addTile(TileType tile){
+	customTiles.insert(pair<string, TileType>(tile.getName(), tile));
 }
 	
-string Map::getTile(int x, int y){
-	return mapComp[x][y].getName();
+TileType Map::getTile(int x, int y){
+	return customTiles[mapComp[x][y]];
 }

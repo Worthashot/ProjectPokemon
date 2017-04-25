@@ -18,70 +18,73 @@ TileType::TileType(){
 	talkable = 0;
 	pushable = 0;
 	cutable = 0;
-	doorwayLocation = 0;
+	location = 0;
 	npcID = 0;
 	tileset = "";
 	}
 
 void TileType::setName(string name){ this->name = name; }
 
-void TileType::setPass(int passable){ this->passable = passable; }
+void TileType::setPassable(int passable){ this->passable = passable; }
 
-void TileType::setSurf(int surfable){ this->surfable = surfable; }
+void TileType::setSurfable(int surfable){ this->surfable = surfable; }
 
-void TileType::setDoor(int doorway){ this->doorway = doorway; }
+void TileType::setDoorway(int doorway){ this->doorway = doorway; }
 
-void TileType::setTalk(int talkable){ this->talkable = talkable; }
+void TileType::setTalkable(int talkable){ this->talkable = talkable; }
 
-void TileType::setPush(int pushable){ this->pushable = pushable; }
+void TileType::setPushable(int pushable){ this->pushable = pushable; }
 
-void TileType::setCut(int cutable){ this->cutable = cutable; }
+void TileType::setCutable(int cutable){ this->cutable = cutable; }
 
-void TileType::setDoorway(int location){
-	if (doorway){ doorwayLocation = location; }
+void TileType::setLocation(int location){
+	if (doorway){ this->location = location; }
 }
 
-void TileType::setIdentity(int person){
+void TileType::setPerson(int person){
 	if (talkable){ npcID = person; }
 }
 
-void TileType::setTileset(string tileset){ this->tileset; }
+void TileType::setTileset(string tileset){ this->tileset = tileset; }
 
 void TileType::setAll(string name, int passable, int surfable, int doorway, int talkable, int pushable, int cutable, int location, int person, string tileset){
 	setName(name);
-	setPass(passable);
-	setSurf(surfable);
-	setDoor(doorway);
-	setTalk(talkable);
-	setPush(pushable);
-	setCut(cutable);
-	setDoorway(location);
-	setIdentity(person);
+	setPassable(passable);
+	setSurfable(surfable);
+	setDoorway(doorway);
+	setTalkable(talkable);
+	setPushable(pushable);
+	setCutable(cutable);
+	setLocation(location);
+	setPerson(person);
 	setTileset(tileset);
 }
 
 //Maybe make able to add new paramaters easily
 void TileType::setAll(vector<string> par){
-	int pars [Helper::tilePars - 1];
+	int pars [Helper::tilePars];
 	for (int i = 1; i < 9; i++){
-		pars[i - 1] = atoi(par[i-1].c_str());
+		pars[i - 1] = atoi(par[i].c_str());
 	}
+
 	setAll(par[0], pars[0], pars[1], pars[2], pars[3], pars[4], pars[5], pars[6], pars[7], par[9]);
 }
 std::string TileType::getName(){ return name; }
 
-bool TileType::getPass(){ return passable; }
+bool TileType::getPassable(){ return passable; }
 
-bool TileType::getSurf(){ return surfable; }
+bool TileType::getSurfable(){ return surfable; }
 
-bool TileType::getDoor(){ return doorway; }
+bool TileType::getDoorway(){ return doorway; }
 
-bool TileType::getTalk(){ return talkable; }
+bool TileType::getTalkable(){ return talkable; }
 
-bool TileType::getPush(){ return pushable; }
+bool TileType::getPushable(){ return pushable; }
 
-int TileType::getDestination(){
-	if (doorway){ return doorwayLocation; 
+bool TileType::getCutable(){ return cutable; }
+
+int TileType::getLocation(){
+	if (doorway){ return location; 
 	} else {
 		cout << "tile is not recognised as doorway, cannot return ID. " ; 
 		return 0;

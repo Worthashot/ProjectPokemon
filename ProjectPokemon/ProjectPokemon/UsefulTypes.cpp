@@ -1,5 +1,5 @@
 //probably useless
-
+/*
 #include "UsefulTypes.h"
 #include "TileType.h"
 #include <iostream>
@@ -9,7 +9,7 @@ using namespace std;
 
 void UsefulTypes::initilizeBase(){
 	base.setName("Base");
-	base.setPass(1); 
+	base.setPassable(1); 
 }
 
 void UsefulTypes::initilizeWall(){ 
@@ -18,16 +18,16 @@ void UsefulTypes::initilizeWall(){
 
 void UsefulTypes::initilizeNpc(){
 	npc.setName("NPC");
-	npc.setTalk(1);
+	npc.setTalkable(1);
 }
 void UsefulTypes::initilizeWater(){
 	water.setName("Water");
-	water.setSurf(1); 
+	water.setSurfable(1); 
 }
 
 void UsefulTypes::initilizeTree(){
 	tree.setName("Tree");
-	tree.setCut(1);
+	tree.setCutable(1);
 }
 	
 void UsefulTypes::initilizeDoor(){
@@ -58,7 +58,7 @@ TileType UsefulTypes::getNpc(){
 
 TileType UsefulTypes::getNpc(int personId){
 	TileType iNpc = npc;
-	iNpc.setIdentity(personId);
+	iNpc.setPerson(personId);
 	iNpc.setName("IdentifiedNPC");
 	return iNpc; 
 }
@@ -66,3 +66,4 @@ TileType UsefulTypes::getNpc(int personId){
 TileType UsefulTypes::getWater(){
 	return water; 
 }
+*/

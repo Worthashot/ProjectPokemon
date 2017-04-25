@@ -8,8 +8,7 @@ class Map
 {
 
 private:
-	std::vector<std::vector<TileType> >  mapComp;
-	UsefulTypes ut;
+	std::vector<std::vector<string> >  mapComp;
 	int encounterCode;
 	map<string, TileType> customTiles;
 
@@ -20,8 +19,8 @@ public:
 	void setSpace(int xCord, int yCord, string setSpace);
 	void setSpaces(int xCord, vector<string> spaces);
 	void setEncounterCode(int encounter);
-	void addTile(string, TileType);
-	string getTile(int, int);
+	void addTile(TileType);
+	TileType getTile(int, int);
 };
 
 //TODO Add the relevent map properties such as tilesets, list of tileTypes ect

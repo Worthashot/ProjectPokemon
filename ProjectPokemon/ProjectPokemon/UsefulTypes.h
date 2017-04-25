@@ -1,4 +1,4 @@
-#pragma once
+/*#pragma once
 
 #include "TileType.h"
 class UsefulTypes
@@ -27,4 +27,4 @@ public:
 	TileType getWater();
 
 
-};
+};*/
