@@ -56,6 +56,7 @@ void Map::setSpaces(int  xCord, vector<string> spaces){
 			mapComp[xCord][i] = spaces[i];
 		}
 		else {
+			cout << "tile not recognised\n";
 			//keep as is, maybe throw error or log
 		}
 	}

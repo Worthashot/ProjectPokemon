@@ -1,0 +1,8 @@
+5 5
+1
+t1 1 1 1 1 1 1 1 1 ts1
+t1 t1 t1 t1 t1
+t1 t1 t1 t1 t1
+t1 t1 t1 t1 t1
+t1 t1 t1 t1 t1
+t1 t1 t1 t1 t1

@@ -1,4 +1,4 @@
-﻿Build started 4/25/2017 1:38:04 AM.
+﻿Build started 4/26/2017 1:37:58 AM.
      1>Project "D:\Git\ProjectPokemon\ProjectPokemon\ProjectPokemon\ProjectPokemon\ProjectPokemon.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          D:\visual studio\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt map_test.cpp
@@ -8,6 +8,7 @@
          Debug\MainTest.obj
          Debug\Map.obj
          Debug\MapList.obj
+         Debug\map_list_test.obj
          Debug\map_test.obj
          Debug\tests.obj
          Debug\TileType.obj
@@ -18,4 +19,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:00.87
+Time Elapsed 00:00:00.70

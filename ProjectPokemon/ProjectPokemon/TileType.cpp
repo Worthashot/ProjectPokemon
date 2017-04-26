@@ -86,7 +86,7 @@ bool TileType::getCutable(){ return cutable; }
 int TileType::getLocation(){
 	if (doorway){ return location; 
 	} else {
-		cout << "tile is not recognised as doorway, cannot return ID. " ; 
+		//some sort of logging
 		return 0;
 	}
 }
@@ -94,9 +94,16 @@ int TileType::getLocation(){
 int TileType::getPerson(){
 	if (talkable){ return npcID; 
 	} else {
-		cout << "tile is not recognised as npc, cannot return ID. "; 
+		//some sort of logging
 		return 0;
 	}
 }
 
 string TileType::getTileset(){ return tileset; }
+
+vector <string> TileType::getAll(){
+	vector <string> output{ getName(), to_string(getPassable()), to_string(getSurfable()), to_string(getDoorway()),
+		to_string(getTalkable()), to_string(getPushable()), to_string(getCutable()), to_string(getLocation()),
+		to_string(getPerson()), getTileset() };
+	return output;
+}

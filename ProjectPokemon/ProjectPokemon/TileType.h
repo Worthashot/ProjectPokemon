@@ -40,6 +40,7 @@ public:
 	bool getCutable();
 	int getLocation();
 	int getPerson();
-	std::string getTileset();
+	string getTileset();
+	vector<string> getAll();
 };
 
