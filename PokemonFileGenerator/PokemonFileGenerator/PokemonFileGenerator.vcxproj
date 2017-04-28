@@ -66,9 +66,15 @@
   <ItemGroup>
     <ClCompile Include="Generate.cpp" />
     <ClCompile Include="Helper.cpp" />
+    <ClCompile Include="Map.cpp" />
+    <ClCompile Include="MapList.cpp" />
+    <ClCompile Include="TileType.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Helper.h" />
+    <ClInclude Include="Map.h" />
+    <ClInclude Include="MapList.h" />
+    <ClInclude Include="TileType.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

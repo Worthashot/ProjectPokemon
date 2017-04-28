@@ -1,14 +1,20 @@
 #include "Helper.h"
+#include "MapList.h"
+#include <windows.h>
+#include <stdio.h>
 #include <iostream>
 #include <fstream>
+using namespace std;
 
 int main(){
-	vector<string> customFiles;
-	string line;
-	int i = 1;
-	cout << "starting file generator\nloading custom tiles\n";
+	cout << "starting file generator\nloading header\n";
+	MapList theList = MapList();
 
-	ifstream CustomTileFile("custom files.exe");
+
+	//The correct directory should be 3 levels up
+
+	/*
+	ifstream header(dir + "\PokemonProject\PokemonProjext\header.exe");
 	if (CustomTileFile.is_open()){
 
 		//check the file is formated properly
@@ -45,6 +51,6 @@ int main(){
 	else {
 		cout << "no custom tile file found\n";
 	}
-
+	*/
 
 }
