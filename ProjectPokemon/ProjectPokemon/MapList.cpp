@@ -22,6 +22,19 @@ MapList::MapList(){
 	}
 }
 
+MapList::MapList(string header_name){
+	ifstream header( header_name + ".txt");
+
+	if (!header.is_open()){
+		cerr << "unable to open header";
+		throw("unable to open header");
+	}
+	//every line will give the name of a map
+	for (string line; getline(header, line);){
+		maps[line] = readMap(line);
+	}
+}
+
 Map MapList::readMap(string map){
 	ifstream file(map + ".txt");
 	if (!file.is_open()) {
@@ -96,6 +109,17 @@ void MapList::readTile(Map *map, string par){
 
 Map MapList::getMap(string map){
 	return maps[map];
+}
+
+int MapList::mapCount(){
+	return maps.size();
+}
+vector<string> MapList::listOfMaps(){
+	vector<string> output;
+	for (map<string, Map>::iterator it = maps.begin(); it != maps.end(); ++it) {
+		output.push_back(it->first);
+	}
+	return output;
 }
 //first lookup header file. This tells the number of maps and their names.
 //lookup the map with that code, create the tiles located at the start of the file then create the map useing these tiles

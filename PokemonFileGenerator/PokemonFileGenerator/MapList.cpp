@@ -14,24 +14,26 @@ using namespace std;
 MapList::MapList(){
 	char buffer[_MAX_PATH];
 	GetModuleFileName(NULL, buffer, _MAX_PATH);
-	string::size_type pos = string(buffer).find_last_of("\\/");
-	pos = string(buffer).substr(0, pos).find_last_of("\\/");
-	pos = string(buffer).substr(0, pos).find_last_of("\\/");
+	string::size_type pos = string(buffer).find_last_of("\\");
+	pos = string(buffer).substr(0, pos).find_last_of("\\");
+	pos = string(buffer).substr(0, pos).find_last_of("\\");
 	string dir = string(buffer).substr(0, pos);
-	string location = "\\PokemonProject\\PokemonProjext\\";
-	ifstream header(dir + location + "header.exe");
+	string location = dir + "\\ProjectPokemon\\Debug\\";
+	ifstream header(location + "header.txt");
 
 	if (!header.is_open()){
 		cout << "no header found, creating\n";
-		ofstream header(dir + location + "header.exe");
+		ofstream header(location + "header.txt");
 		header.close();
+		string a = location + "header.txt";
+		rename(a.c_str(), "header.txt");
 	}
 	else {
 		//every line will give the name of a map
 		cout << "header found, loading maps\n";
 		for (string line; getline(header, line);){
 			cout << "loading " + line + "\n";
-			maps[line] = readMap(dir + location + line);
+			maps[line] = readMap(location + line);
 		}
 	}
 }
@@ -110,6 +112,17 @@ void MapList::readTile(Map *map, string par){
 
 Map MapList::getMap(string map){
 	return maps[map];
+}
+
+int MapList::mapCount(){
+	return maps.size();
+}
+vector<string> MapList::listOfMaps(){
+	vector<string> output;
+	for (map<string, Map>::iterator it = maps.begin(); it != maps.end(); ++it) {
+		output.push_back(it->first);
+	}
+	return output;
 }
 //first lookup header file. This tells the number of maps and their names.
 //lookup the map with that code, create the tiles located at the start of the file then create the map useing these tiles

@@ -12,5 +12,7 @@ private:
 public:
 	MapList();
 	Map getMap(string);
+	int mapCount();
+	vector<string> listOfMaps();
 };
 

@@ -11,6 +11,9 @@ private:
 	void readTile(Map*, string); //adds a tile type to the map given based on the string of paramaters given
 public:
 	MapList();
+	MapList(string);
 	Map getMap(string);
+	int mapCount();
+	vector<string> listOfMaps();
 };
 
