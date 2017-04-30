@@ -97,12 +97,12 @@ TEST_CASE("Test getting correct information from a file", "[MapList_create]"){
 	remove("test2_1.txt");
 	remove("header test3.txt");
 	remove("header test4.txt");
-	remove("test4_1");
-	remove("test4_2");
-	remove("test4_3");
-	remove("test4_4");
-	remove("test4_5");
-	remove("test4_6");
+	remove("test4_1.txt");
+	remove("test4_2.txt");
+	remove("test4_3.txt");
+	remove("test4_4.txt");
+	remove("test4_5.txt");
+	remove("test4_6.txt ");
 
 
 	
