@@ -107,3 +107,4 @@ vector <string> TileType::getAll(){
 		to_string(getPerson()), getTileset() };
 	return output;
 }
+

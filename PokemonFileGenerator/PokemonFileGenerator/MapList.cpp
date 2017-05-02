@@ -124,13 +124,15 @@ vector<string> MapList::listOfMaps(){
 	}
 	return output;
 }
+
 //first lookup header file. This tells the number of maps and their names.
 //lookup the map with that code, create the tiles located at the start of the file then create the map useing these tiles
+
 //frst draft file format
-//first line number of custom tiles (n)
-//next n lines, makeup of custom tiles
-//next line - x*y co-ordinates separated by a space
-//the next y lines will have x numbers. These corespond to the tiles id assigned previously. Each tile will be seperated by a space
+//first line number of dimensions
+//second line, number of custom times (n)
+//next n lines, the custom tiles
+//next x tiles, each y tile
 
 //TODO put npcs, npc vision, encounters and others
 

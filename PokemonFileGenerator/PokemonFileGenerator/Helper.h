@@ -5,7 +5,7 @@
 #include <functional> 
 #include <cctype>
 #include <locale>
-
+#include <fstream>
 using namespace std;
 
 class Helper
@@ -17,5 +17,6 @@ public:
 	static void ltrim(string);
 	static void rtrim(string);
 	static void trim(string);
+	static bool doesFileExist(string)
 };
 

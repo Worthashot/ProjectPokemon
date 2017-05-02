@@ -19,18 +19,24 @@ vector<string> Helper::split(const string &text, char sep) {
 
 // trim from start (in place)
 void ltrim(string &s) {
-	s.erase(s.begin(), std::find_if(s.begin(), s.end(),
-		std::not1(std::ptr_fun<int, int>(std::isspace))));
+	s.erase(s.begin(), find_if(s.begin(), s.end(),
+		not1(ptr_fun<int, int>(isspace))));
 }
 
 // trim from end (in place)
-void rtrim(std::string &s) {
-	s.erase(std::find_if(s.rbegin(), s.rend(),
-		std::not1(std::ptr_fun<int, int>(std::isspace))).base(), s.end());
+void rtrim(string &s) {
+	s.erase(find_if(s.rbegin(), s.rend(),
+		not1(ptr_fun<int, int>(isspace))).base(), s.end());
 }
 
 // trim from both ends (in place)
-void trim(std::string &s) {
+void trim(string &s) {
 	ltrim(s);
 	rtrim(s);
+}
+
+bool doesFileExist(string fileName)
+{
+	ifstream infile(fileName);
+	return infile.good();
 }
