@@ -1,12 +1,11 @@
 #pragma once
 #include <string>
 #include <vector>
-using namespace std;
 
 class TileType
 {
 private:
-	string name;
+	std::string name;
 	bool passable;		 //can tile be walked through normaly
 	bool surfable;
 	bool doorway;
@@ -15,12 +14,12 @@ private:
 	bool cutable;
 	int location;  //these are only assigned when appropriate flags are true
 	int npcID;
-	string tileset;
+	std::string tileset;
 
 public:
 	TileType();
-	void setAll(string, int, int, int, int, int, int, int, int, string);
-	void setAll(vector<string>);
+	void setAll(std::string, int, int, int, int, int, int, int, int, std::string);
+	void setAll(std::vector<std::string>);
 	void setName(std::string name);
 	void setPassable(int passable);
 	void setSurfable(int surfable);
@@ -40,7 +39,7 @@ public:
 	bool getCutable();
 	int getLocation();
 	int getPerson();
-	string getTileset();
-	vector<string> getAll();
+	std::string getTileset();
+	std::vector<std::string> getAll();
 };
 

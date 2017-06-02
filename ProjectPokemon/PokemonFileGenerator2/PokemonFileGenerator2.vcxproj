@@ -11,8 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{D1791649-B29A-4C9A-BFE9-10D6DC10D8C8}</ProjectGuid>
-    <RootNamespace>PokemonFileGenerator</RootNamespace>
+    <ProjectGuid>{45BA713B-4F7B-40CB-9B1A-5530F21F1836}</ProjectGuid>
+    <RootNamespace>PokemonFileGenerator2</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -64,20 +64,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Generate.cpp" />
-    <ClCompile Include="Generate_test.cpp" />
-    <ClCompile Include="Helper.cpp" />
-    <ClCompile Include="Map.cpp" />
-    <ClCompile Include="MapList.cpp" />
-    <ClCompile Include="tests.cpp" />
-    <ClCompile Include="TileType.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\..\..\Useful resources\catch.hpp" />
-    <ClInclude Include="Helper.h" />
-    <ClInclude Include="Map.h" />
-    <ClInclude Include="MapList.h" />
-    <ClInclude Include="TileType.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

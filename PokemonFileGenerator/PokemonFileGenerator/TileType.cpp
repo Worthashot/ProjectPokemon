@@ -3,7 +3,7 @@
 #include <string>
 #include "Helper.h"
 #include <fstream>
-using namespace std;
+
 
 
 	//TODO maybe add trainer sight radius, will see how it turns out
@@ -23,7 +23,7 @@ TileType::TileType(){
 	tileset = "";
 	}
 
-void TileType::setName(string name){ this->name = name; }
+void TileType::setName(std::string name){ this->name = name; }
 
 void TileType::setPassable(int passable){ this->passable = passable; }
 
@@ -45,9 +45,9 @@ void TileType::setPerson(int person){
 	if (talkable){ npcID = person; }
 }
 
-void TileType::setTileset(string tileset){ this->tileset = tileset; }
+void TileType::setTileset(std::string tileset){ this->tileset = tileset; }
 
-void TileType::setAll(string name, int passable, int surfable, int doorway, int talkable, int pushable, int cutable, int location, int person, string tileset){
+void TileType::setAll(std::string name, int passable, int surfable, int doorway, int talkable, int pushable, int cutable, int location, int person, string tileset){
 	setName(name);
 	setPassable(passable);
 	setSurfable(surfable);
@@ -61,7 +61,7 @@ void TileType::setAll(string name, int passable, int surfable, int doorway, int 
 }
 
 //Maybe make able to add new paramaters easily
-void TileType::setAll(vector<string> par){
+void TileType::setAll(std::vector<std::string> par){
 	int pars [Helper::tilePars];
 	for (int i = 1; i < 9; i++){
 		pars[i - 1] = atoi(par[i].c_str());
@@ -99,12 +99,12 @@ int TileType::getPerson(){
 	}
 }
 
-string TileType::getTileset(){ return tileset; }
+std::string TileType::getTileset(){ return tileset; }
 
-vector <string> TileType::getAll(){
-	vector <string> output{ getName(), to_string(getPassable()), to_string(getSurfable()), to_string(getDoorway()),
-		to_string(getTalkable()), to_string(getPushable()), to_string(getCutable()), to_string(getLocation()),
-		to_string(getPerson()), getTileset() };
+std::vector <std::string> TileType::getAll(){
+	std::vector <std::string> output{ getName(), std::to_string(getPassable()), std::to_string(getSurfable()), std::to_string(getDoorway()),
+		std::to_string(getTalkable()), std::to_string(getPushable()), std::to_string(getCutable()), std::to_string(getLocation()),
+		std::to_string(getPerson()), getTileset() };
 	return output;
 }
 

@@ -2,17 +2,22 @@
 #include "Map.h"
 #include "Helper.h"
 #include <string>
-using namespace std;
 class MapList
 {
 private:
-	map<string, Map> maps; // A list of maps
-	Map readMap(string);
-	void readTile(Map*, string); //adds a tile type to the map given based on the string of paramaters given
+	std::map<std::string, Map> maps; // A list of maps
+	Map readMap(std::string);
+
+   //may be better in Map
+	void static readTile(Map*, std::string); //adds a tile type to the map given based on the string of paramaters given
 public:
 	MapList();
-	Map getMap(string);
+	Map getMap(std::string);
 	int mapCount();
-	vector<string> listOfMaps();
+	std::vector<std::string> listOfMaps();
+
+	//may be better in Map
+	//Also makes no sence, need to fix
+	Map static readMap(std::ifstream *);
 };
 

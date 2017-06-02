@@ -6,17 +6,19 @@
 #include <cctype>
 #include <locale>
 #include <fstream>
-using namespace std;
+
 
 class Helper
 {
 public:
 	Helper();
-	static vector<string> split(const string&, char);
+	static std::vector<std::string> split(const std::string&, char);
 	static const int tilePars = 10;
-	static void ltrim(string);
-	static void rtrim(string);
-	static void trim(string);
-	static bool doesFileExist(string)
+	static void ltrim(std::string);
+	static void rtrim(std::string);
+	static void trim(std::string);
+	static bool doesFileExist(std::string);
+	static bool isNumber(std::string, int*);
+	static bool isNumber(std::string);
 };
 

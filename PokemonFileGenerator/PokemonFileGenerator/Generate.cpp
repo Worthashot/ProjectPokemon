@@ -5,125 +5,158 @@
 #include <iostream>
 #include <fstream>
 #include <set>
-using namespace std;
+
 
 int main(){
-	cout << "starting file generator\nloading header\n";
+	start();
+	return 0;
+}
+
+void start(){
+	std::cout << "starting file generator\nloading header\n";
 
 	MapList theList = MapList();
 
 	//opens the header again for future read/write
 	char buffer[_MAX_PATH];
 	GetModuleFileName(NULL, buffer, _MAX_PATH);
-	string::size_type pos = string(buffer).find_last_of("\\");
-	pos = string(buffer).substr(0, pos).find_last_of("\\");
-	pos = string(buffer).substr(0, pos).find_last_of("\\");
-	string dir = string(buffer).substr(0, pos);
-	string location = dir + "\\ProjectPokemon\\Debug\\";
+	std::string::size_type pos = string(buffer).find_last_of("\\");
+	pos = std::string(buffer).substr(0, pos).find_last_of("\\");
+	pos = std::string(buffer).substr(0, pos).find_last_of("\\");
+	std::string dir = std::string(buffer).substr(0, pos);
+	std::string location = dir + "\\ProjectPokemon\\Debug\\";
 
-	vector<string> mapStrings = theList.listOfMaps();
+	std::vector<std::string> mapStrings = theList.listOfMaps();
 	int count = theList.mapCount();
-	string choice;
+	std::string choice;
 	int choiceI = 0;
 	while (choiceI != 1){
-		cout << "Chose old map or create a new one\n";
-		cout << "1.    End\n";
-		cout << "2.    Add Map\n";
+		std::cout << "Chose old map or create a new one\n";
+		std::cout << "1.    End\n";
+		std::cout << "2.    Add Map\n";
 		for (int i = 0; i < count; i++){
-			cout << to_string(i + 3) + "    " + mapStrings[i] + "\n";
+			std::cout << std::to_string(i + 3) + "    " + mapStrings[i] + "\n";
 		}
 
-		cin >> choice;
+		std::cin >> choice;
 		Helper::trim(choice);
 		choiceI = atoi(choice.c_str());
 		while (choiceI < 1 || choiceI > count + 2){
-			cout << "Please chose a number between 0 and " + to_string(count + 1) + "\n";
-			cin >> choice;
+			std::cout << "Please chose a number between 0 and " + std::to_string(count + 1) + "\n";
+			std::cin >> choice;
 			Helper::trim(choice);
 			choiceI = atoi(choice.c_str());
 		}
 
 		if (choiceI == 2){
-			cout << "Name the map\n";
-			cin >> choice;
+			std::cout << "Name the map\n";
+			std::cin >> choice;
 			Helper::trim(choice);
 
 			while (find(mapStrings.begin(), mapStrings.end(), choice) != mapStrings.end()){
-				cout << "Map name already in use, name another map\n";
-				cin >> choice;
+				std::cout << "Map name already in use, name another map\n";
+				std::cin >> choice;
 				Helper::trim(choice);
 			}
 
 
 			if (Helper::doesFileExist(location + choice + ".txt")){
 				if (isValidMap(choice)){
-					cout << "map already exists, linking\nCaution, map may contain tiles that it does not recognise\n";
-					ofstream header(location + "header.txt");
+					std::cout << "map already exists, linking\nCaution, map may contain tiles that it does not recognise\n";
+					std::ofstream header(location + "header.txt");
 					header << choice + "\n";
 					header.close();
 				}
-				else{ 
-					cout << "map exasits but is invalid";
+				else{
+					std::cout << "map exasits but is invalid";
 				}
 			}
 			else{
-				ofstream userMap(location + choice + ".txt");
+				std::ofstream userMap(location + choice + ".txt");
 				if (!userMap.is_open()){
-					cout << "unable to create file, try again\n";
+					std::cout << "unable to create file, try again\n";
 				}
 				else {
-					if (generateMap(userMap));
 					userMap.close();
-					cout << "map created, linking to header\n";
-					ofstream header(location + "header.txt");
+					generateMap(location + choice + ".txt");
+					std::cout << "map created, linking to header\n";
+					std::ofstream header(location + "header.txt");
 					header << choice + "\n";
 					header.close();
-					cout << "map linked to header\n";
+					std::cout << "map linked to header\n";
 				}
 			}
+		}
+		else {
+			std::ifstream userMap(location + mapStrings[choiceI] + ".txt");
+			if (!userMap.is_open()){
+				std::cout << "cannot open map, please try again\n";
+			}
+			else {
+				std::cout << "Loading map data\n";
+				Map currentMap = MapList::readMap(&userMap);
+				userMap.close();
+				std::cout << "Map data loaded\n";
+				int* dims = currentMap.getDimention();
 
-			//TODO allow editing previous map
+				std::vector<std::string> tiles = currentMap.getTiles();
+				std::cout << "Tiles";
+				for (int i = 0; i < tiles.size(); i++){
+					std::cout << " " + tiles[i];
+				}
+
+				std::cout << "Layout\n";
+				//ADD GRAPHICS TO DISPLAY WHEN ABLE
+				for (int j = 0; j < dims[0]; j++){
+					std::cout << std::to_string(j) + "        ";
+				}
+				std::cout << "\n";
+				for (int i = 0; i < dims[1]; i++){
+					std::cout << std::to_string(i);
+					for (int j = 0; j < dims[0]; j++){
+						std::cout << " | " + currentMap.getTile(i, j).getName();
+					}
+					std::cout << "\n";
+				}
+				std::cout << "1.    add new tile\n";
+				std::cout << "2.    change map dimensions\n";
+				std::cout << "3.    change";
+				std::ofstream newUserMap(location + mapStrings[choiceI] + ".txt");
+
+
+			}
+
 		}
 	}
 }
-
-bool isValidMap(string location){
-	ifstream map(location + ".txt");
-	string line;
+bool isValidMap(std::string location){
+	std::ifstream map(location + ".txt");
+	std::string line;
 	int iLine;
-	vector < string > lineVector;
-	int dims[2];
-	int tileCount;
+	std::vector < std::string > lineVector;
+	int * tileCount;
+	int * dims; 
+	bool truth = true;
 
 	getline(map, line);
-	lineVector = Helper::split(line, ' ');
-	if (lineVector.size != 2){
+	if (!validDimention(line, dims)){
 		return false;
 	}
 
-	for (int i = 0; i < 2; i++){
-		Helper::trim(lineVector[i]);
-		dims[i] = atoi(lineVector[i].c_str());
-		if (dims[i] == 0 && lineVector[i] != "0"){
-			return false;
-		}
+	getline(map, line);
+	if (!Helper::isNumber(line, tileCount)){
+		return false;
 	}
 	
-	getline(map, line);
-	Helper::trim(line);
-	iLine = atoi(line.c_str());
-	if (iLine == 0 && line != "0"){
-		return false;
-	}
-
-	tileCount = iLine;
-	for (int i = 0; i < tileCount; i++){
+	for (int i = 0; i < *tileCount; i++){
 		getline(map, line);
 		Helper::trim(line);
+
 		lineVector = Helper::split(line, ' ') ;
 		if (lineVector.size != Helper::tilePars){
 			return false;
 		}
+
 
 		for (int j = 1; j < Helper::tilePars - 1; j++){
 			Helper::trim(lineVector[j]);
@@ -145,19 +178,40 @@ bool isValidMap(string location){
 	return true;
 }
 
-bool generateMap(ofstream map){
-	string line;
-	vector<string> lineVector;
+//sets dims to a vector of 2 ints if the line is formatted properly, null if not
+bool validDimention(std::string line, int* dims){
+
+	std::vector < std::string > lineVector;
+	lineVector = Helper::split(line, ' ');
+	if (lineVector.size != 2){
+		dims = NULL;
+		return false;
+	}
+
+	for (int i = 0; i < 2; i++){
+		Helper::trim(lineVector[i]);
+		dims[i] = atoi(lineVector[i].c_str());
+		if (dims[i] == 0 && lineVector[i] != "0"){
+			dims = NULL;
+			return false;
+		}
+	}
+	return true;
+}
+bool generateMap(std::string mapString){
+	std::ofstream map(mapString);
+	std::string line;
+	std::vector<std::string> lineVector;
 
 	bool truth;
 	int tileCount;
 	int dims[2];
 	int area;
 
-	set<string> tiles;
+	std::set<std::string> tiles;
 
-	cout << "please enter x and y dimensions of map\n";
-	cin >> line;
+	std::cout << "please enter x and y dimensions of map\n";
+	std::cin >> line;
 	lineVector = Helper::split(line, ' ');
 	truth = lineVector.size() == 2;
 
@@ -168,8 +222,8 @@ bool generateMap(ofstream map){
 	}
 
 	while (!truth){
-		cout << "dimensions must have 2 arguments\n";
-		cin >> line;
+		std::cout << "dimensions must have 2 arguments\n";
+		std::cin >> line;
 		lineVector = Helper::split(line, ' ');
 		Helper::trim(lineVector[0]);
 		Helper::trim(lineVector[1]);
@@ -181,22 +235,22 @@ bool generateMap(ofstream map){
 	dims[1] = atoi(lineVector[1].c_str());
 	map << line + "\n";
 
-	cout << "please enter number of custom tiles\n";
-	cin >> line;
+	std::cout << "please enter number of custom tiles\n";
+	std::cin >> line;
 	Helper::trim(line);
 	tileCount = atoi(line.c_str());
 	while ((tileCount == 0) && (lineVector[0] != "0")){
-		cout << "please enter a valid numberan";
-		cin >> line;
+		std::cout << "please enter a valid number";
+		std::cin >> line;
 		Helper::trim(line);
 		tileCount = atoi(line.c_str());
 	}
 	map << line + "\n";
 
 	for (int i = 0; i < tileCount; i++){
-		cout << "Creating tile " + to_string(i + 1) + "\n";
-		cout << "Enter the name and " + to_string(Helper::tilePars) + " paramaters\n";
-		cin >> line;
+		std::cout << "Creating tile " + std::to_string(i + 1) + "\n";
+		std::cout << "Enter the name and " + to_string(Helper::tilePars) + " paramaters\n";
+		std::cin >> line;
 		Helper::trim(line);
 		lineVector = Helper::split(line, ' ');
 		truth = lineVector.size == Helper::tilePars;
@@ -206,8 +260,8 @@ bool generateMap(ofstream map){
 			}
 		}
 		while (!truth){
-			cout << "Please enter " + to_string(Helper::tilePars) + " paramaters\n";
-			cin >> line;
+			std::cout << "Please enter " + to_string(Helper::tilePars) + " paramaters\n";
+			std::cin >> line;
 			Helper::trim(line);
 			lineVector = Helper::split(line, ' ');
 			truth = lineVector.size == Helper::tilePars;
@@ -224,9 +278,9 @@ bool generateMap(ofstream map){
 	area = dims[0] * dims[1];
 	for (int i = 0; i < area;){
 		int startSquare = i;
-		cout << "Assigning tiles from co-ordinates " + findDims(i, dims[0], dims[1]) + " to map\n";
-		cout << "Please enter the number of tiles followed by its name\n";
-		cin >> line;
+		std::cout << "Assigning tiles from co-ordinates " + findDims(i, dims[0], dims[1]) + " to map\n";
+		std::cout << "Please enter the number of tiles followed by its name\n";
+		std::cin >> line;
 		Helper::trim(line);
 		lineVector = Helper::split(line, ' ');
 		truth = lineVector.size == 2;
@@ -234,8 +288,8 @@ bool generateMap(ofstream map){
 			truth = (atoi(lineVector[0].c_str()) != 0) && tiles.find(lineVector[1]) != tiles.end();
 		}
 		while (!truth){
-			cout << "please enter a number above 0 and a valid tile name\n";
-			cin >> line;
+			std::cout << "please enter a number above 0 and a valid tile name\n";
+			std::cin >> line;
 			Helper::trim(line);
 			lineVector = Helper::split(line, ' ');
 			if (lineVector.size() == 2){
@@ -249,7 +303,7 @@ bool generateMap(ofstream map){
 	return true;
 }
 
-string findDims(int position, int dimx, int dimy){
+std::string findDims(int position, int dimx, int dimy){
 	int x = 0;
 	int y = 0;
 	int count = 0;
@@ -258,15 +312,15 @@ string findDims(int position, int dimx, int dimy){
 		y = y * dimx;
 	}
 	x = position - count * dimx;
-	return to_string(x) + " " + to_string(y) + "\n";
+	return std::to_string(x) + " " + std::to_string(y) + "\n";
 
 	//calculates the co-ordinates on a 0 start grid given the x + (y*x) possition
 }
 
-string assignSquares(int start, int end, string tile, int dimx, int dimy){
+std::string assignSquares(int start, int end, std::string tile, int dimx, int dimy){
 	int currentYDim = atoi(Helper::split(findDims(start, dimx, dimy), ' ')[1].c_str());
 	int endYDim = atoi(Helper::split(findDims(end, dimx, dimy), ' ')[1].c_str());
-	string result = "";
+	std::string result = "";
 
 	for (int i = start; i < end; i++){
 		if (currentYDim = dimy){
