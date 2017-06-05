@@ -7,12 +7,8 @@
 #include <set>
 
 
-int main(){
-	start();
-	return 0;
-}
 
-void start(){
+int main(){
 	std::cout << "starting file generator\nloading header\n";
 
 	MapList theList = MapList();
@@ -20,7 +16,7 @@ void start(){
 	//opens the header again for future read/write
 	char buffer[_MAX_PATH];
 	GetModuleFileName(NULL, buffer, _MAX_PATH);
-	std::string::size_type pos = string(buffer).find_last_of("\\");
+	std::string::size_type pos = std::string(buffer).find_last_of("\\");
 	pos = std::string(buffer).substr(0, pos).find_last_of("\\");
 	pos = std::string(buffer).substr(0, pos).find_last_of("\\");
 	std::string dir = std::string(buffer).substr(0, pos);
@@ -41,6 +37,7 @@ void start(){
 		std::cin >> choice;
 		Helper::trim(choice);
 		choiceI = atoi(choice.c_str());
+
 		while (choiceI < 1 || choiceI > count + 2){
 			std::cout << "Please chose a number between 0 and " + std::to_string(count + 1) + "\n";
 			std::cin >> choice;
@@ -72,38 +69,25 @@ void start(){
 				}
 			}
 			else{
-				std::ofstream userMap(location + choice + ".txt");
-				if (!userMap.is_open()){
-					std::cout << "unable to create file, try again\n";
-				}
-				else {
-					userMap.close();
-					generateMap(location + choice + ".txt");
-					std::cout << "map created, linking to header\n";
-					std::ofstream header(location + "header.txt");
-					header << choice + "\n";
-					header.close();
-					std::cout << "map linked to header\n";
-				}
+				generateMap(location + choice + ".txt");
+				std::cout << "map created, linking to header\n";
+				std::ofstream header(location + "header.txt");
+				header << choice + "\n";
+				header.close();
+				std::cout << "map linked to header\n";
 			}
 		}
 		else {
-			std::ifstream userMap(location + mapStrings[choiceI] + ".txt");
-			if (!userMap.is_open()){
-				std::cout << "cannot open map, please try again\n";
-			}
-			else {
-				std::cout << "Loading map data\n";
-				Map currentMap = MapList::readMap(&userMap);
-				userMap.close();
-				std::cout << "Map data loaded\n";
-				int* dims = currentMap.getDimention();
+			std::cout << "Loading map data\n";
+			Map currentMap = Map(location);
+			std::cout << "Map data loaded\n";
+			int* dims = currentMap.getDimention();
 
-				std::vector<std::string> tiles = currentMap.getTiles();
-				std::cout << "Tiles";
-				for (int i = 0; i < tiles.size(); i++){
-					std::cout << " " + tiles[i];
-				}
+			std::vector<std::string> tiles = currentMap.getTiles();
+			std::cout << "Tiles";
+			for (int i = 0; i < tiles.size(); i++){
+				std::cout << " " + tiles[i];
+			}
 
 				std::cout << "Layout\n";
 				//ADD GRAPHICS TO DISPLAY WHEN ABLE
@@ -124,11 +108,11 @@ void start(){
 				std::ofstream newUserMap(location + mapStrings[choiceI] + ".txt");
 
 
-			}
-
 		}
+
 	}
 }
+
 bool isValidMap(std::string location){
 	std::ifstream map(location + ".txt");
 	std::string line;
@@ -200,6 +184,7 @@ bool validDimention(std::string line, int* dims){
 }
 bool generateMap(std::string mapString){
 	std::ofstream map(mapString);
+
 	std::string line;
 	std::vector<std::string> lineVector;
 

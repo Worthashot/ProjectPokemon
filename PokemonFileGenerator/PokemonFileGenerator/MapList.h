@@ -5,19 +5,25 @@
 class MapList
 {
 private:
-	std::map<std::string, Map> maps; // A list of maps
-	Map readMap(std::string);
 
-   //may be better in Map
-	void static readTile(Map*, std::string); //adds a tile type to the map given based on the string of paramaters given
+	//A map of each Map with their respective name
+	std::map<std::string, Map> maps; 
+
 public:
-	MapList();
-	Map getMap(std::string);
-	int mapCount();
-	std::vector<std::string> listOfMaps();
 
-	//may be better in Map
-	//Also makes no sence, need to fix
-	Map static readMap(std::ifstream *);
+	//creates a list of maps from the expected header location
+	MapList();
+
+	//creates a list of maps from the given header location
+	MapList(std::string);
+
+	//returns the Map assigned to the given string
+	Map getMap(std::string);
+
+	//returns the number of stored Maps
+	int mapCount();
+
+	//returns a list of names of the stores Maps
+	std::vector<std::string> listOfMaps();
 };
 

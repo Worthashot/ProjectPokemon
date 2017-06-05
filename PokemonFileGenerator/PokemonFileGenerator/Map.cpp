@@ -101,8 +101,13 @@ void Map::readTile(Map *map, std::string par){
 	map->addTile(newType);
 }
 
+//BIG TODO - Create a container which all relevent information is read in to. this container will then be passed
+//to a constructor http://www.cplusplus.com/reference/deque/deque/
 Map::Map(std::string  locationString){
 	std::ifstream map(locationString);
+	if (!map.is_open()){
+
+	}
 	std::string line;
 	getline(map, line);
 	int dimensions[2];

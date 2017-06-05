@@ -47,7 +47,7 @@ void TileType::setPerson(int person){
 
 void TileType::setTileset(std::string tileset){ this->tileset = tileset; }
 
-void TileType::setAll(std::string name, int passable, int surfable, int doorway, int talkable, int pushable, int cutable, int location, int person, string tileset){
+void TileType::setAll(std::string name, int passable, int surfable, int doorway, int talkable, int pushable, int cutable, int location, int person, std::string tileset){
 	setName(name);
 	setPassable(passable);
 	setSurfable(surfable);
