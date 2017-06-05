@@ -4,6 +4,7 @@
 #include <map>
 #include <fstream>
 #include <iostream>
+#include <deque>
 class Map
 {
 
@@ -11,7 +12,7 @@ private:
 	std::vector<std::vector<std::string> >  mapComp;
 	int encounterCode;
 	std::map<std::string, TileType> customTiles;
-
+	void setTile(std::string);
 public:
 	//TODO
 	Map();
@@ -19,11 +20,14 @@ public:
 	//sets the size of the map and allocates an unpassable wall as defalt
 	Map(int, int);
 
+	//sets the size of the map from string and allocates an unpassable wall as default
+	Map(std::string, std::string);
+
 	//TODO
 	Map(int, int, int);
 
 	//loads in a Map from file per the given location
-	Map(std::string);
+	Map(std::deque<std::string>);
 
 	//Sets an individual x,y cordinate to the corresponding tileType specified by the String, checking that
 	//the TileType is registerd in the Map

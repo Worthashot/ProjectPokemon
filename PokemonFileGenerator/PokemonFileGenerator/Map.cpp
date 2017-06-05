@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include "Helper.h"
+#include <deque>
 #include <map>
 
 Map::Map(){
@@ -11,6 +12,7 @@ Map::Map(){
 
 //sets the size of the map and allocates an unpassable wall as defalt
 Map::Map(int xDim, int yDim){	
+
 	TileType wall = TileType();
 	wall.setName("wall");
 	addTile(wall);
@@ -23,6 +25,21 @@ Map::Map(int xDim, int yDim){
 	}
 }
 
+//sets the size of the map from string and allocates an unpassable wall as defalt
+Map::Map(std::string xDimS, std::string yDimS){
+	int xDim = Helper::toInt(xDimS);
+	int yDim = Helper::toInt(yDimS);
+	TileType wall = TileType();
+	wall.setName("wall");
+	addTile(wall);
+	mapComp.resize(xDim);
+	for (int i = 0; i < xDim; i++){
+		mapComp[i].resize(yDim);
+		for (int j = 0; j < yDim; j++){
+			mapComp[i][j] = "wall";
+		}
+	}
+}
 //sets the size of the map and allocates an unpassable wall as defalt and the encounter code
 Map::Map(int xDim, int yDim, int encounter){	
 	TileType wall = TileType();
@@ -85,6 +102,7 @@ std::vector<std::string> Map::getTiles(){
 	}
 }
 
+
 void Map::readTile(Map *map, std::string par){
 	std::vector<std::string> pars = Helper::split(par, ' ');
 
@@ -101,58 +119,43 @@ void Map::readTile(Map *map, std::string par){
 	map->addTile(newType);
 }
 
+void Map::setTile(std::string par){
+	std::vector<std::string> pars = Helper::split(par, ' ');
+
+	//expecting every par to have enough paramaters to create a new tiletype
+	if (pars.size() != Helper::tilePars){
+		std::cerr << "invalid number of paramaters in map";
+		throw("invalid number of paramarets");
+	}
+
+	TileType newType = TileType();
+	newType.setAll(pars);
+	addTile(newType);
+}
+
+
 //BIG TODO - Create a container which all relevent information is read in to. this container will then be passed
 //to a constructor http://www.cplusplus.com/reference/deque/deque/
-Map::Map(std::string  locationString){
-	std::ifstream map(locationString);
-	if (!map.is_open()){
 
-	}
-	std::string line;
-	getline(map, line);
-	int dimensions[2];
-
-	//the first line will contain the x and y co-ordinates of the map
-	std::vector<std::string> dims = Helper::split(line, ' ');
-	if (dims.size() != 2){
-		std::cerr << "first line of map not expected dimension";
-		throw("unable to load map dimensions");
-	}
-
-	dimensions[0] = std::atoi(dims[0].c_str());
-	dimensions[1] = std::atoi(dims[1].c_str());
-	Map output = Map(dimensions[0], dimensions[1]);
-
-	int i = 0;
+//info is expected to be a deque containing all information from the relavent file
+Map::Map(std::deque<std::string>  info) : Map(Helper::split(info[0], ' ')[0], Helper::split(info[0], ' ')[1]){
+	int currentLine = 1;
 
 	//second line contains the number of custom tiles
-	getline(map, line);
-	int c = atoi(line.c_str());
+	int c = Helper::toInt(info[1]);
+	int j = 1;
+	for (int i = 2; i < c + 2; i++){
 
-	if ((c == 0 && line != "0") || c < 0){
-		std::cerr << "second line of not valid number";
-		throw("unexpected paramater");
-	}
-
-	while (i < c){
-		getline(map, line);
 		//each line contains the paramaters to a new tiletype
-		readTile(&output, line);
-		i++;
+		setTile(info[i]);
+		currentLine++;
 	}
 
-	for (int i = 0; i < dimensions[1]; i++){
+	for (int i = currentLine; i < currentLine + mapComp.size(); i++){
 
-		//next of the next y-dimension number of lines will contain an x-dimension number of tile codes
-		getline(map, line);
-		std::vector<std::string> tiles = Helper::split(line, ' ');
-		if (tiles.size() != dimensions[0]){
-			std::cerr << "invalid map";
-			throw("map size does not match expected size");
-		}
-
-		//assigns all y co-ordinates for the current x co-ordinate
-		output.setSpaces(i, tiles);
+		//each of the next y-dimension number of lines will contain an x-dimension number of tile codes
+		std::vector<std::string> tiles = Helper::split(info[i], ' ');
+		setSpaces(i, tiles);
 	}
 }
 //I Think what I was going for was to relocate the creation of a map from file to the Map class from the map list class.

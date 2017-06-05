@@ -234,7 +234,7 @@ bool generateMap(std::string mapString){
 
 	for (int i = 0; i < tileCount; i++){
 		std::cout << "Creating tile " + std::to_string(i + 1) + "\n";
-		std::cout << "Enter the name and " + to_string(Helper::tilePars) + " paramaters\n";
+		std::cout << "Enter the name and " + std::to_string(Helper::tilePars) + " paramaters\n";
 		std::cin >> line;
 		Helper::trim(line);
 		lineVector = Helper::split(line, ' ');
@@ -245,7 +245,7 @@ bool generateMap(std::string mapString){
 			}
 		}
 		while (!truth){
-			std::cout << "Please enter " + to_string(Helper::tilePars) + " paramaters\n";
+			std::cout << "Please enter " + std::to_string(Helper::tilePars) + " paramaters\n";
 			std::cin >> line;
 			Helper::trim(line);
 			lineVector = Helper::split(line, ' ');

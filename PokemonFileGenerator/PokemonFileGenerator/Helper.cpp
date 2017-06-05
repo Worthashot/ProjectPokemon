@@ -60,3 +60,25 @@ bool isNumber(std::string line){
 	}
 	return true;
 }
+
+int toInt(std::string s){
+	trim(s);
+	return  std::atoi(s.c_str);
+}
+
+static void readMap(std::string file_name, std::deque<std::string> &queue){
+	std::ifstream map;
+	map.open(file_name);
+	if (!map.is_open()){
+		std::cerr << "Error opening file.";
+		throw("Error opening file.");
+	}
+	else {
+		//TODO, VARIFY FILE IS MAP
+		std::string s;
+		while (map){
+			getline(map, s);
+			str_queue.push_back(s);
+		}
+	}
+}
