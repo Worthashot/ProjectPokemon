@@ -139,14 +139,16 @@ void Map::setTile(std::string par){
 
 //info is expected to be a deque containing all information from the relavent file
 Map::Map(std::deque<std::string>  info) : Map(Helper::split(info[0], ' ')[0], Helper::split(info[0], ' ')[1]){
+
+	//line 0 is used to construct the Map this constructor uses causing the real starting line to be 1
 	int currentLine = 1;
 
-	//second line contains the number of custom tiles
+	//line 1 contains the number of custom tiles
 	int c = Helper::toInt(info[1]);
 	int j = 1;
 	for (int i = 2; i < c + 2; i++){
 
-		//each line contains the paramaters to a new tiletype
+		//next c lines contains the paramaters to a new tiletype
 		setTile(info[i]);
 		currentLine++;
 	}
@@ -154,10 +156,11 @@ Map::Map(std::deque<std::string>  info) : Map(Helper::split(info[0], ' ')[0], He
 	for (int i = currentLine; i < currentLine + mapComp.size(); i++){
 
 		//each of the next y-dimension number of lines will contain an x-dimension number of tile codes
+		//Will trow error if trying to assign a type not yet registerd to the Map
 		std::vector<std::string> tiles = Helper::split(info[i], ' ');
 		setSpaces(i, tiles);
 	}
 }
 //I Think what I was going for was to relocate the creation of a map from file to the Map class from the map list class.
 //This would allow for other methods to make their own isolated maps rather than being forced to use the rigid definition
-//forced by the mapList
+//forced by the mapList. This is now possible by 

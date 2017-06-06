@@ -22,7 +22,6 @@ public:
 	static bool isNumber(std::string, int*);
 	static bool isNumber(std::string);
 	static int toInt(std::string);
-	static void readMap(std::string, std::deque<std::string>&);
 
 };
 

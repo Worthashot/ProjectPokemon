@@ -37,7 +37,9 @@ void trim(std::string &s) {
 bool doesFileExist(std::string fileName)
 {
 	std::ifstream infile(fileName);
-	return infile.good();
+	bool output = infile.good();
+	infile.close();
+	return output;
 }
 
 bool isNumber(std::string line, int* tileCount){
@@ -66,19 +68,4 @@ int toInt(std::string s){
 	return  std::atoi(s.c_str);
 }
 
-static void readMap(std::string file_name, std::deque<std::string> &queue){
-	std::ifstream map;
-	map.open(file_name);
-	if (!map.is_open()){
-		std::cerr << "Error opening file.";
-		throw("Error opening file.");
-	}
-	else {
-		//TODO, VARIFY FILE IS MAP
-		std::string s;
-		while (map){
-			getline(map, s);
-			str_queue.push_back(s);
-		}
-	}
-}
+
