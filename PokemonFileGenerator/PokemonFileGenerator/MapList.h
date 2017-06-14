@@ -1,9 +1,11 @@
-#pragma once#include <map>
-#include "Map.h"
+#pragma once
 #include "Helper.h"
-#include <string>
-#include <vector>
+#include "Map.h"
+#include <windows.h>
+#include <stdio.h>
+
 class MapList
+
 {
 private:
 
@@ -13,8 +15,8 @@ private:
 	//A vector of all Maps able to be loaded
 	std::vector<std::string> mapNames;
 
-	//The file location of all stored maps
-	std::string location;
+	//The file location of all stored maps. All maps in the same MapList must be in the same directory
+	std::string directory;
 
 
 public:
@@ -25,14 +27,26 @@ public:
 	//Finds all valid maps from the header at a given location
 	MapList(std::string);
 
+	//given the name of a map, searches for a file with that name in the directory and tests that its the correct form
+	bool testMap(std::string);
+
 	//returns the Map assigned to the given string
-	Map getMap(std::string);
+	Map* getMap(std::string);
+
+	//returns the directory
+	std::string getDirectory();
+
+	//tests if a string is a valid 
+	bool testDimention(std::string);
 
 	//loads the given list of maps
 	void loadMaps(std::vector<std::string>);
 
 	//loads the given address to the deck and checks that it's a valid map
 	void loadMap(std::string, std::deque<std::string>&);
+
+	//returns a Map loaded from the given name at the MapList directory
+	Map generateMap(std::string);
 
 	//returns the number of stored Maps
 	int mapCount();
@@ -43,7 +57,12 @@ public:
 	//tests the format of a given string
 	bool testValidTileType(std::string);
 
-	//loads the given and any adjacent maps
+	//TODO loads the given and any adjacent maps
 	void loadAdjacentMaps(Map);
+
+	//TEMP, loads all maps
+	void loadAdjacentMaps();
+
+
 };
 

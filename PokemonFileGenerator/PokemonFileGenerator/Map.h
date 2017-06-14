@@ -1,10 +1,7 @@
 #pragma once
-#include <vector>
 #include "TileType.h"
 #include <map>
-#include <fstream>
-#include <iostream>
-#include <deque>
+
 class Map
 {
 
@@ -26,7 +23,7 @@ public:
 	//TODO
 	Map(int, int, int);
 
-	//loads in a Map from file per the given location
+	//loads in a Map from file via the contance of that file
 	Map(std::deque<std::string>);
 
 	//Sets an individual x,y cordinate to the corresponding tileType specified by the String, checking that
@@ -46,7 +43,7 @@ public:
 	TileType getTile(int, int);
 
 	//returns the dimention of the map
-	int* getDimention();
+	std::vector<int> getDimention();
 
 	//returns a list of the names of the registerd TileTypes
 	std::vector<std::string> getTiles();

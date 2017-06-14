@@ -1,13 +1,5 @@
+
 #include "MapList.h"
-#include <windows.h>
-#include <stdio.h>
-#include "Map.h"
-#include <iostream>
-#include <fstream>
-#include <map>
-#include <vector>
-#include "Helper.h"
-#include <deque>
 
 MapList::MapList(){
 	char buffer[_MAX_PATH];
@@ -16,14 +8,14 @@ MapList::MapList(){
 	pos = std::string(buffer).substr(0, pos).find_last_of("\\");
 	pos = std::string(buffer).substr(0, pos).find_last_of("\\");
 	std::string dir = std::string(buffer).substr(0, pos);
-	location = dir + "\\ProjectPokemon\\Debug\\";
-	std::ifstream header(location + "header.txt");
+	directory = dir + "\\ProjectPokemon\\Debug\\";
+	std::ifstream header(directory + "header.txt");
 
 	if (!header.is_open()){
 		std::cout << "no header found, creating\n";
-		std::ofstream header(location + "header.txt");
+		std::ofstream header(directory + "header.txt");
 		header.close();
-		std::string a = location + "header.txt";
+		std::string a = directory + "header.txt";
 		std::rename(a.c_str(), "header.txt");
 	}
 	else {
@@ -40,17 +32,23 @@ MapList::MapList(){
 	}
 }
 
-MapList::MapList(std::string location){
-	this->location = location;
+MapList::MapList(std::string directory){
+	this->directory = directory;
 
 }
-Map MapList::getMap(std::string map){
-	return maps[map];
+
+Map* MapList::getMap(std::string map){
+	if (find(mapNames.begin(), mapNames.end(), map) != mapNames.end()){
+		return NULL;
+	}
+	
+	return &maps[map];
 }
 
 int MapList::mapCount(){
 	return maps.size();
 }
+
 std::vector<std::string> MapList::listOfMaps(){
 	std::vector<std::string> output;
 	for (std::map<std::string, Map>::iterator it = maps.begin(); it != maps.end(); ++it) {
@@ -73,15 +71,14 @@ void MapList::loadMaps(std::vector<std::string> mapsToLoad){
 	for (int i = 0; i < size; i++){
 		if (maps.find(mapsToLoad[i]) == maps.end()){
 			std::deque<std::string> queue;
-			loadMap(location + mapsToLoad[i], queue);
-			maps.insert(std::pair<std::string, Map>(mapsToLoad[i], Map(queue)));
+			maps.insert(std::pair<std::string, Map>(mapsToLoad[i], generateMap(directory + mapsToLoad[i])));
 		}
 	}
 }
 
 void MapList::loadMap(std::string fileName, std::deque<std::string> &queue){
 	std::ifstream file;
-	file.open(location + fileName);
+	file.open(directory + fileName + ".txt");
 	if (!file.is_open()){
 		std::cerr << "Error opening file.";
 		throw("Error opening file.");
@@ -134,9 +131,16 @@ void MapList::loadMap(std::string fileName, std::deque<std::string> &queue){
 	}
 }
 
+Map MapList::generateMap(std::string fileName){
+	std::deque<std::string> queue;
+	loadMap(fileName, queue);
+	Map output = Map(queue);
+	return output;
+}
+
 bool MapList::testValidTileType(std::string line){
 	std::vector<std::string> pars = Helper::split(line, ' ');
-	if (pars.size != 10){
+	if (pars.size() != 10){
 		return false;
 	}
 	for (int i = 1; i < 9; i++){
@@ -148,10 +152,83 @@ bool MapList::testValidTileType(std::string line){
 }
 
 //TODO Add the adjecent map feild to Maps and implement this function
-void loadAdjacentMaps(Map currentMap){
+void MapList::loadAdjacentMaps(Map currentMap){
 
 }
 	
+//TEMP loads all maps at once
+void MapList::loadAdjacentMaps(){
+	loadMaps(mapNames);
+}
+
+bool MapList::testMap(std::string mapName){
+	if (!Helper::doesFileExist(directory + mapName + ".txt")){
+		std::cerr << "map does not exist.\n";
+		throw("Map does not exist");
+		return false;
+	}
+
+	std::ifstream map(directory + ".txt");
+	std::string line;
+	std::vector < std::string > lineVector;
+	int  tileCount;
+	bool truth = true;
+	std::vector<int> dims;
+	//line should be 2 dimentional
+	getline(map, line);
+	if (!testDimention(line)){
+		return false;
+	}
+	
+	dims = Helper::toInt(Helper::split(line, ' '));
+
+	//line should be number of custom TileTypes
+	getline(map, line);
+	if (Helper::isNumber(line)){
+		return false;
+	}
+	tileCount = Helper::toInt(line);
+
+	//each line should be a TileType
+	for (int i = 0; i < tileCount; i++){
+			getline(map, line);
+			Helper::trim(line);
+			if (!testValidTileType(line)){
+				return false;
+			}
+		}
+
+	//each line should be a set amount of strings seperated by spaces
+	for (int i = 0; i < dims[1]; i++){
+		getline(map, line);
+		lineVector = Helper::split(line, ' ');
+		if (lineVector.size() != dims[0]){
+			return false;
+		}
+	}
+	return true;
+	//TODO add test for more information when added
+}
+
+bool testDimention(std::string line){
+
+	std::vector < std::string > lineVector;
+	lineVector = Helper::split(line, ' ');
+	if (lineVector.size() != 2){
+		return false;
+	}
+
+	Helper::trim(lineVector[0]);
+	Helper::trim(lineVector[1]);
+	if (!(Helper::isNumber(lineVector[0]) && Helper::isNumber(lineVector[1]))){
+		return false;
+	}
+	return true;
+}
+
+std::string MapList::getDirectory(){
+	return directory;
+}
 //first lookup header file. This tells the number of maps and their names.
 //lookup the map with that code, create the tiles located at the start of the file then create the map useing these tiles
 

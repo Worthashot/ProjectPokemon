@@ -1,10 +1,4 @@
 #include "TileType.h"
-#include <iostream>
-#include <string>
-#include "Helper.h"
-#include <fstream>
-
-
 
 	//TODO maybe add trainer sight radius, will see how it turns out
 

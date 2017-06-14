@@ -1,9 +1,5 @@
 #include "Helper.h"
 
-Helper::Helper()
-{
-}
-
 //functions shamelessly copied from stackoverflow comments
 std::vector<std::string> split(const std::string &text, char sep) {
 	std::vector<std::string> tokens;
@@ -42,6 +38,7 @@ bool doesFileExist(std::string fileName)
 	return output;
 }
 
+//This may be pointless
 bool isNumber(std::string line, int* tileCount){
 	Helper::trim(line);
 	int iLine = atoi(line.c_str());
@@ -63,9 +60,17 @@ bool isNumber(std::string line){
 	return true;
 }
 
+
 int toInt(std::string s){
 	trim(s);
-	return  std::atoi(s.c_str);
+	return  std::atoi(s.c_str());
 }
 
+std::vector<int> toInt(std::vector<std::string> s){
+	std::vector<int> output;
+	for (std::vector<std::string>::iterator it = s.begin(); it != s.end(); ++it) {
+		output.push_back(toInt(*it));
+	}
+	return output;
+}
 

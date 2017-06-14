@@ -1,11 +1,5 @@
+#pragma once
 #include "Map.h"
-#include "TileType.h"
-#include <iostream>
-#include <string>
-#include <vector>
-#include "Helper.h"
-#include <deque>
-#include <map>
 
 Map::Map(){
 }
@@ -88,8 +82,8 @@ TileType Map::getTile(int x, int y){
 	return customTiles[mapComp[x][y]];
 }
 
-int* Map::getDimention(){
-	int output[2];
+std::vector<int> Map::getDimention(){
+	std::vector<int> output;
 	output[0] = mapComp.size();
 	output[1] = mapComp[0].size();
 	return output;
@@ -100,6 +94,7 @@ std::vector<std::string> Map::getTiles(){
 	for (std::map<std::string, TileType>::iterator it = customTiles.begin(); it != customTiles.end(); ++it) {
 		v.push_back(it->first);
 	}
+	return v;
 }
 
 
@@ -134,8 +129,7 @@ void Map::setTile(std::string par){
 }
 
 
-//BIG TODO - Create a container which all relevent information is read in to. this container will then be passed
-//to a constructor http://www.cplusplus.com/reference/deque/deque/
+
 
 //info is expected to be a deque containing all information from the relavent file
 Map::Map(std::deque<std::string>  info) : Map(Helper::split(info[0], ' ')[0], Helper::split(info[0], ' ')[1]){
