@@ -1,4 +1,3 @@
-#pragma once
 #include "Map.h"
 
 Map::Map(){
@@ -55,7 +54,7 @@ void Map::setSpace(int xCord, int yCord, std::string setSpace){	//sets a specifi
 		mapComp[xCord][yCord] = setSpace;
 	}
 	else{
-		//keep as is, maybe throw error or log
+		std::cout << "tile not recognised\n";
 	}
 }
 
@@ -130,10 +129,8 @@ void Map::setTile(std::string par){
 
 
 
-
 //info is expected to be a deque containing all information from the relavent file
 Map::Map(std::deque<std::string>  info) : Map(Helper::split(info[0], ' ')[0], Helper::split(info[0], ' ')[1]){
-
 	//line 0 is used to construct the Map this constructor uses causing the real starting line to be 1
 	int currentLine = 1;
 
@@ -144,17 +141,14 @@ Map::Map(std::deque<std::string>  info) : Map(Helper::split(info[0], ' ')[0], He
 
 		//next c lines contains the paramaters to a new tiletype
 		setTile(info[i]);
-		currentLine++;
+		currentLine = i;
 	}
 
-	for (int i = currentLine; i < currentLine + mapComp.size(); i++){
-
+	currentLine++;
+	for (int i = currentLine, j=0; i < currentLine + mapComp.size(); i++, j++){
 		//each of the next y-dimension number of lines will contain an x-dimension number of tile codes
 		//Will trow error if trying to assign a type not yet registerd to the Map
 		std::vector<std::string> tiles = Helper::split(info[i], ' ');
-		setSpaces(i, tiles);
+		setSpaces(j, tiles);
 	}
 }
-//I Think what I was going for was to relocate the creation of a map from file to the Map class from the map list class.
-//This would allow for other methods to make their own isolated maps rather than being forced to use the rigid definition
-//forced by the mapList. This is now possible by 

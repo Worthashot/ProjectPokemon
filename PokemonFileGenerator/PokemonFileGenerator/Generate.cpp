@@ -1,4 +1,4 @@
-#include "Helper.h"
+#pragma once
 #include "MapList.h"
 #include <set>
 
@@ -147,7 +147,7 @@ bool userGenerateMap(std::string choice){
 }
 
 
-int main(){
+/*int main(){
 
 	std::cout << "starting file generator\nloading header\n";
 	MapList theList;
@@ -258,4 +258,4 @@ int main(){
 
 	}
 }
-
+*/

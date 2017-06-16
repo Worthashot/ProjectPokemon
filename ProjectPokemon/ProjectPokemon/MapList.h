@@ -1,4 +1,5 @@
-#pragma once#include <map>
+#pragma once
+#include <map>
 #include "Map.h"
 #include "Helper.h"
 #include <string>

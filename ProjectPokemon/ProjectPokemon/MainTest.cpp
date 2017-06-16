@@ -1,4 +1,4 @@
-#/*pragma once
+/*#pragma once
 #include "mapList.h"
 #include <iostream>
 int main(){

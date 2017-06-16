@@ -1,8 +1,24 @@
-﻿Build started 4/30/2017 5:44:07 PM.
+﻿Build started 6/15/2017 11:40:24 PM.
      1>Project "D:\Git\ProjectPokemon\ProjectPokemon\ProjectPokemon\ProjectPokemon\ProjectPokemon.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         D:\visual studio\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt map_list_test.cpp
+         D:\visual studio\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt MainTest.cpp Map.cpp MapList.cpp TileType.cpp UsefulTypes.cpp map_list_test.cpp map_test.cpp tile_type_test.cpp
          map_list_test.cpp
+         UsefulTypes.cpp
+         TileType.cpp
+     1>d:\git\projectpokemon\projectpokemon\projectpokemon\projectpokemon\tiletype.cpp(28): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
+     1>d:\git\projectpokemon\projectpokemon\projectpokemon\projectpokemon\tiletype.cpp(30): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
+     1>d:\git\projectpokemon\projectpokemon\projectpokemon\projectpokemon\tiletype.cpp(32): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
+     1>d:\git\projectpokemon\projectpokemon\projectpokemon\projectpokemon\tiletype.cpp(34): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
+     1>d:\git\projectpokemon\projectpokemon\projectpokemon\projectpokemon\tiletype.cpp(36): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
+     1>d:\git\projectpokemon\projectpokemon\projectpokemon\projectpokemon\tiletype.cpp(38): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
+         Map.cpp
+     1>d:\git\projectpokemon\projectpokemon\projectpokemon\projectpokemon\map.cpp(54): warning C4018: '<' : signed/unsigned mismatch
+         MainTest.cpp
+         Generating Code...
+         Skipping... (no relevant changes detected)
+         tile_type_test.cpp
+         map_test.cpp
+         MapList.cpp
        Link:
          D:\visual studio\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Git\ProjectPokemon\ProjectPokemon\ProjectPokemon\Debug\ProjectPokemon.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\Git\ProjectPokemon\ProjectPokemon\ProjectPokemon\Debug\ProjectPokemon.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Git\ProjectPokemon\ProjectPokemon\ProjectPokemon\Debug\ProjectPokemon.lib" /MACHINE:X86 Debug\Helper.obj
          Debug\MainTest.obj
@@ -19,4 +35,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.68
+Time Elapsed 00:00:01.59

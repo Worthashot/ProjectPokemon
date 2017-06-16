@@ -1,7 +1,7 @@
-
 #include "MapList.h"
 
 MapList::MapList(){
+	std::cout << "MapList v 1 start\n";
 	char buffer[_MAX_PATH];
 	GetModuleFileName(NULL, buffer, _MAX_PATH);
 	std::string::size_type pos = std::string(buffer).find_last_of("\\");
@@ -24,21 +24,50 @@ MapList::MapList(){
 		for (std::string line; getline(header, line);){
 			mapNames[i] = line;
 			i++;
-		}
+		}		
 		//the first name will dictate what maps are loaded. Ie, this one and all adjecent 
 		std::deque<std::string> queue;
 		loadMap(mapNames[0], queue);
 		loadAdjacentMaps(Map(queue));
+		std::cout << "MapList v 1 end\n";
 	}
+	header.close();
 }
 
 MapList::MapList(std::string directory){
+	std::cout << "MapList v 2 start\n";
 	this->directory = directory;
+	
+	std::ifstream header(directory + "header.txt");
+	
+	if (!header.is_open()){
+		std::cout << "no header found, creating\n";
+		std::ofstream header(directory + "header.txt");
+		header.close();
+		std::string a = directory + "header.txt";
+		std::rename(a.c_str(), "header.txt");
+	}
+	else {
+		
+		//every line will give the name of a map
+		int i = 0;
+		for (std::string line; getline(header, line);){
+			mapNames.push_back(line);
+			i++;	
+		}
 
+		if (!mapNames.empty()){
+			//the first name will dictate what maps are loaded. Ie, this one and all adjecent 
+			std::deque<std::string> queue;
+			loadMap(mapNames[0], queue);
+			loadAdjacentMaps();
+			std::cout << "MapList v 2 end\n";
+		}
+	}
 }
 
 Map* MapList::getMap(std::string map){
-	if (find(mapNames.begin(), mapNames.end(), map) != mapNames.end()){
+	if (find(mapNames.begin(), mapNames.end(), map) == mapNames.end()){
 		return NULL;
 	}
 	
@@ -57,6 +86,14 @@ std::vector<std::string> MapList::listOfMaps(){
 	return output;
 }
 
+std::string MapList::getNames(){
+	std::string output = "";
+	for (int i = 0; i < mapNames.size(); i++){
+		output = output + mapNames[i];
+	}
+	return output;
+}
+
 void MapList::loadMaps(std::vector<std::string> mapsToLoad){
 	int size = mapsToLoad.size();
 
@@ -71,7 +108,7 @@ void MapList::loadMaps(std::vector<std::string> mapsToLoad){
 	for (int i = 0; i < size; i++){
 		if (maps.find(mapsToLoad[i]) == maps.end()){
 			std::deque<std::string> queue;
-			maps.insert(std::pair<std::string, Map>(mapsToLoad[i], generateMap(directory + mapsToLoad[i])));
+			maps.insert(std::pair<std::string, Map>(mapsToLoad[i], generateMap(mapsToLoad[i])));
 		}
 	}
 }
@@ -96,6 +133,8 @@ void MapList::loadMap(std::string fileName, std::deque<std::string> &queue){
 			throw("unable to load map dimensions");
 		}
 		queue.push_back(line);
+		dimensions[0] = Helper::toInt(dims[0]);
+		dimensions[1] = Helper::toInt(dims[1]);
 
 		//second line contains the number of custom tiles
 		getline(file, line);
@@ -126,9 +165,11 @@ void MapList::loadMap(std::string fileName, std::deque<std::string> &queue){
 				std::cerr << "invalid map";
 				throw("map size does not match expected size");
 			}
+
 			queue.push_back(line);
 		}
 	}
+	file.close();
 }
 
 Map MapList::generateMap(std::string fileName){
@@ -206,11 +247,12 @@ bool MapList::testMap(std::string mapName){
 			return false;
 		}
 	}
+	map.close();
 	return true;
 	//TODO add test for more information when added
 }
 
-bool testDimention(std::string line){
+bool MapList::testDimention(std::string line){
 
 	std::vector < std::string > lineVector;
 	lineVector = Helper::split(line, ' ');

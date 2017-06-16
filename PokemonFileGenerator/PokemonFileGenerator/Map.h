@@ -9,7 +9,7 @@ private:
 	std::vector<std::vector<std::string> >  mapComp;
 	int encounterCode;
 	std::map<std::string, TileType> customTiles;
-	void setTile(std::string);
+	
 public:
 	//TODO
 	Map();
@@ -23,6 +23,7 @@ public:
 	//TODO
 	Map(int, int, int);
 
+	void setTile(std::string);
 	//loads in a Map from file via the contance of that file
 	Map(std::deque<std::string>);
 

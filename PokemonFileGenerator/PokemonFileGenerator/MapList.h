@@ -1,5 +1,4 @@
 #pragma once
-#include "Helper.h"
 #include "Map.h"
 #include <windows.h>
 #include <stdio.h>
@@ -32,6 +31,9 @@ public:
 
 	//returns the Map assigned to the given string
 	Map* getMap(std::string);
+
+	//returns a list of all loaded maps
+	std::string getNames();
 
 	//returns the directory
 	std::string getDirectory();

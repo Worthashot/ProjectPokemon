@@ -1,7 +1,7 @@
 #include "Helper.h"
 
 //functions shamelessly copied from stackoverflow comments
-std::vector<std::string> split(const std::string &text, char sep) {
+std::vector<std::string> Helper::split(const std::string &text, char sep) {
 	std::vector<std::string> tokens;
 	size_t start = 0, end = 0;
 	while ((end = text.find(sep, start)) != std::string::npos) {
@@ -13,24 +13,24 @@ std::vector<std::string> split(const std::string &text, char sep) {
 }
 
 // trim from start (in place)
-void ltrim(std::string &s) {
+void Helper::ltrim(std::string &s) {
 	s.erase(s.begin(), std::find_if(s.begin(), s.end(),
 		not1(std::ptr_fun<int, int>(isspace))));
 }
 
 // trim from end (in place)
-void rtrim(std::string &s) {
+void Helper::rtrim(std::string &s) {
 	s.erase(std::find_if(s.rbegin(), s.rend(),
 		not1(std::ptr_fun<int, int>(isspace))).base(), s.end());
 }
 
 // trim from both ends (in place)
-void trim(std::string &s) {
+void Helper::trim(std::string &s) {
 	ltrim(s);
 	rtrim(s);
 }
 
-bool doesFileExist(std::string fileName)
+bool Helper::doesFileExist(std::string fileName)
 {
 	std::ifstream infile(fileName);
 	bool output = infile.good();
@@ -38,6 +38,7 @@ bool doesFileExist(std::string fileName)
 	return output;
 }
 
+/*
 //This may be pointless
 bool isNumber(std::string line, int* tileCount){
 	Helper::trim(line);
@@ -50,8 +51,9 @@ bool isNumber(std::string line, int* tileCount){
 	*tileCount = iLine;
 	return true;
 }
+*/
 
-bool isNumber(std::string line){
+bool Helper::isNumber(std::string line){
 	Helper::trim(line);
 	int iLine = atoi(line.c_str());
 	if (iLine == 0 && line != "0"){
@@ -61,12 +63,12 @@ bool isNumber(std::string line){
 }
 
 
-int toInt(std::string s){
+int Helper::toInt(std::string s){
 	trim(s);
 	return  std::atoi(s.c_str());
 }
 
-std::vector<int> toInt(std::vector<std::string> s){
+std::vector<int> Helper::toInt(std::vector<std::string> s){
 	std::vector<int> output;
 	for (std::vector<std::string>::iterator it = s.begin(); it != s.end(); ++it) {
 		output.push_back(toInt(*it));

@@ -65,15 +65,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Generate.cpp" />
-    <ClCompile Include="Generate_test.cpp" />
     <ClCompile Include="Helper.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapList.cpp" />
+    <ClCompile Include="map_list_test.cpp" />
+    <ClCompile Include="map_test.cpp" />
     <ClCompile Include="tests.cpp" />
     <ClCompile Include="TileType.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\Useful resources\catch.hpp" />
+    <ClInclude Include="catch.hpp" />
     <ClInclude Include="Helper.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapList.h" />
