@@ -2,6 +2,7 @@
 #include "Map.h"
 #include <windows.h>
 #include <stdio.h>
+#include <direct.h>
 
 class MapList
 
@@ -25,6 +26,9 @@ public:
 
 	//Finds all valid maps from the header at a given location
 	MapList(std::string);
+
+	//using the given file name as a base, loads in all maps specified by that file
+	void initiateList(std::string);
 
 	//given the name of a map, searches for a file with that name in the directory and tests that its the correct form
 	bool testMap(std::string);

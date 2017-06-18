@@ -1,0 +1,24 @@
+
+MapList(string directory)
+- directory cannot change, one directory for each MapList
+
+- expects a file named Header to be in the directory. If this is not there, will not load any maps
+
+- if header is there, will run initiateList with the name of this file
+-----------------------------------------------------------------------------------------------------
+
+void initiateList(string headerName)
+-
+
+
+testMap :
+- returns false if first line is not 2 spaced numbers. Numbers may be 0
+
+- returns false if second line is not 1 number. May be 0
+
+- returns false if each of the lines specified above is not a valid TileType format
+
+- returns false if the next number of lines determined by the dimentions in the first line
+	are not a number also specified by the first line spaced apart.
+
+- returns false if there are any more lines

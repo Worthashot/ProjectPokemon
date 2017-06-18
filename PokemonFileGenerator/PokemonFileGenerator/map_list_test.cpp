@@ -6,133 +6,189 @@
 #include <fstream>
 using namespace std;
 
+
+TEST_CASE("Test MapList recognises the correct map format 1", "[testMap1]"){
+	char buffer[_MAX_PATH];
+	GetModuleFileName(NULL, buffer, _MAX_PATH);
+	string testFolder = (string)buffer + "testMap 1\\";
+	_mkdir(testFolder.c_str());
+
+	MapList test1 = MapList(testFolder);
+
+	ofstream h(testFolder + "header.txt");
+	h << "map data1\nmap data9";
+	h.close();
+
+	ofstream t1(testFolder + "map data1.txt");
+	t1 << "5 5\n1\nt1 1 1 1 1 1 1 1 1 ts1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1";
+	t1.close();
+
+	ofstream t2(testFolder + "map data2.txt");
+	t2 << "bannanas\n1\nt1 1 1 1 1 1 1 1 1 ts1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1";
+	t2.close();
+
+	ofstream t3(testFolder + "map data3.txt");
+	t3 << "5 5\nbannanas\nt1 1 1 1 1 1 1 1 1 ts1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1";
+	t3.close();
+
+	ofstream t4(testFolder + "map data4.txt");
+	t4 << "5 5\n1\nbannanas\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1";
+	t4.close();
+
+	ofstream t5(testFolder + "map data5.txt");
+	t5 << "5 5\n1\nt1 1 1 1 1 1 1 1 1 ts1\ntbannanas\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1";
+	t5.close();
+
+	ofstream t6(testFolder + "map data6.txt");
+	t6 << "0 0\n1\nt1 1 1 1 1 1 1 1 1 ts1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1";
+	t6.close();
+
+	ofstream t7(testFolder + "map data7.txt");
+	t7 << "24\n1\nt1 1 1 1 1 1 1 1 1 ts1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1";
+	t7.close();
+
+	ofstream t8(testFolder + "map data8.txt");
+	t8 << "5 5\n0\nt1 1 1 1 1 1 1 1 1 ts1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1";
+	t8.close();
+
+	ofstream t9(testFolder + "map data9.txt");
+	t9 << "5 5\n4\nt1 1 1 1 1 1 1 1 1 ts1\nt1 1 1 1 1 1 1 1 1 ts1\nt1 1 1 1 1 1 1 1 1 ts1\nt1 1 1 1 1 1 1 1 1 ts1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1";
+	t9.close();
+
+	REQUIRE(test1.testMap("map data1") == true);
+	REQUIRE(test1.testMap("map data2") == false);
+	REQUIRE(test1.testMap("map data3") == false);
+	REQUIRE(test1.testMap("map data4") == false);
+	REQUIRE(test1.testMap("map data5") == false);
+	REQUIRE(test1.testMap("map data6") == false);
+	REQUIRE(test1.testMap("map data7") == false);
+	REQUIRE(test1.testMap("map data8") == false);
+	REQUIRE(test1.testMap("map data9") == true);
+}
+
+
 TEST_CASE("Test getting correct information from a file 1", "[MapList_create1]"){
 	char buffer[_MAX_PATH];
 	GetModuleFileName(NULL, buffer, _MAX_PATH);
-	string test1Folder = (string)buffer + "test 1\\";
-	_mkdir(test1Folder.c_str());
-	ofstream h1(test1Folder + "header.txt");
-	h1 << "test1_1\ntest1_2";
-	h1.close();
+	string testFolder = (string)buffer + "MapList_create 1\\";
+	_mkdir(testFolder.c_str());
 
-	ofstream t1_1(test1Folder + "test1_1.txt");
-	t1_1 << "5 5\n1\nt1 1 1 1 1 1 1 1 1 ts1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1";
-	t1_1.close();
+	ofstream h(testFolder + "header.txt");
+	h << "map data1\nmap data2";
+	h.close();
 
-	ofstream t1_2(test1Folder + "test1_2.txt");
-	t1_2 << "5 5\n5\nt1 1 1 1 1 1 1 1 1 ts1\nt2 1 1 1 1 1 1 1 1 ts2\nt3 1 1 1 1 1 1 1 1 ts3\nt4 1 1 1 1 1 1 1 1 ts4\nt5 1 1 1 1 1 1 1 1 ts5\nt1 t2 t3 t4 t5\nt1 t5 t4 t1 t2\nt2 t1 t3 t1 t4\nt3 t1 t4 t3 t5\nt1 t1 t1 t5 t1";
-	t1_2.close();
+	ofstream t1(testFolder + "map data1.txt");
+	t1 << "5 5\n1\nt1 1 1 1 1 1 1 1 1 ts1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1";
+	t1.close();
 
-	MapList test1 = MapList(test1Folder);
-	vector<string> v1_list{ "test1_1", "test1_2" };
-	vector<string> v1_1{ "t1", "1", "1", "1", "1", "1", "1", "1", "1", "ts1" };
-	vector<string> v1_2{ "t2", "1", "1", "1", "1", "1", "1", "1", "1", "ts2" };
-	vector<string> v1_3{ "t3", "1", "1", "1", "1", "1", "1", "1", "1", "ts3" };
-	vector<string> v1_4{ "t4", "1", "1", "1", "1", "1", "1", "1", "1", "ts4" };
-	vector<string> v1_5{ "t5", "1", "1", "1", "1", "1", "1", "1", "1", "ts5" };
+	ofstream t2(testFolder + "map data2.txt");
+	t2 << "5 5\n5\nt1 1 1 1 1 1 1 1 1 ts1\nt2 1 1 1 1 1 1 1 1 ts2\nt3 1 1 1 1 1 1 1 1 ts3\nt4 1 1 1 1 1 1 1 1 ts4\nt5 1 1 1 1 1 1 1 1 ts5\nt1 t2 t3 t4 t5\nt1 t5 t4 t1 t2\nt2 t1 t3 t1 t4\nt3 t1 t4 t3 t5\nt1 t1 t1 t5 t1";
+	t2.close();
 
-	REQUIRE(test1.getMap("test1_1")->getTile(1, 1).getAll() == v1_1);
-	REQUIRE(test1.getMap("test1_2")->getTile(0, 0).getAll() == v1_1);
-	REQUIRE(test1.getMap("test1_2")->getTile(1, 4).getAll() == v1_2);
-	REQUIRE(test1.getMap("test1_2")->getTile(2, 2).getAll() == v1_3);
-	REQUIRE(test1.getMap("test1_2")->getTile(3, 2).getAll() == v1_4);
-	REQUIRE(test1.getMap("test1_2")->getTile(4, 3).getAll() == v1_5);
+	MapList test1 = MapList(testFolder);
+	vector<string> vlist{ "map data1", "map data2" };
+	vector<string> v1{ "t1", "1", "1", "1", "1", "1", "1", "1", "1", "ts1" };
+	vector<string> v2{ "t2", "1", "1", "1", "1", "1", "1", "1", "1", "ts2" };
+	vector<string> v3{ "t3", "1", "1", "1", "1", "1", "1", "1", "1", "ts3" };
+	vector<string> v4{ "t4", "1", "1", "1", "1", "1", "1", "1", "1", "ts4" };
+	vector<string> v5{ "t5", "1", "1", "1", "1", "1", "1", "1", "1", "ts5" };
+
+	REQUIRE(test1.getMap("map data1")->getTile(1, 1).getAll() == v1);
+	REQUIRE(test1.getMap("map data2")->getTile(0, 0).getAll() == v1);
+	REQUIRE(test1.getMap("map data2")->getTile(1, 4).getAll() == v2);
+	REQUIRE(test1.getMap("map data2")->getTile(2, 2).getAll() == v3);
+	REQUIRE(test1.getMap("map data2")->getTile(3, 2).getAll() == v4);
+	REQUIRE(test1.getMap("map data2")->getTile(4, 3).getAll() == v5);
 	REQUIRE(test1.mapCount() == 2);
-	REQUIRE(test1.listOfMaps() == v1_list);
-	_rmdir(test1Folder.c_str());
+	REQUIRE(test1.listOfMaps() == vlist);
+	_rmdir(testFolder.c_str());
 }
 
 TEST_CASE("Test getting correct information from a file 2", "[MapList_create2]"){
 	char buffer[_MAX_PATH];
 	GetModuleFileName(NULL, buffer, _MAX_PATH);
-	string test2Folder = (string)buffer + "test 2\\";
-	_mkdir(test2Folder.c_str());
+	string testFolder = (string)buffer + "MapList_create 2\\";
+	_mkdir(testFolder.c_str());
 
-	ofstream h2(test2Folder + "header.txt");
-	h2 << "test2_1";
-	h2.close();
+	ofstream h(testFolder + "header.txt");
+	h << "map data1";
+	h.close();
 
-	ofstream t2_1(test2Folder + "test2_1.txt");
-	t2_1 << "5 5\n1\nt1 1 1 1 1 1 1 1 1 ts1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1";
-	t2_1.close();
+	ofstream t1(testFolder + "map data1.txt");
+	t1 << "5 5\n1\nt1 1 1 1 1 1 1 1 1 ts1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1";
+	t1.close();
 
-	MapList test2 = MapList(test2Folder);
-	vector<string> v2_list{ "test2_1" };
-	REQUIRE(test2.mapCount() == 1);
-	REQUIRE(test2.listOfMaps() == v2_list);
-	_rmdir(test2Folder.c_str());
+	MapList test1 = MapList(testFolder);
+	vector<string> vlist{ "map data1" };
+	REQUIRE(test1.mapCount() == 1);
+	REQUIRE(test1.listOfMaps() == vlist);
+	_rmdir(testFolder.c_str());
 }
 
 TEST_CASE("Test getting correct information from a file 3", "[MapList_create3]"){
 	char buffer[_MAX_PATH];
 	GetModuleFileName(NULL, buffer, _MAX_PATH);
-	string test3Folder = (string)buffer + "test 3\\";
-	_mkdir(test3Folder.c_str());
+	string testFolder = (string)buffer + "MapList_create 3\\";
+	_mkdir(testFolder.c_str());
 
-	ofstream h3(test3Folder + "header.txt");
-	h3 << "";
-	h3.close();
+	ofstream h(testFolder + "header.txt");
+	h << "";
+	h.close();
 
-	MapList test3 = MapList(test3Folder);
-	vector<string> v3_list{  };
-	REQUIRE(test3.mapCount() == 0);
-	REQUIRE(test3.listOfMaps() == v3_list);
+	MapList testList1 = MapList(testFolder);
+	vector<string> vlist{  };
+	REQUIRE(testList1.mapCount() == 0);
+	REQUIRE(testList1.listOfMaps() == vlist);
 
 }
-	/*
-	ofstream h3("header test3.txt");
-	h2 << "";
-	h2.close();
 
-	MapList test3 = MapList("header test3");
-	vector<string> v3_list{ "" };
-	REQUIRE(test3.mapCount() == 0);
-	REQUIRE(test3.listOfMaps() == v3_list);
-	*/
 
 TEST_CASE("Test getting correct information from a file 4", "[MapList_create4]"){
 	char buffer[_MAX_PATH];
 	GetModuleFileName(NULL, buffer, _MAX_PATH);
-	string test4Folder = (string)buffer + "test 4\\";
-	_mkdir(test4Folder.c_str());
+	string testFolder = (string)buffer + "MapList_create 4\\";
+	_mkdir(testFolder.c_str());
 
-	ofstream h4(test4Folder + "header.txt");
-	h4 << "test4_1\ntest4_2\ntest4_3\ntest4_4\ntest4_5\ntest4_6";
-	h4.close();
+	ofstream h(testFolder + "header.txt");
+	h << "map data1\nmap data2\nmap data3\nmap data4\nmap data5\nmap data6";
+	h.close();
 
-	ofstream t4_1(test4Folder + "test4_1.txt");
-	t4_1 << "5 5\n1\nt1 1 1 1 1 1 1 1 1 ts1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1";
-	t4_1.close();
+	ofstream t1(testFolder + "map data1.txt");
+	t1 << "5 5\n1\nt1 1 1 1 1 1 1 1 1 ts1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1";
+	t1.close();
 
-	ofstream t4_2(test4Folder + "test4_2.txt");
-	t4_2 << "5 5\n1\nt1 1 1 1 1 1 1 1 1 ts1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1";
-	t4_2.close();
+	ofstream t2(testFolder + "map data2.txt");
+	t2 << "5 5\n1\nt1 1 1 1 1 1 1 1 1 ts1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1";
+	t2.close();
 
-	ofstream t4_3(test4Folder + "test4_3.txt");
-	t4_3 << "5 5\n1\nt1 1 1 1 1 1 1 1 1 ts1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1";
-	t4_3.close();
+	ofstream t3(testFolder + "map data3.txt");
+	t3 << "5 5\n1\nt1 1 1 1 1 1 1 1 1 ts1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1";
+	t3.close();
 
-	ofstream t4_4(test4Folder + "test4_4.txt");
-	t4_4 << "5 5\n1\nt1 1 1 1 1 1 1 1 1 ts1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1";
-	t4_4.close();
+	ofstream t4(testFolder + "map data4.txt");
+	t4 << "5 5\n1\nt1 1 1 1 1 1 1 1 1 ts1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1";
+	t4.close();
 
-	ofstream t4_5(test4Folder + "test4_5.txt");
-	t4_5 << "5 5\n1\nt1 1 1 1 1 1 1 1 1 ts1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1";
-	t4_5.close();
+	ofstream t5(testFolder + "map data5.txt");
+	t5 << "5 5\n1\nt1 1 1 1 1 1 1 1 1 ts1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1";
+	t5.close();
 
-	ofstream t4_6(test4Folder + "test4_6.txt");
-	t4_6 << "5 5\n1\nt1 1 1 1 1 1 1 1 1 ts1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1";
-	t4_6.close();
+	ofstream t6(testFolder + "map data6.txt");
+	t6 << "5 5\n1\nt1 1 1 1 1 1 1 1 1 ts1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1";
+	t6.close();
 
-	MapList test4 = MapList(test4Folder);
-	vector<string> v4_list{ "test4_1","test4_2","test4_3","test4_4","test4_5","test4_6" };
-	REQUIRE(test4.mapCount() == 6);
-	REQUIRE(test4.listOfMaps() == v4_list);
+	MapList testList1 = MapList(testFolder);
+	vector<string> v1_list{ "map data1","map data2","map data3","map data4","map data5","map data6" };
+	REQUIRE(testList1.mapCount() == 6);
+	REQUIRE(testList1.listOfMaps() == v1_list);
 
-	_rmdir(test4Folder.c_str());
+	_rmdir(testFolder.c_str());
 
 }
 
+TEST_CASE("Test Having a MapList with multiple TileTypes named the same", "[MapList Same TileType]"){
+	//TODO
+}
 //frst draft file format
 //first line number of dimensions
 //second line, number of custom times (n)

@@ -8,62 +8,39 @@ MapList::MapList(){
 	pos = std::string(buffer).substr(0, pos).find_last_of("\\");
 	pos = std::string(buffer).substr(0, pos).find_last_of("\\");
 	std::string dir = std::string(buffer).substr(0, pos);
-	directory = dir + "\\ProjectPokemon\\Debug\\";
-	std::ifstream header(directory + "header.txt");
+	directory = dir + "\\ProjectPokemon\\Debug\\Maps\\";
+	_mkdir(directory.c_str());
 
-	if (!header.is_open()){
-		std::cout << "no header found, creating\n";
-		std::ofstream header(directory + "header.txt");
-		header.close();
-		std::string a = directory + "header.txt";
-		std::rename(a.c_str(), "header.txt");
+	if (Helper::doesFileExist(directory + "header.txt")){
+		initiateList("header.txt");
 	}
-	else {
-		//every line will give the name of a map
-		int i = 0;
-		for (std::string line; getline(header, line);){
-			mapNames[i] = line;
-			i++;
-		}		
-		//the first name will dictate what maps are loaded. Ie, this one and all adjecent 
-		std::deque<std::string> queue;
-		loadMap(mapNames[0], queue);
-		loadAdjacentMaps(Map(queue));
-		std::cout << "MapList v 1 end\n";
-	}
-	header.close();
 }
 
 MapList::MapList(std::string directory){
-	std::cout << "MapList v 2 start\n";
 	this->directory = directory;
 	
-	std::ifstream header(directory + "header.txt");
-	
-	if (!header.is_open()){
-		std::cout << "no header found, creating\n";
-		std::ofstream header(directory + "header.txt");
-		header.close();
-		std::string a = directory + "header.txt";
-		std::rename(a.c_str(), "header.txt");
+	if (Helper::doesFileExist(directory + "header.txt")){
+		initiateList("header.txt");
 	}
-	else {
-		
-		//every line will give the name of a map
-		int i = 0;
-		for (std::string line; getline(header, line);){
-			mapNames.push_back(line);
-			i++;	
-		}
+}
 
-		if (!mapNames.empty()){
-			//the first name will dictate what maps are loaded. Ie, this one and all adjecent 
-			std::deque<std::string> queue;
-			loadMap(mapNames[0], queue);
-			loadAdjacentMaps();
-			std::cout << "MapList v 2 end\n";
-		}
+void MapList::initiateList(std::string headerName){
+
+	std::ifstream header(directory + headerName);
+
+	int i = 0;
+	for (std::string line; getline(header, line);){
+		mapNames.push_back(line);
+		i++;
 	}
+
+	if (!mapNames.empty()){
+		//the first name will dictate what maps are loaded. Ie, this one and all adjecent 
+		std::deque<std::string> queue;
+		loadMap(mapNames[0], queue);
+		loadAdjacentMaps();
+	}
+	header.close();
 }
 
 Map* MapList::getMap(std::string map){
@@ -209,15 +186,17 @@ bool MapList::testMap(std::string mapName){
 		return false;
 	}
 
-	std::ifstream map(directory + ".txt");
+	std::ifstream map(directory + mapName + ".txt");
 	std::string line;
 	std::vector < std::string > lineVector;
 	int  tileCount;
 	bool truth = true;
 	std::vector<int> dims;
 	//line should be 2 dimentional
+
 	getline(map, line);
 	if (!testDimention(line)){
+		std::cout << "not correct dimension\n";
 		return false;
 	}
 	
@@ -225,7 +204,8 @@ bool MapList::testMap(std::string mapName){
 
 	//line should be number of custom TileTypes
 	getline(map, line);
-	if (Helper::isNumber(line)){
+	if (!Helper::isNumber(line)){
+		std::cout << "not valid number for number of TileTypes\n";
 		return false;
 	}
 	tileCount = Helper::toInt(line);
@@ -235,6 +215,7 @@ bool MapList::testMap(std::string mapName){
 			getline(map, line);
 			Helper::trim(line);
 			if (!testValidTileType(line)){
+				std::cout << "line " + std::to_string(i + 2) + " not correct TileType\n";
 				return false;
 			}
 		}
@@ -244,8 +225,16 @@ bool MapList::testMap(std::string mapName){
 		getline(map, line);
 		lineVector = Helper::split(line, ' ');
 		if (lineVector.size() != dims[0]){
+			std::cout << "Not correct form for map layout";
 			return false;
 		}
+	}
+
+	getline(map, line);
+
+	//should be at the end of the file
+	if (!map.eof()){
+		return false;
 	}
 	map.close();
 	return true;
@@ -253,16 +242,18 @@ bool MapList::testMap(std::string mapName){
 }
 
 bool MapList::testDimention(std::string line){
-
+	std::cout << line + "\n";
 	std::vector < std::string > lineVector;
 	lineVector = Helper::split(line, ' ');
 	if (lineVector.size() != 2){
+		std::cout << "size not 2, is actually " + std::to_string(lineVector.size()) + "\n";
 		return false;
 	}
 
 	Helper::trim(lineVector[0]);
 	Helper::trim(lineVector[1]);
 	if (!(Helper::isNumber(lineVector[0]) && Helper::isNumber(lineVector[1]))){
+		std::cout << "both not numbers";
 		return false;
 	}
 	return true;
