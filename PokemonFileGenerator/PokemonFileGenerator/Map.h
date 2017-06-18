@@ -24,6 +24,7 @@ public:
 	Map(int, int, int);
 
 	void setTile(std::string);
+
 	//loads in a Map from file via the contance of that file
 	Map(std::deque<std::string>);
 
@@ -49,6 +50,8 @@ public:
 	//returns a list of the names of the registerd TileTypes
 	std::vector<std::string> getTiles();
 
+	//true if mapComp is empty
+	bool empty();
 
 	void readTile(Map*, std::string);
 };

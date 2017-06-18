@@ -30,6 +30,18 @@ public:
 	//using the given file name as a base, loads in all maps specified by that file
 	void initiateList(std::string);
 
+	//loads the given address to the deck and checks that it's a valid map
+	bool loadMap(std::string, std::deque<std::string>&);
+
+	//loads the given list of maps
+	void loadMaps(std::vector<std::string>);
+
+	//TODO loads the given and any adjacent maps
+	void loadAdjacentMaps(Map);
+
+	//TEMP, loads all maps
+	void loadAdjacentMaps();
+
 	//given the name of a map, searches for a file with that name in the directory and tests that its the correct form
 	bool testMap(std::string);
 
@@ -45,12 +57,6 @@ public:
 	//tests if a string is a valid 
 	bool testDimention(std::string);
 
-	//loads the given list of maps
-	void loadMaps(std::vector<std::string>);
-
-	//loads the given address to the deck and checks that it's a valid map
-	void loadMap(std::string, std::deque<std::string>&);
-
 	//returns a Map loaded from the given name at the MapList directory
 	Map generateMap(std::string);
 
@@ -63,11 +69,7 @@ public:
 	//tests the format of a given string
 	bool testValidTileType(std::string);
 
-	//TODO loads the given and any adjacent maps
-	void loadAdjacentMaps(Map);
 
-	//TEMP, loads all maps
-	void loadAdjacentMaps();
 
 
 };

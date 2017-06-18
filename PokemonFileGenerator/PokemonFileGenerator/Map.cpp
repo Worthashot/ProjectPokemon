@@ -130,25 +130,48 @@ void Map::setTile(std::string par){
 
 
 //info is expected to be a deque containing all information from the relavent file
-Map::Map(std::deque<std::string>  info) : Map(Helper::split(info[0], ' ')[0], Helper::split(info[0], ' ')[1]){
-	//line 0 is used to construct the Map this constructor uses causing the real starting line to be 1
-	int currentLine = 1;
+Map::Map(std::deque<std::string>  info){
+	int currentLine = 0;
+	if (!info.empty()){
+		int xDim = Helper::toInt(Helper::split(info[0], ' ')[0]);
+		int yDim = Helper::toInt(Helper::split(info[0], ' ')[1]);
 
-	//line 1 contains the number of custom tiles
-	int c = Helper::toInt(info[1]);
-	int j = 1;
-	for (int i = 2; i < c + 2; i++){
+		TileType wall = TileType();
+		wall.setName("wall");
+		addTile(wall);
+		mapComp.resize(xDim);
+		for (int i = 0; i < xDim; i++){
+			mapComp[i].resize(yDim);
+			for (int j = 0; j < yDim; j++){
+				mapComp[i][j] = "wall";
+			}
+		}
 
-		//next c lines contains the paramaters to a new tiletype
-		setTile(info[i]);
-		currentLine = i;
+		//line 1 contains the number of custom tiles
+		int c = Helper::toInt(info[1]);
+		int j = 1;
+		for (int i = 2; i < c + 2; i++){
+
+			//next c lines contains the paramaters to a new tiletype
+			setTile(info[i]);
+			currentLine = i;
+		}
+
+		currentLine++;
+		for (int i = currentLine, j = 0; i < currentLine + mapComp.size(); i++, j++){
+			//each of the next y-dimension number of lines will contain an x-dimension number of tile codes
+			//Will trow error if trying to assign a type not yet registerd to the Map
+			std::vector<std::string> tiles = Helper::split(info[i], ' ');
+			setSpaces(j, tiles);
+		}
+	}
+	else {
+		mapComp.clear();
 	}
 
-	currentLine++;
-	for (int i = currentLine, j=0; i < currentLine + mapComp.size(); i++, j++){
-		//each of the next y-dimension number of lines will contain an x-dimension number of tile codes
-		//Will trow error if trying to assign a type not yet registerd to the Map
-		std::vector<std::string> tiles = Helper::split(info[i], ' ');
-		setSpaces(j, tiles);
-	}
+
+}
+
+bool Map::empty(){
+	return mapComp.empty();
 }

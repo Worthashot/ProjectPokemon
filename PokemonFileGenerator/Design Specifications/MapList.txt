@@ -1,24 +1,123 @@
+MapList()
+- Directory cannot change, one directory for each MapList
+
+- Sets the directory to be in a folder named maps one layer up from the location of where the file is ran from
+ 
+- Expects a file named Header to be in the directory. If this is not there, will not load any maps
+
+- If header is there, will run initiateList with the name "header"
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
 
 MapList(string directory)
-- directory cannot change, one directory for each MapList
+- Will do the same as MapList() but sets the directory to what its given
 
-- expects a file named Header to be in the directory. If this is not there, will not load any maps
+--------------------------------------------------------------------------------------------------------------------------------------------------
 
-- if header is there, will run initiateList with the name of this file
------------------------------------------------------------------------------------------------------
+//May be changed so only one map is given to load. All other maps are then loaded as part of this base map
 
 void initiateList(string headerName)
--
+- Expects a file with the given name to be present in the MapList directory. Will end if file cannot open
 
+- Each line of the given file will contain a map to load. Will read each line and add it to the possible map list caled mapNames
 
-testMap :
-- returns false if first line is not 2 spaced numbers. Numbers may be 0
+- Will run loadMap on the first name in MapNames then loadAdjacentMaps with no arguments.
 
-- returns false if second line is not 1 number. May be 0
+- If loadMap returns false, will end without loading any maps.
 
-- returns false if each of the lines specified above is not a valid TileType format
+--------------------------------------------------------------------------------------------------------------------------------------------------
 
-- returns false if the next number of lines determined by the dimentions in the first line
-	are not a number also specified by the first line spaced apart.
+bool loadMap(string filename, deque<string> queue)
+- Will return false if the given file is of the wrong form or cannot be opend. 
+	Queue will be cleared in this case.
 
-- returns false if there are any more lines
+- If file can be opened and is the correct form, will go line by line and write the data to queue.
+
+- Will return True if whole file is read correctly. 
+	file data will now be in queue
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+void loadMaps(vector<string> mapsToLoad)
+- Will first, for every map to load, search the loaded map list maps for any maps no longer required to be loaded and unloads them
+
+- After, for every map required to be loaded that is not, will load that Map.
+
+- Maps are loaded by inserting the name of that map with a Map created by generateMap.  
+	If generateMap produces an empty Map, this will not be inserted into the list.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+//TODO if loading files is too slow/space intensive this function will be implemented to reduce the load
+void loadAdjacentMaps(Map currentMap)
+- DOES NOTHING
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+void loadAdjacentMaps()
+- Runs loadMaps with the list of possible maps mapNames.
+	Effectivly loads all maps.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+bool testMap(string mapName)
+- If the file specified does not exist, returns false.
+
+- If the file specified cannot be opened, returns false.
+
+- If the first line of the file is not 2 spaced integers, returns false.
+
+- If the second line of the file is not 1 integer, returns false.
+
+- If the next number of lines are not the form of a TileType, returns false.
+	The number of lines are specified by the second line of the file.
+
+- If the next number of lines are not a specific number of strings spaced, returns false.
+	Number of lines specified by the first integer of the first line.
+	Number of strings specified by the second integer of the first line.
+
+- If there are any more lines after this, returns false.
+
+- Otherwise returns true.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+Map* getMap(string map)
+//TODO
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+string getNames();
+//TODO
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+std::string getDirectory();
+//TODO
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+bool testDimention(string line);
+//TODO
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+Map generateMap(string fileName)
+- Runs loadMap with the given fileName to load the data to a queue.
+
+- The queue is passed into the constructor for Map and this is returned. 
+	If load map was not successfull, a map with no mapComp is returned.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+int mapCount();
+//TODO
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+vector<string> listOfMaps();
+//TODO
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+bool testValidTileType(string line);
+//TODO

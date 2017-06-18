@@ -27,6 +27,9 @@ MapList::MapList(std::string directory){
 void MapList::initiateList(std::string headerName){
 
 	std::ifstream header(directory + headerName);
+	if (!header.is_open()){
+		return;
+	}
 
 	int i = 0;
 	for (std::string line; getline(header, line);){
@@ -37,8 +40,9 @@ void MapList::initiateList(std::string headerName){
 	if (!mapNames.empty()){
 		//the first name will dictate what maps are loaded. Ie, this one and all adjecent 
 		std::deque<std::string> queue;
-		loadMap(mapNames[0], queue);
-		loadAdjacentMaps();
+		if (loadMap(mapNames[0], queue)){
+			loadAdjacentMaps();
+		}
 	}
 	header.close();
 }
@@ -67,6 +71,9 @@ std::string MapList::getNames(){
 	std::string output = "";
 	for (int i = 0; i < mapNames.size(); i++){
 		output = output + mapNames[i];
+		if (i + 1 != mapNames.size()){
+			output = output + " ";
+		}
 	}
 	return output;
 }
@@ -85,18 +92,27 @@ void MapList::loadMaps(std::vector<std::string> mapsToLoad){
 	for (int i = 0; i < size; i++){
 		if (maps.find(mapsToLoad[i]) == maps.end()){
 			std::deque<std::string> queue;
-			maps.insert(std::pair<std::string, Map>(mapsToLoad[i], generateMap(mapsToLoad[i])));
+			Map mapToInsert = generateMap(mapsToLoad[i]);
+			if (!mapToInsert.empty()){
+				maps.insert(std::pair<std::string, Map>(mapsToLoad[i], mapToInsert));
+			}
 		}
 	}
 }
 
-void MapList::loadMap(std::string fileName, std::deque<std::string> &queue){
+bool MapList::loadMap(std::string fileName, std::deque<std::string> &queue){
+	if (!testMap(fileName)){
+		queue.clear();
+		return false;
+	}
+	
 	std::ifstream file;
 	file.open(directory + fileName + ".txt");
+
 	if (!file.is_open()){
-		std::cerr << "Error opening file.";
-		throw("Error opening file.");
+		return false;
 	}
+
 	else {
 		
 		std::string line;
@@ -105,48 +121,30 @@ void MapList::loadMap(std::string fileName, std::deque<std::string> &queue){
 
 		//the first line will contain the x and y co-ordinates of the map
 		std::vector<std::string> dims = Helper::split(line, ' ');
-		if (dims.size() != 2 && Helper::isNumber(dims[0]) && Helper::isNumber(dims[1])){
-			std::cerr << "first line of map " + fileName + " not expected dimension";
-			throw("unable to load map dimensions");
-		}
 		queue.push_back(line);
 		dimensions[0] = Helper::toInt(dims[0]);
 		dimensions[1] = Helper::toInt(dims[1]);
 
 		//second line contains the number of custom tiles
 		getline(file, line);
-		int c = atoi(line.c_str());
-		if ((c == 0 && line != "0") || c < 0){
-			std::cerr << "second line of map " + fileName + " not valid number";
-			throw("unexpected paramater");
-		}
+		int numberOfCustomTileTypes = atoi(line.c_str());
 		queue.push_back(line);
 
 		//next c lines contains the paramaters to a new tiletype
-		int i = 0;
-		while (i < c){
+		for (int i = 0; i < numberOfCustomTileTypes; i++){
 			getline(file, line);
-			if (!testValidTileType(line)){
-				std::cerr << "Line number " + std::to_string(i + 2) + " of map " + fileName + " is not a valid TileType";
-				throw("unable to load TileType");
-			}
 			queue.push_back(line);
-			i++;
 		}
 
 		//the next y-dimension number of lines will contain an x-dimension number of tile codes
 		for (int i = 0; i < dimensions[1]; i++){
 			getline(file, line);
 			std::vector<std::string> tiles = Helper::split(line, ' ');
-			if (tiles.size() != dimensions[0]){
-				std::cerr << "invalid map";
-				throw("map size does not match expected size");
-			}
-
 			queue.push_back(line);
 		}
 	}
 	file.close();
+	return true;
 }
 
 Map MapList::generateMap(std::string fileName){
@@ -181,12 +179,15 @@ void MapList::loadAdjacentMaps(){
 
 bool MapList::testMap(std::string mapName){
 	if (!Helper::doesFileExist(directory + mapName + ".txt")){
-		std::cerr << "map does not exist.\n";
-		throw("Map does not exist");
 		return false;
 	}
 
 	std::ifstream map(directory + mapName + ".txt");
+
+	if (!map.is_open()){
+		return false;
+	}
+
 	std::string line;
 	std::vector < std::string > lineVector;
 	int  tileCount;
