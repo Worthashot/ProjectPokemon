@@ -17,6 +17,29 @@ TileType::TileType(){
 	tileset = "";
 	}
 
+void TileType::setAll(std::string name, int passable, int surfable, int doorway, int talkable, int pushable, int cutable, int location, int person, std::string tileset){
+	setName(name);
+	setPassable(passable);
+	setSurfable(surfable);
+	setDoorway(doorway);
+	setTalkable(talkable);
+	setPushable(pushable);
+	setCutable(cutable);
+	setLocation(location);
+	setPerson(person);
+	setTileset(tileset);
+}
+
+//Maybe make able to add new paramaters easily
+void TileType::setAll(std::vector<std::string> par){
+	int pars[Helper::tilePars];
+	for (int i = 1; i < 9; i++){
+		pars[i - 1] = atoi(par[i].c_str());
+	}
+
+	setAll(par[0], pars[0], pars[1], pars[2], pars[3], pars[4], pars[5], pars[6], pars[7], par[9]);
+}
+
 void TileType::setName(std::string name){ this->name = name; }
 
 void TileType::setPassable(int passable){ this->passable = passable; }
@@ -41,28 +64,7 @@ void TileType::setPerson(int person){
 
 void TileType::setTileset(std::string tileset){ this->tileset = tileset; }
 
-void TileType::setAll(std::string name, int passable, int surfable, int doorway, int talkable, int pushable, int cutable, int location, int person, std::string tileset){
-	setName(name);
-	setPassable(passable);
-	setSurfable(surfable);
-	setDoorway(doorway);
-	setTalkable(talkable);
-	setPushable(pushable);
-	setCutable(cutable);
-	setLocation(location);
-	setPerson(person);
-	setTileset(tileset);
-}
 
-//Maybe make able to add new paramaters easily
-void TileType::setAll(std::vector<std::string> par){
-	int pars [Helper::tilePars];
-	for (int i = 1; i < 9; i++){
-		pars[i - 1] = atoi(par[i].c_str());
-	}
-
-	setAll(par[0], pars[0], pars[1], pars[2], pars[3], pars[4], pars[5], pars[6], pars[7], par[9]);
-}
 std::string TileType::getName(){ return name; }
 
 bool TileType::getPassable(){ return passable; }
@@ -102,3 +104,15 @@ std::vector <std::string> TileType::getAll(){
 	return output;
 }
 
+bool TileType::testValidTileType(std::string line){
+	std::vector<std::string> pars = Helper::split(line, ' ');
+	if (pars.size() != 10){
+		return false;
+	}
+	for (int i = 1; i < 9; i++){
+		if (!Helper::isNumber(pars[i])){
+			return false;
+		}
+	}
+	return true;
+}

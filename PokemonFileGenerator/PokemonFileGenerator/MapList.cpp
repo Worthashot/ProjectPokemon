@@ -47,65 +47,12 @@ void MapList::initiateList(std::string headerName){
 	header.close();
 }
 
-Map* MapList::getMap(std::string map){
-	if (find(mapNames.begin(), mapNames.end(), map) == mapNames.end()){
-		return NULL;
-	}
-	
-	return &maps[map];
-}
-
-int MapList::mapCount(){
-	return maps.size();
-}
-
-std::vector<std::string> MapList::listOfMaps(){
-	std::vector<std::string> output;
-	for (std::map<std::string, Map>::iterator it = maps.begin(); it != maps.end(); ++it) {
-		output.push_back(it->first);
-	}
-	return output;
-}
-
-std::string MapList::getNames(){
-	std::string output = "";
-	for (int i = 0; i < mapNames.size(); i++){
-		output = output + mapNames[i];
-		if (i + 1 != mapNames.size()){
-			output = output + " ";
-		}
-	}
-	return output;
-}
-
-void MapList::loadMaps(std::vector<std::string> mapsToLoad){
-	int size = mapsToLoad.size();
-
-	//find and delete all no longer necacerry maps
-	for (std::map<std::string, Map>::iterator it=maps.begin(); it!=maps.end(); ++it){
-		if (std::find(mapsToLoad.begin(), mapsToLoad.end(), it->first) == mapsToLoad.end()){
-			maps.erase(it);
-		}
-	}
-
-	//load in all new maps
-	for (int i = 0; i < size; i++){
-		if (maps.find(mapsToLoad[i]) == maps.end()){
-			std::deque<std::string> queue;
-			Map mapToInsert = generateMap(mapsToLoad[i]);
-			if (!mapToInsert.empty()){
-				maps.insert(std::pair<std::string, Map>(mapsToLoad[i], mapToInsert));
-			}
-		}
-	}
-}
-
 bool MapList::loadMap(std::string fileName, std::deque<std::string> &queue){
 	if (!testMap(fileName)){
 		queue.clear();
 		return false;
 	}
-	
+
 	std::ifstream file;
 	file.open(directory + fileName + ".txt");
 
@@ -114,7 +61,7 @@ bool MapList::loadMap(std::string fileName, std::deque<std::string> &queue){
 	}
 
 	else {
-		
+
 		std::string line;
 		getline(file, line);
 		int dimensions[2];
@@ -147,31 +94,33 @@ bool MapList::loadMap(std::string fileName, std::deque<std::string> &queue){
 	return true;
 }
 
-Map MapList::generateMap(std::string fileName){
-	std::deque<std::string> queue;
-	loadMap(fileName, queue);
-	Map output = Map(queue);
-	return output;
-}
+void MapList::loadMaps(std::vector<std::string> mapsToLoad){
+	int size = mapsToLoad.size();
 
-bool MapList::testValidTileType(std::string line){
-	std::vector<std::string> pars = Helper::split(line, ' ');
-	if (pars.size() != 10){
-		return false;
-	}
-	for (int i = 1; i < 9; i++){
-		if (!Helper::isNumber(pars[i])){
-			return false;
+	//find and delete all no longer necacerry maps
+	for (std::map<std::string, Map>::iterator it = maps.begin(); it != maps.end(); ++it){
+		if (std::find(mapsToLoad.begin(), mapsToLoad.end(), it->first) == mapsToLoad.end()){
+			maps.erase(it);
 		}
 	}
-	return true;
+
+	//load in all new maps
+	for (int i = 0; i < size; i++){
+		if (maps.find(mapsToLoad[i]) == maps.end()){
+			std::deque<std::string> queue;
+			Map mapToInsert = generateMap(mapsToLoad[i]);
+			if (!mapToInsert.empty()){
+				maps.insert(std::pair<std::string, Map>(mapsToLoad[i], mapToInsert));
+			}
+		}
+	}
 }
 
 //TODO Add the adjecent map feild to Maps and implement this function
 void MapList::loadAdjacentMaps(Map currentMap){
 
 }
-	
+
 //TEMP loads all maps at once
 void MapList::loadAdjacentMaps(){
 	loadMaps(mapNames);
@@ -200,7 +149,7 @@ bool MapList::testMap(std::string mapName){
 		std::cout << "not correct dimension\n";
 		return false;
 	}
-	
+
 	dims = Helper::toInt(Helper::split(line, ' '));
 
 	//line should be number of custom TileTypes
@@ -213,13 +162,13 @@ bool MapList::testMap(std::string mapName){
 
 	//each line should be a TileType
 	for (int i = 0; i < tileCount; i++){
-			getline(map, line);
-			Helper::trim(line);
-			if (!testValidTileType(line)){
-				std::cout << "line " + std::to_string(i + 2) + " not correct TileType\n";
-				return false;
-			}
+		getline(map, line);
+		Helper::trim(line);
+		if (!testValidTileType(line)){
+			std::cout << "line " + std::to_string(i + 2) + " not correct TileType\n";
+			return false;
 		}
+	}
 
 	//each line should be a set amount of strings seperated by spaces
 	for (int i = 0; i < dims[1]; i++){
@@ -242,10 +191,34 @@ bool MapList::testMap(std::string mapName){
 	//TODO add test for more information when added
 }
 
+Map* MapList::getMap(std::string map){
+	if (find(mapNames.begin(), mapNames.end(), map) == mapNames.end()){
+		return NULL;
+	}
+
+	return &maps[map];
+}
+
+std::string MapList::getNames(){
+	std::string output = "";
+	for (int i = 0; i < mapNames.size(); i++){
+		output = output + mapNames[i];
+		if (i + 1 != mapNames.size()){
+			output = output + " ";
+		}
+	}
+	return output;
+}
+
+std::string MapList::getDirectory(){
+	return directory;
+}
+
 bool MapList::testDimention(std::string line){
 	std::cout << line + "\n";
 	std::vector < std::string > lineVector;
 	lineVector = Helper::split(line, ' ');
+
 	if (lineVector.size() != 2){
 		std::cout << "size not 2, is actually " + std::to_string(lineVector.size()) + "\n";
 		return false;
@@ -257,12 +230,41 @@ bool MapList::testDimention(std::string line){
 		std::cout << "both not numbers";
 		return false;
 	}
+
+	if (!(Helper::toInt(lineVector[0]) >= 0 && Helper::toInt(lineVector[1]) >= 0)){
+		return true;
+	}
+}
+
+Map MapList::generateMap(std::string fileName){
+	std::deque<std::string> queue;
+	loadMap(fileName, queue);
+	Map output = Map(queue);
+	return output;
+}
+
+int MapList::mapCount(){
+	return maps.size();
+}
+
+std::vector<std::string> MapList::listOfMaps(){
+	return mapNames;
+}
+
+
+bool MapList::testValidTileType(std::string line){
+	std::vector<std::string> pars = Helper::split(line, ' ');
+	if (pars.size() != 10){
+		return false;
+	}
+	for (int i = 1; i < 9; i++){
+		if (!Helper::isNumber(pars[i])){
+			return false;
+		}
+	}
 	return true;
 }
 
-std::string MapList::getDirectory(){
-	return directory;
-}
 //first lookup header file. This tells the number of maps and their names.
 //lookup the map with that code, create the tiles located at the start of the file then create the map useing these tiles
 

@@ -1,0 +1,115 @@
+Map()
+- Does nothing. Placeholder.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+Map(int xDim, int Ydim)
+- Sets dimensions of the map to the dimensions given by re-sizing mapComp.
+
+- Allocates a generic wall to every tile
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+Map(string xDimS, string yDimS)
+- Desciphers dimesnions from string and applys this to the constructor Map(int xDim, int Ydim).
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+Map(int xDim, int yDim, int encounter)
+- Placeholder. Will implement after encounter codes are implemented.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+Map(deque<string> info)
+- Constructs a Map using relevent info passed in.
+
+- Info expected to be read from a file and validated before being passed into the constructor.
+
+- First line of info should be 2 evenly spaced non-negative integers.
+	Resizes mapComp based on this
+
+- Second line should be one non-negative integer.
+
+
+- Next c lines should be valid TileTypes.
+	c determined by line 2.
+	each line passed into setTile to allocate the TileType to the Map
+
+- Next x lines should be y evenly spaced sub-strings.
+	x determined by first sub-string of line 1.
+	y determined by second sub-string of line 1.
+	Will set the co-ordinates of mapComp based on the string of info at that place
+
+- Should be no more lines.
+
+- If info is an incorrect form will attempt to construct with what was given, may cause unexpected behavour.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+void setTile(string par)
+- Checks par is of the correct form for creating a TileType
+
+- If not, throws an error.
+
+- If so, creates a new TileType, assigns the data to it and returns this.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+void setSpace(int xCord, int yCord, string setSpace)
+- Checks that the given name has a coresponding stored TileType.
+
+- If so, stores the name to the given co-ordinate in mapComp.
+
+- If not, complains.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+void setSpaces(int xCord, vector<string> spaces)
+- Checks each name has a coresponding stored TileType.
+
+- If so, stores the name to the given co-ordinate in mapComp.
+
+- If not, complains.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+void setEncounterCode(int encounter)
+- Sets the encounterCode to encounter.
+	Currently not in use.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+void addTile(TileType tile)
+- Adds the given TileType to the list of TileTypes customTyles.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+TileType getTile(int x, int y)
+- Returns the TileType with the name of position x, y in mapComp.
+	If there is no tile at this position, crashes (should never happen)
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+vector<int> getDimention()
+- Returns a 2 element vector, with element 0 being the x dimentsion and element 1 being the y.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+vector<string> getTiles()
+- Returns a vector of every TileTypes name.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+bool empty()
+- Returns true is mapComp is empty.
+
+- Returns false otherwise.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+void readTile(string par)
+- Checks that the given par is the correct form for a TileType.
+
+- If not, complains.
+
+- If so, passes this to a TileType and adds this to the list of tileTypes.

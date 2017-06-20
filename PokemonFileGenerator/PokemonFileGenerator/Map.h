@@ -23,20 +23,20 @@ public:
 	//TODO
 	Map(int, int, int);
 
-	void setTile(std::string);
-
 	//loads in a Map from file via the contance of that file
 	Map(std::deque<std::string>);
 
+	void setTile(std::string);
+
 	//Sets an individual x,y cordinate to the corresponding tileType specified by the String, checking that
 	//the TileType is registerd in the Map
-	void setSpace(int xCord, int yCord, std::string setSpace);
+	void setSpace(int, int, std::string);
 
 	//Applies setSpace to a row of cordinates
-	void setSpaces(int xCord, std::vector<std::string> spaces);
+	void setSpaces(int, std::vector<std::string>);
 
 	//TODO
-	void setEncounterCode(int encounter);
+	void setEncounterCode(int);
 
 	//Adds the given TileType to the avalible TileTypes for this map
 	void addTile(TileType);
@@ -53,7 +53,7 @@ public:
 	//true if mapComp is empty
 	bool empty();
 
-	void readTile(Map*, std::string);
+	void readTile(std::string);
 };
 
 //TODO Add the relevent map properties such as tilesets, list of tileTypes ect

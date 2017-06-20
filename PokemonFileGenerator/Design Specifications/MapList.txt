@@ -83,22 +83,26 @@ bool testMap(string mapName)
 --------------------------------------------------------------------------------------------------------------------------------------------------
 
 Map* getMap(string map)
-//TODO
+- If the given Map name is in the list of loaded maps mapNames, return a pointer to it
+	If not, returns a Null pointer.
 
 --------------------------------------------------------------------------------------------------------------------------------------------------
 
 string getNames();
-//TODO
+- Returns a string containing every loaded map from mapNames with a space between them.
+	No space at beggining or end.
 
 --------------------------------------------------------------------------------------------------------------------------------------------------
 
 std::string getDirectory();
-//TODO
+- Returns the directory.
 
 --------------------------------------------------------------------------------------------------------------------------------------------------
 
 bool testDimention(string line);
-//TODO
+- If line is not 2 evenly spaced non-negative integers, returns false.
+	
+- Otherwise returns true;
 
 --------------------------------------------------------------------------------------------------------------------------------------------------
 Map generateMap(string fileName)
@@ -110,14 +114,18 @@ Map generateMap(string fileName)
 --------------------------------------------------------------------------------------------------------------------------------------------------
 
 int mapCount();
-//TODO
+- Returns the amount of currently loaded maps.
 
 --------------------------------------------------------------------------------------------------------------------------------------------------
 
 vector<string> listOfMaps();
-//TODO
+- Returns a vector of the names of currently loaded maps.
 
 --------------------------------------------------------------------------------------------------------------------------------------------------
 
 bool testValidTileType(string line);
-//TODO
+- If the given string is not 10 spaced substrings, returns false.
+
+- If the 2nd to 8th substring are not integers, returns false.
+
+- otherwise returns true.

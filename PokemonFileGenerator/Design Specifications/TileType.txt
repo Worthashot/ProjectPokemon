@@ -1,0 +1,149 @@
+TileType()
+- Initilises every paramater to "" (string) or 0 (int).
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+void setAll(string name, int passable, int surfable, int doorway, int talkable, int pushable, int cutable, int location, int person, string tileset)
+- Calls the setter for each argument.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+void setAll(vector<string> par)
+- Splits the vector into 10 substrings, changes substrings 2 - 8 into ints and passes into setAll above.
+
+- Assumes par is of the correct form. (MAY CHANGE SO IT CHECKS)
+	correct for is 10 evenly spaced substrings, where substrings 2 - 8 are integers.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+void setName(string name)
+- Setter for name.
+	How a tile is identified.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+void setPassable(int passable)
+- Setter for passable.
+	Determines if a tile may be steped on.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+void setSurfable(int surfable)
+- Setter for surfable.
+	Determines if a tile may be surfed on.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+void setDoorway(int doorway)
+- Setter for doorway.
+	Determines if a tile is a doorway.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+void setTalkable(int talkable)
+- Setter for talkable.
+	Determines if a tile produces a dialouge when interacted.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+void setPushable(int pushable)
+- Setter for pushable.
+	Determines if a tile can be infulenced by strength.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+void setCutable(int cutable)
+- Setter for cutable.
+	Determines if a tile can be infulenced by cut.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+void setLocation(int location)
+- Setter for location.
+	The location of a doorway.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+void setPerson(int person)
+- Setter for person.
+	The identity of a tile that is talkabale.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+void setTileset(string tileset)
+- Setter for tileset.
+	The apperance of a tile.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+string getName()
+- Getter for name.
+	How a tile is identified.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+bool getPassable()
+- Getter for passable.
+	Determines if a tile may be steped on.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+bool getSurfable()
+- Getter for surfable.
+	Determines if a tile may be surfed on.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+bool getDoorway()
+- Getter for doorway.
+	Determines if a tile is a doorway.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+bool getTalkable()
+- Getter for talkable.
+	Determines if a tile produces a dialouge when interacted.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+bool getPushable()
+- Getter for pushable.
+	Determines if a tile can be infulenced by strength.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+bool getCutable()
+- Getter for cutable.
+	Determines if a tile can be infulenced by cut.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+int getLocation()
+- Getter for location.
+	The location of a doorway.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+int getPerson()
+- Getter for person.
+	The identity of a tile that is talkabale.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+string getTileset()
+- Getter for tileset.
+	The apperance of a tile.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+vector<string> getAll()
+- Calls the getter for each paramater, converts the ints into string and combines them into one vector which is returned
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+bool testValidTileType(string line)
+- If the given string is not 10 spaced substrings, returns false.
+
+- If the 2nd to 8th substring are not integers, returns false.
+
+- otherwise returns true.

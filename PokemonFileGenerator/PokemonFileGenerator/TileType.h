@@ -14,8 +14,9 @@ private:
 	int location;  //these are only assigned when appropriate flags are true
 	int npcID;
 	std::string tileset;
-
+	
 public:
+	const int tilePars = 10;
 	TileType();
 	void setAll(std::string, int, int, int, int, int, int, int, int, std::string);
 	void setAll(std::vector<std::string>);
@@ -40,5 +41,7 @@ public:
 	int getPerson();
 	std::string getTileset();
 	std::vector<std::string> getAll();
+	bool testValidTileType(std::string);
+
 };
 
