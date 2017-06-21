@@ -16,64 +16,69 @@ TEST_CASE("Map::Map() general test", "[Map::Map()]"){
 
 
 //Tests for constructor Map::Map(int xDim, int Ydim)
+//This should create an object with the specified dimension, TileType and Map Composition.
+//Each aspect is tested seperatly
 
-TEST_CASE("Map::Map(int xDim, int Ydim) general test 1", "[Map::Map(int xDim, int Ydim)]"){
+//These test for correct dimension
+TEST_CASE("Map::Map(int xDim, int Ydim) test 1", "[Map::Map(int xDim, int Ydim)]"){
 	//Test that this creates map with the correct dimension.
 	Map m = Map(0, 0);
 	std::vector<int> d = { 0, 0 };
 	REQUIRE(m.getDimention() == d);
 }
 
-TEST_CASE("Map::Map(int xDim, int Ydim) general test 2", "[Map::Map(int xDim, int Ydim)]"){
+TEST_CASE("Map::Map(int xDim, int Ydim) test 2", "[Map::Map(int xDim, int Ydim)]"){
 	//Test that this creates map with the correct dimension.
 	Map m = Map(5, 5);
 	std::vector<int> d = { 5, 5 };
 	REQUIRE(m.getDimention() == d);
 }
 
-TEST_CASE("Map::Map(int xDim, int Ydim) general test 3", "[Map::Map(int xDim, int Ydim)]"){
+TEST_CASE("Map::Map(int xDim, int Ydim) test 3", "[Map::Map(int xDim, int Ydim)]"){
 	//Test that this creates map with the correct dimension.
 	Map m = Map(150, 150);
 	std::vector<int> d = { 150, 150 };
 	REQUIRE(m.getDimention() == d);
 }
 
-TEST_CASE("Map::Map(int xDim, int Ydim) general test 4", "[Map::Map(int xDim, int Ydim)]"){
+TEST_CASE("Map::Map(int xDim, int Ydim) test 4", "[Map::Map(int xDim, int Ydim)]"){
 	//Test that this creates map with the correct dimension.
 	Map m = Map(2, 7);
 	std::vector<int> d = { 2, 7 };
 	REQUIRE(m.getDimention() == d);
 }
 
-TEST_CASE("Map::Map(int xDim, int Ydim) general test 5", "[Map::Map(int xDim, int Ydim)]"){
+TEST_CASE("Map::Map(int xDim, int Ydim) test 5", "[Map::Map(int xDim, int Ydim)]"){
 	//Test that this creates map with the correct dimension.
 	Map m = Map(0, 17);
-	std::vector<int> d = { 0, 17 };
+	std::vector<int> d = { 0, 0 };
 	REQUIRE(m.getDimention() == d);
 }
 
-TEST_CASE("Map::Map(int xDim, int Ydim) general test 6", "[Map::Map(int xDim, int Ydim)]"){
+TEST_CASE("Map::Map(int xDim, int Ydim) test 6", "[Map::Map(int xDim, int Ydim)]"){
 	//Test that this creates map with the correct dimension.
 	Map m = Map(17, 0);
-	std::vector<int> d = { 17, 0 };
+	std::vector<int> d = { 0, 0 };
 	REQUIRE(m.getDimention() == d);
 }
 
-TEST_CASE("Map::Map(int xDim, int Ydim) general test 7", "[Map::Map(int xDim, int Ydim)]"){
+TEST_CASE("Map::Map(int xDim, int Ydim) test 7", "[Map::Map(int xDim, int Ydim)]"){
 	//Test that this creates map with the correct dimension.
 	Map m = Map(1, 150);
 	std::vector<int> d = { 1, 150 };
 	REQUIRE(m.getDimention() == d);
 }
 
-TEST_CASE("Map::Map(int xDim, int Ydim) general test 8", "[Map::Map(int xDim, int Ydim)]"){
+TEST_CASE("Map::Map(int xDim, int Ydim) test 8", "[Map::Map(int xDim, int Ydim)]"){
 	//Test that this creates map with the correct dimension.
 	Map m = Map(150, 1);
 	std::vector<int> d = { 150, 1 };
 	REQUIRE(m.getDimention() == d);
 }
 
-TEST_CASE("Map::Map(int xDim, int Ydim) general test 9", "[Map::Map(int xDim, int Ydim)]"){
+
+//These test for correct TileType registration
+TEST_CASE("Map::Map(int xDim, int Ydim) test 9", "[Map::Map(int xDim, int Ydim)]"){
 	//Test that this creates a map with only a wall TileType
 	Map m = Map(0, 0);
 
@@ -83,7 +88,7 @@ TEST_CASE("Map::Map(int xDim, int Ydim) general test 9", "[Map::Map(int xDim, in
 	REQUIRE(m.getTiles().size() == 1);
 }
 
-TEST_CASE("Map::Map(int xDim, int Ydim) general test 10", "[Map::Map(int xDim, int Ydim)]"){
+TEST_CASE("Map::Map(int xDim, int Ydim) test 10", "[Map::Map(int xDim, int Ydim)]"){
 	//Test that this creates a map with only a wall TileType
 	Map m = Map(0, 17);
 
@@ -93,7 +98,7 @@ TEST_CASE("Map::Map(int xDim, int Ydim) general test 10", "[Map::Map(int xDim, i
 	REQUIRE(m.getTiles().size() == 1);
 }
 
-TEST_CASE("Map::Map(int xDim, int Ydim) general test 11", "[Map::Map(int xDim, int Ydim)]"){
+TEST_CASE("Map::Map(int xDim, int Ydim) test 11", "[Map::Map(int xDim, int Ydim)]"){
 	//Test that this creates a map with only a wall TileType
 	Map m = Map(17, 0);
 
@@ -103,7 +108,7 @@ TEST_CASE("Map::Map(int xDim, int Ydim) general test 11", "[Map::Map(int xDim, i
 	REQUIRE(m.getTiles().size() == 1);
 }
 
-TEST_CASE("Map::Map(int xDim, int Ydim) general test 12", "[Map::Map(int xDim, int Ydim)]"){
+TEST_CASE("Map::Map(int xDim, int Ydim) test 12", "[Map::Map(int xDim, int Ydim)]"){
 	//Test that this creates a map with only a wall TileType
 	Map m = Map(170, 170);
 
@@ -114,17 +119,198 @@ TEST_CASE("Map::Map(int xDim, int Ydim) general test 12", "[Map::Map(int xDim, i
 }
 
 
-//------------------------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------------------------
-
-
-TEST_CASE("Map::Map(string xDimS, string yDimS) general test", "[Map(string xDimS, string yDimS)]"){
-	//Test that this creates map with the correct dimension with each point being the correct TileType.
+//These will test the map composition is correct
+//Refactor TileType before implementing
+TEST_CASE("Map::Map(int xDim, int Ydim) test 13", "[Map::Map(int xDim, int Ydim)]"){
 }
+
+TEST_CASE("Map::Map(int xDim, int Ydim) test 14", "[Map::Map(int xDim, int Ydim)]"){
+
+
+}
+
+TEST_CASE("Map::Map(int xDim, int Ydim) test 15", "[Map::Map(int xDim, int Ydim)]"){
+
+}
+
+TEST_CASE("Map::Map(int xDim, int Ydim) test 16", "[Map::Map(int xDim, int Ydim)]"){
+
+
+}
+
+
+//------------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------------
+
+
+//Tests for constructor Map::Map(int xDim, int Ydim)
+//This should create an object with the specified dimension, TileType and Map Composition.
+//Each aspect is tested seperatly
+
+//These Test for correct dimension
+TEST_CASE("Map::Map(string xDimS, string yDimS) general test 1", "[Map::Map(string xDimS, string yDimS)]"){
+	//Test that this creates map with the correct dimension.
+	Map m = Map("0", "0");
+	std::vector<int> d = { 0, 0 };
+	REQUIRE(m.getDimention() == d);
+}
+
+TEST_CASE("Map::Map(string xDimS, string yDimS) general test 2", "[Map::Map(string xDimS, string yDimS)]"){
+	//Test that this creates map with the correct dimension.
+	Map m = Map("5", "5");
+	std::vector<int> d = { 5, 5 };
+	REQUIRE(m.getDimention() == d);
+}
+
+TEST_CASE("Map::Map(string xDimS, string yDimS) general test 3", "[Map::Map(string xDimS, string yDimS)]"){
+	//Test that this creates map with the correct dimension.
+	Map m = Map("150", "150");
+	std::vector<int> d = { 150, 150 };
+	REQUIRE(m.getDimention() == d);
+}
+
+TEST_CASE("Map::Map(string xDimS, string yDimS) general test 4", "[Map::Map(string xDimS, string yDimS)]"){
+	//Test that this creates map with the correct dimension.
+	Map m = Map("2", "7");
+	std::vector<int> d = { 2, 7 };
+	REQUIRE(m.getDimention() == d);
+}
+
+TEST_CASE("Map::Map(string xDimS, string yDimS) general test 5", "[Map::Map(string xDimS, string yDimS)]"){
+	//Test that this creates map with the correct dimension.
+	Map m = Map("0", "17");
+	std::vector<int> d = { 0, 0 };
+	REQUIRE(m.getDimention() == d);
+}
+
+TEST_CASE("Map::Map(string xDimS, string yDimS) general test 6", "[Map::Map(string xDimS, string yDimS)]"){
+	//Test that this creates map with the correct dimension.
+	Map m = Map("17", "0");
+	std::vector<int> d = { 0, 0 };
+	REQUIRE(m.getDimention() == d);
+}
+
+TEST_CASE("Map::Map(string xDimS, string yDimS) general test 7", "[Map::Map(string xDimS, string yDimS)]"){
+	//Test that this creates map with the correct dimension.
+	Map m = Map("1", "150");
+	std::vector<int> d = { 1, 150 };
+	REQUIRE(m.getDimention() == d);
+}
+
+TEST_CASE("Map::Map(string xDimS, string yDimS) general test 8", "[Map::Map(string xDimS, string yDimS)]"){
+	//Test that this creates map with the correct dimension.
+	Map m = Map("150", "1");
+	std::vector<int> d = { 150, 1 };
+	REQUIRE(m.getDimention() == d);
+}
+
+
+
+//These correct for Correct TileTypes
+TEST_CASE("Map::Map(string xDimS, string yDimS) general test 9", "[Map::Map(string xDimS, string yDimS)]"){
+	//Test that this creates a map with only a wall TileType
+	Map m = Map("0", "0");
+
+	std::vector<string> tile = { "wall" };
+
+	REQUIRE(m.getTiles() == tile);
+	REQUIRE(m.getTiles().size() == 1);
+}
+
+TEST_CASE("Map::Map(string xDimS, string yDimS) general test 10", "[Map::Map(string xDimS, string yDimS)]"){
+	//Test that this creates a map with only a wall TileType
+	Map m = Map("0", "17");
+
+	std::vector<string> tile = { "wall" };
+
+	REQUIRE(m.getTiles() == tile);
+	REQUIRE(m.getTiles().size() == 1);
+}
+
+TEST_CASE("Map::Map(string xDimS, string yDimS) general test 11", "[Map::Map(string xDimS, string yDimS)]"){
+	//Test that this creates a map with only a wall TileType
+	Map m = Map("17", "0");
+
+	std::vector<string> tile = { "wall" };
+
+	REQUIRE(m.getTiles() == tile);
+	REQUIRE(m.getTiles().size() == 1);
+}
+
+TEST_CASE("Map::Map(string xDimS, string yDimS) general test 12", "[Map::Map(string xDimS, string yDimS)]"){
+	//Test that this creates a map with only a wall TileType
+	Map m = Map("170", "170");
+
+	std::vector<string> tile = { "wall" };
+
+	REQUIRE(m.getTiles() == tile);
+	REQUIRE(m.getTiles().size() == 1);
+}
+
+
+//These will test the map composition is correct
+TEST_CASE("Map::Map(string xDimS, string yDimS) general test 13", "[Map::Map(string xDimS, string yDimS)]"){
+	Map m = Map("1", "1");
+
+	TileType t = TileType({ "name" }, { "wall" });
+
+	REQUIRE(m.getTile(0, 0).getAll() == t.getAll());
+}
+
+TEST_CASE("Map::Map(string xDimS, string yDimS) general test 14", "[Map::Map(string xDimS, string yDimS)]"){
+	Map m = Map("1", "200");
+
+	TileType t = TileType({ "name" }, { "wall" });
+
+	REQUIRE(m.getTile(0, 0).getAll() == t.getAll());
+	REQUIRE(m.getTile(0, 40).getAll() == t.getAll());
+	REQUIRE(m.getTile(0,80).getAll() == t.getAll());
+	REQUIRE(m.getTile(0, 120).getAll() == t.getAll());
+	REQUIRE(m.getTile(0, 199).getAll() == t.getAll());
+	REQUIRE(m.getTile(1, 1).getAll() != t.getAll());
+	REQUIRE(m.getTile(0, 201).getAll() != t.getAll());
+}
+
+TEST_CASE("Map::Map(string xDimS, string yDimS) general test 15", "[Map::Map(string xDimS, string yDimS)]"){
+	Map m = Map("200", "1");
+
+	TileType t = TileType({ "name" }, { "wall" });
+
+	REQUIRE(m.getTile(0, 0).getAll() == t.getAll());
+	REQUIRE(m.getTile(40, 0).getAll() == t.getAll());
+	REQUIRE(m.getTile(80, 0).getAll() == t.getAll());
+	REQUIRE(m.getTile(120, 0).getAll() == t.getAll());
+	REQUIRE(m.getTile(199, 0).getAll() == t.getAll());
+	REQUIRE(m.getTile(1, 1).getAll() != t.getAll());
+	REQUIRE(m.getTile(201, 0).getAll() != t.getAll());
+}
+
+TEST_CASE("Map::Map(string xDimS, string yDimS) general test 16", "[Map::Map(string xDimS, string yDimS)]"){
+	Map m = Map("250", "250");
+
+	TileType t = TileType({ "name" }, { "wall" });
+
+	REQUIRE(m.getTile(0, 0).getAll() == t.getAll());
+	REQUIRE(m.getTile(40, 40).getAll() == t.getAll());
+	REQUIRE(m.getTile(120, 0).getAll() == t.getAll());
+	REQUIRE(m.getTile(0, 120).getAll() == t.getAll());
+	REQUIRE(m.getTile(160, 160).getAll() == t.getAll());
+	REQUIRE(m.getTile(249, 249).getAll() == t.getAll());
+	REQUIRE(m.getTile(251, 251).getAll() != t.getAll());
+	REQUIRE(m.getTile(-5, -5).getAll() != t.getAll());
+}
+
+
+//------------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------------
+
+
 
 TEST_CASE("Map::Map(int xDim, int yDim, int encounter) general test", "[Map(int xDim, int yDim, int encounter)]"){
 	//Test that this creates map with the correct dimension with each point being the correct TileType and sets the encounter code.
 }
+
+
 
 TEST_CASE("Map::Map(deque<string> info) general test", "[Map::Map(deque<string> info)]"){
 	//Test that all information is read correctly from the queue and assigned.

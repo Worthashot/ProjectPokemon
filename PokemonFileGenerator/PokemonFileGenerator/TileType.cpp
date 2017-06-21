@@ -17,6 +17,14 @@ TileType::TileType(){
 	tileset = "";
 	}
 
+TileType::TileType(std::vector<std::string> commands, std::vector<std::string> arguments) : TileType(){
+	int i = 0;
+	for (std::vector<std::string>::iterator it = commands.begin(); it != commands.end(); ++it) {
+		assignAsSpecified(*it, arguments[i]);
+		i++;
+	}
+}
+
 void TileType::setAll(std::string name, int passable, int surfable, int doorway, int talkable, int pushable, int cutable, int location, int person, std::string tileset){
 	setName(name);
 	setPassable(passable);
@@ -40,44 +48,119 @@ void TileType::setAll(std::vector<std::string> par){
 	setAll(par[0], pars[0], pars[1], pars[2], pars[3], pars[4], pars[5], pars[6], pars[7], par[9]);
 }
 
-void TileType::setName(std::string name){ this->name = name; }
+void TileType::setName(std::string name){ 
+	this->name = name; 
+}
 
-void TileType::setPassable(int passable){ this->passable = passable; }
+void TileType::setPassable(int passable){ 
+	this->passable = passable; 
+}
 
-void TileType::setSurfable(int surfable){ this->surfable = surfable; }
+void TileType::setSurfable(int surfable){ 
+	this->surfable = surfable; 
+}
 
-void TileType::setDoorway(int doorway){ this->doorway = doorway; }
+void TileType::setDoorway(int doorway){ 
+	this->doorway = doorway; 
+}
 
-void TileType::setTalkable(int talkable){ this->talkable = talkable; }
+void TileType::setTalkable(int talkable){ 
+	this->talkable = talkable; 
+}
 
-void TileType::setPushable(int pushable){ this->pushable = pushable; }
+void TileType::setPushable(int pushable){
+	this->pushable = pushable; 
+}
 
-void TileType::setCutable(int cutable){ this->cutable = cutable; }
+void TileType::setCutable(int cutable){ 
+	this->cutable = cutable; 
+}
 
 void TileType::setLocation(int location){
-	if (doorway){ this->location = location; }
+	if (doorway){ 
+		this->location = location; 
+	}
 }
 
 void TileType::setPerson(int person){
 	if (talkable){ npcID = person; }
 }
 
-void TileType::setTileset(std::string tileset){ this->tileset = tileset; }
+void TileType::setTileset(std::string tileset){ 
+	this->tileset = tileset; 
+}
 
+void TileType::assignAsSpecified(std::string command, std::string argument){
+	Helper::trim(command);
+	Helper::lower(command);
+	if (command == "name"){
+		setName(argument);
+	}
 
-std::string TileType::getName(){ return name; }
+	else if (command == "passable" && Helper::isNumber(argument)){
+		setPassable(Helper::toInt(argument));
+	}
 
-bool TileType::getPassable(){ return passable; }
+	else if (command == "surfable" && Helper::isNumber(argument)){
+		setSurfable(Helper::toInt(argument));
+	}
 
-bool TileType::getSurfable(){ return surfable; }
+	else if (command == "doorway" && Helper::isNumber(argument)){
+		setDoorway(Helper::toInt(argument));
+	}
 
-bool TileType::getDoorway(){ return doorway; }
+	else if (command == "talkable" && Helper::isNumber(argument)){
+		setTalkable(Helper::toInt(argument));
+	}
 
-bool TileType::getTalkable(){ return talkable; }
+	else if (command == "pushable" && Helper::isNumber(argument)){
+		setPushable(Helper::toInt(argument));
+	}
 
-bool TileType::getPushable(){ return pushable; }
+	else if (command == "cutable" && Helper::isNumber(argument)){
+		setCutable(Helper::toInt(argument));
+	}
 
-bool TileType::getCutable(){ return cutable; }
+	else if (command == "location" && Helper::isNumber(argument)){
+		setLocation(Helper::toInt(argument));
+	}
+
+	else if (command == "person" && Helper::isNumber(argument)){
+		setPerson(Helper::toInt(argument));
+	}
+
+	else if (command == "tileset"){
+		setTileset(argument);
+	}
+}
+
+std::string TileType::getName(){ 
+	return name; 
+}
+
+bool TileType::getPassable(){ 
+	return passable; 
+}
+
+bool TileType::getSurfable(){ 
+	return surfable; 
+}
+
+bool TileType::getDoorway(){ 
+	return doorway; 
+}
+
+bool TileType::getTalkable(){ 
+	return talkable; 
+}
+
+bool TileType::getPushable(){
+	return pushable; 
+}
+
+bool TileType::getCutable(){
+	return cutable; 
+}
 
 int TileType::getLocation(){
 	if (doorway){ return location; 

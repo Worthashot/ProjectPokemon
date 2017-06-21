@@ -18,6 +18,7 @@ private:
 public:
 	const int tilePars = 10;
 	TileType();
+	TileType(std::vector<std::string>, std::vector<std::string>);
 	void setAll(std::string, int, int, int, int, int, int, int, int, std::string);
 	void setAll(std::vector<std::string>);
 	void setName(std::string name);
@@ -30,6 +31,7 @@ public:
 	void setLocation(int location);
 	void setPerson(int person);
 	void setTileset(std::string tileset);
+	void assignAsSpecified(std::string, std::string);
 	std::string getName();
 	bool getPassable();
 	bool getSurfable();

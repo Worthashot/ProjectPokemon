@@ -1,7 +1,6 @@
 #include "MapList.h"
 
 MapList::MapList(){
-	std::cout << "MapList v 1 start\n";
 	char buffer[_MAX_PATH];
 	GetModuleFileName(NULL, buffer, _MAX_PATH);
 	std::string::size_type pos = std::string(buffer).find_last_of("\\");
@@ -146,7 +145,6 @@ bool MapList::testMap(std::string mapName){
 
 	getline(map, line);
 	if (!testDimention(line)){
-		std::cout << "not correct dimension\n";
 		return false;
 	}
 
@@ -155,7 +153,6 @@ bool MapList::testMap(std::string mapName){
 	//line should be number of custom TileTypes
 	getline(map, line);
 	if (!Helper::isNumber(line)){
-		std::cout << "not valid number for number of TileTypes\n";
 		return false;
 	}
 	tileCount = Helper::toInt(line);
@@ -165,7 +162,6 @@ bool MapList::testMap(std::string mapName){
 		getline(map, line);
 		Helper::trim(line);
 		if (!testValidTileType(line)){
-			std::cout << "line " + std::to_string(i + 2) + " not correct TileType\n";
 			return false;
 		}
 	}
@@ -175,7 +171,6 @@ bool MapList::testMap(std::string mapName){
 		getline(map, line);
 		lineVector = Helper::split(line, ' ');
 		if (lineVector.size() != dims[0]){
-			std::cout << "Not correct form for map layout";
 			return false;
 		}
 	}
@@ -195,7 +190,6 @@ Map* MapList::getMap(std::string map){
 	if (find(mapNames.begin(), mapNames.end(), map) == mapNames.end()){
 		return NULL;
 	}
-
 	return &maps[map];
 }
 
@@ -215,25 +209,24 @@ std::string MapList::getDirectory(){
 }
 
 bool MapList::testDimention(std::string line){
-	std::cout << line + "\n";
 	std::vector < std::string > lineVector;
 	lineVector = Helper::split(line, ' ');
 
 	if (lineVector.size() != 2){
-		std::cout << "size not 2, is actually " + std::to_string(lineVector.size()) + "\n";
 		return false;
 	}
 
 	Helper::trim(lineVector[0]);
 	Helper::trim(lineVector[1]);
 	if (!(Helper::isNumber(lineVector[0]) && Helper::isNumber(lineVector[1]))){
-		std::cout << "both not numbers";
 		return false;
 	}
 
-	if (!(Helper::toInt(lineVector[0]) >= 0 && Helper::toInt(lineVector[1]) >= 0)){
-		return true;
+	if (Helper::toInt(lineVector[0]) <= 0 || Helper::toInt(lineVector[1]) <= 0){
+		return false;
 	}
+
+	return true;
 }
 
 Map MapList::generateMap(std::string fileName){

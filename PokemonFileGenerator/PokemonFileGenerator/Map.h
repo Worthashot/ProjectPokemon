@@ -54,6 +54,8 @@ public:
 	bool empty();
 
 	void readTile(std::string);
+
+	void clear();
 };
 
 //TODO Add the relevent map properties such as tilesets, list of tileTypes ect

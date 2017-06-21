@@ -1,6 +1,6 @@
 #include "Map.h"
 
-//TODO, Create function for clearing MapComp that will not cause memory leaks.
+
 Map::Map(){
 }
 
@@ -10,12 +10,17 @@ Map::Map(int xDim, int yDim){
 	TileType wall = TileType();
 	wall.setName("wall");
 	addTile(wall);
-	mapComp.resize(xDim);
-	for (int i = 0; i < xDim; i++){
-		mapComp[i].resize(yDim);
-		for (int j = 0; j < yDim; j++){
-			mapComp[i][j] = "wall"; 
-		}		
+	if (xDim != 0 && yDim != 0){
+		mapComp.resize(xDim);
+		for (int i = 0; i < xDim; i++){
+			mapComp[i].resize(yDim);
+			for (int j = 0; j < yDim; j++){
+				mapComp[i][j] = "wall";
+			}
+		}
+	}
+	else {
+		clear();
 	}
 }
 
@@ -26,12 +31,17 @@ Map::Map(std::string xDimS, std::string yDimS){
 	TileType wall = TileType();
 	wall.setName("wall");
 	addTile(wall);
-	mapComp.resize(xDim);
-	for (int i = 0; i < xDim; i++){
-		mapComp[i].resize(yDim);
-		for (int j = 0; j < yDim; j++){
-			mapComp[i][j] = "wall";
+	if (xDim != 0 && yDim != 0){
+		mapComp.resize(xDim);
+		for (int i = 0; i < xDim; i++){
+			mapComp[i].resize(yDim);
+			for (int j = 0; j < yDim; j++){
+				mapComp[i][j] = "wall";
+			}
 		}
+	}
+	else {
+		clear();
 	}
 }
 
@@ -51,14 +61,14 @@ Map::Map(int xDim, int yDim, int encounter){
 		}
 	}
 	else {
-		mapComp.clear();
+		clear();
 	}
 }
 
 //info is expected to be a deque containing all information from the relavent file
 Map::Map(std::deque<std::string>  info){
 	int currentLine = 0;
-	if (!info.empty()){
+	if (!info.empty() && Helper::toInt(Helper::split(info[0], ' ')[0]) != 0 && Helper::toInt(Helper::split(info[0], ' ')[1]) != 0){
 		int xDim = Helper::toInt(Helper::split(info[0], ' ')[0]);
 		int yDim = Helper::toInt(Helper::split(info[0], ' ')[1]);
 
@@ -92,7 +102,7 @@ Map::Map(std::deque<std::string>  info){
 		}
 	}
 	else {
-		mapComp.clear();
+		clear();
 	}
 }
 
@@ -114,9 +124,6 @@ void Map::setSpace(int xCord, int yCord, std::string setSpace){	//sets a specifi
 	if (customTiles.count(setSpace)){
 		mapComp[xCord][yCord] = setSpace;
 	}
-	else{
-		std::cout << "tile not recognised\n";
-	}
 }
 
 //sets all the spaces for a given x co-ordinate
@@ -126,8 +133,7 @@ void Map::setSpaces(int  xCord, std::vector<std::string> spaces){
 			mapComp[xCord][i] = spaces[i];
 		}
 		else {
-			std::cout << "tile not recognised\n";
-			//keep as is, maybe throw error or log
+			//maybe throw error or log
 		}
 	}
 }
@@ -141,7 +147,11 @@ void Map::addTile(TileType tile){
 }
 	
 TileType Map::getTile(int x, int y){
-	return customTiles.at(mapComp[x][y]);
+	std::vector<int> dims = { x, y };
+	if (getDimention()[0] > dims[0] && getDimention()[1] > dims[1] && x >= 0 && y >= 0){
+		return customTiles.at(mapComp[x][y]);
+	}
+	return TileType();
 }
 
 std::vector<int> Map::getDimention(){
@@ -150,8 +160,8 @@ std::vector<int> Map::getDimention(){
 		output = { 0, 0 };
 		return output;
 	}
-	output[0] = mapComp.size();
-	output[1] = mapComp[0].size();
+	output.push_back(mapComp.size());
+	output.push_back(mapComp[0].size());
 	return output;
 }
 
@@ -180,4 +190,11 @@ void Map::readTile(std::string par){
 	newType.setAll(pars);
 
 	this->addTile(newType);
+}
+
+void Map::clear(){
+	for (std::vector<std::vector<std::string>>::iterator it = mapComp.begin(); it != mapComp.end(); ++it) {
+		it->clear();
+	}
+	mapComp.clear();
 }

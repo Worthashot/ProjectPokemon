@@ -38,6 +38,10 @@ bool Helper::doesFileExist(std::string fileName)
 	return output;
 }
 
+void Helper::lower(std::string& data){
+	std::transform(data.begin(), data.end(), data.begin(), ::tolower);
+}
+
 /*
 //This may be pointless
 bool isNumber(std::string line, int* tileCount){

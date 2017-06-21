@@ -27,6 +27,7 @@ Map(deque<string> info)
 
 - First line of info should be 2 evenly spaced non-negative integers.
 	Resizes mapComp based on this
+	The only check, if both dims are 0 will clear and end.
 
 - Second line should be one non-negative integer.
 
@@ -86,7 +87,7 @@ void addTile(TileType tile)
 
 TileType getTile(int x, int y)
 - Returns the TileType with the name of position x, y in mapComp.
-	If there is no tile at this position, crashes (should never happen)
+	If there is no tile at this position, returns an empty TileType
 
 --------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -113,3 +114,8 @@ void readTile(string par)
 - If not, complains.
 
 - If so, passes this to a TileType and adds this to the list of tileTypes.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+void clear()
+- Loops through Map comp, clearing each inner vector before clearing the outer

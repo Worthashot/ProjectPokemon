@@ -3,6 +3,12 @@ TileType()
 
 --------------------------------------------------------------------------------------------------------------------------------------------------
 
+TileType(std::vector<std::string> commands, std::vector<std::string> arguments)
+- Takes in a vector of commands and arguments and applies each argument to a setter specified by commands.
+	Will pass argument in position i to the getter specified in commands position i.
+	
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
 void setAll(string name, int passable, int surfable, int doorway, int talkable, int pushable, int cutable, int location, int person, string tileset)
 - Calls the setter for each argument.
 
@@ -76,6 +82,13 @@ void setTileset(string tileset)
 
 --------------------------------------------------------------------------------------------------------------------------------------------------
 
+assignAsSpecified(string command, string argument)
+- Checks the given command for a key word, then passes argument into the appropriate setter.
+	The key word is the same as the name of the variable to be set.
+	If command is unrecognised, nothing happens.
+	If argument is not the right form for the setter, nothing happens.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
 string getName()
 - Getter for name.
 	How a tile is identified.
