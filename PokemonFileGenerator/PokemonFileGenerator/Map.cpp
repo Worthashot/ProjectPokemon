@@ -107,15 +107,14 @@ Map::Map(std::deque<std::string>  info){
 }
 
 void Map::setTile(std::string par){
-	std::vector<std::string> pars = Helper::split(par, ' ');
+	TileType newType = TileType();
 
-	//expecting every par to have enough paramaters to create a new tiletype
-	if (pars.size() != Helper::tilePars){
-		std::cerr << "invalid number of paramaters in map";
-		throw("invalid number of paramarets");
+	if (!newType.testValidTileType(par)){
+		std::cerr << "invalid TileType parameters";
+		throw("invalid TileType parameters");
 	}
 
-	TileType newType = TileType();
+	std::vector<std::string> pars = Helper::split(par, ' ');
 	newType.setAll(pars);
 	addTile(newType);
 }
@@ -140,6 +139,10 @@ void Map::setSpaces(int  xCord, std::vector<std::string> spaces){
 
 void Map::setEncounterCode(int encounter){ 
 	encounterCode = encounter; 
+}
+
+int Map::getEncounterCode(){
+	return encounterCode;
 }
 
 void Map::addTile(TileType tile){

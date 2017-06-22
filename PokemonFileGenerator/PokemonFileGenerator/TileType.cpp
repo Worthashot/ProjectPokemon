@@ -48,6 +48,11 @@ void TileType::setAll(std::vector<std::string> par){
 	setAll(par[0], pars[0], pars[1], pars[2], pars[3], pars[4], pars[5], pars[6], pars[7], par[9]);
 }
 
+void TileType::setAll(std::string par){
+	std::vector<std::string> pars = Helper::split(par, ' ');
+	setAll(pars);
+}
+
 void TileType::setName(std::string name){ 
 	this->name = name; 
 }
@@ -93,7 +98,11 @@ void TileType::setTileset(std::string tileset){
 void TileType::assignAsSpecified(std::string command, std::string argument){
 	Helper::trim(command);
 	Helper::lower(command);
-	if (command == "name"){
+
+	if (command == "all" && testValidTileType(argument)){
+		setAll(argument);
+	}
+	else if (command == "name"){
 		setName(argument);
 	}
 
@@ -178,7 +187,9 @@ int TileType::getPerson(){
 	}
 }
 
-std::string TileType::getTileset(){ return tileset; }
+std::string TileType::getTileset(){ 
+	return tileset; 
+}
 
 std::vector <std::string> TileType::getAll(){
 	std::vector <std::string> output{ getName(), std::to_string(getPassable()), std::to_string(getSurfable()), std::to_string(getDoorway()),

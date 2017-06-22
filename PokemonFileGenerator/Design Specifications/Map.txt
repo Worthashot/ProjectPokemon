@@ -47,12 +47,8 @@ Map(deque<string> info)
 
 --------------------------------------------------------------------------------------------------------------------------------------------------
 
-void setTile(string par)
-- Checks par is of the correct form for creating a TileType
-
-- If not, throws an error.
-
-- If so, creates a new TileType, assigns the data to it and returns this.
+void setTile(TileType tile)
+- Registers a new TileType to the map
 
 --------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -78,6 +74,10 @@ void setEncounterCode(int encounter)
 - Sets the encounterCode to encounter.
 	Currently not in use.
 
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+int getEncounterCode()
+- Returns the encounterCode.
 --------------------------------------------------------------------------------------------------------------------------------------------------
 
 void addTile(TileType tile)

@@ -38,6 +38,8 @@ public:
 	//TODO
 	void setEncounterCode(int);
 
+	int getEncounterCode();
+
 	//Adds the given TileType to the avalible TileTypes for this map
 	void addTile(TileType);
 

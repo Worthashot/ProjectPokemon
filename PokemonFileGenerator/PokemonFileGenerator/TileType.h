@@ -21,6 +21,7 @@ public:
 	TileType(std::vector<std::string>, std::vector<std::string>);
 	void setAll(std::string, int, int, int, int, int, int, int, int, std::string);
 	void setAll(std::vector<std::string>);
+	void setAll(std::string);
 	void setName(std::string name);
 	void setPassable(int passable);
 	void setSurfable(int surfable);
