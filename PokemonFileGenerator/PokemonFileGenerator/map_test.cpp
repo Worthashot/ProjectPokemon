@@ -721,42 +721,91 @@ TEST_CASE("Map::Map(deque<string> info) general test 17", "[Map::Map(deque<strin
 //------------------------------------------------------------------------------------------------------------------------
 
 
-TEST_CASE("Map::setTile(string par) general test", "[Map::setTile(string par)]"){
-
-}
-
-TEST_CASE("Map::setTile(string par) general test 1", "[Map::setTile(string par)]"){
+TEST_CASE("Map::addTile(string par) general test 1", "[Map::setTile(string par)]"){
 	//Test adding to a map with no custom maps
 
 	std::deque<string> info = { "1 1", "0", "wall" };
 	Map m = Map(info);
 
 	std::vector<std::string> v = { "name1", "wall" };
-	m.setTile("name1 0 0 0 0 0 0 0 0 tile1");
+	m.addTile("name1 0 0 0 0 0 0 0 0 tile1");
 	REQUIRE(m.getTiles() == v);
 }
 
-
-TEST_CASE("Map::setTile(string par) general test 2", "[Map::setTile(string par)]"){
+TEST_CASE("Map::addTile(string par) general test 2", "[Map::setTile(string par)]"){
 	//Test adding to a map with some custom maps
 
 	std::deque<string> info = { "1 1", "1", "name1 0 0 0 0 0 0 0 0 tile1", "wall" };
 	Map m = Map(info);
 
-	std::vector<std::string> v = { "name1", "name2", "wall" };
-	m.setTile("name2 0 0 0 0 0 0 0 0 tile2");
+	std::vector<std::string> v = { "name1", "wall" };
+	m.addTile("name1 0 0 0 0 0 0 0 0 tile1");
+
+	REQUIRE(m.getTiles() == v);
+
+}
+
+TEST_CASE("Map::addTile(string par) general test 3", "[Map::setTile(string par)]"){
+	//Test a TileType may be added to a map with that TileType already
+
+	std::deque<string> info = { "1 1", "1", "name1 0 0 0 0 0 0 0 0 tile1", "wall" };
+	Map m = Map(info);
+
+	TileType t = TileType({ "all" }, { "name1 0 0 0 0 0 0 0 0 tile1" });
+	m.addTile(t);
+
+	std::vector<std::string> v = { "name1", "wall" };
+
 	REQUIRE(m.getTiles() == v);
 
 }
 
 
-
-
 //------------------------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------------------------------
 
 
-TEST_CASE("Map::setSpace(int xCord, int yCord, string setSpace) general test", "[Map::setSpace(int xCord, int yCord, string setSpace)]"){
+TEST_CASE("Map::addTile(TileType tile) general test 1", "[Map::addTile(TileType tile)]"){
+	//Test a TileType may be added to a map with no Tiles
+
+	std::deque<string> info = { "1 1", "0", "wall" };
+	Map m = Map(info);
+
+	TileType t = TileType({ "all" }, { "name1 0 0 0 0 0 0 0 0 tile1" });
+	m.addTile(t);
+
+	std::vector<std::string> v = { "name1", "wall" };
+
+	REQUIRE(m.getTiles() == v);
+}
+
+TEST_CASE("Map::addTile(TileType tile) general test 2", "[Map::addTile(TileType tile)]"){
+	//Test a TileType may be added to a map with Tiles
+
+	std::deque<string> info = { "1 1", "1", "name1 0 0 0 0 0 0 0 0 tile1", "wall" };
+	Map m = Map(info);
+
+	TileType t = TileType({ "all" }, { "name2 0 0 0 0 0 0 0 0 tile2" });
+	m.addTile(t);
+
+	std::vector<std::string> v = { "name1", "name2", "wall" };
+
+	REQUIRE(m.getTiles() == v);
+
+}
+
+TEST_CASE("Map::addTile(TileType tile) general test 3", "[Map::addTile(TileType tile)]"){
+	//Test a TileType may be added to a map with that TileType already
+
+	std::deque<string> info = { "1 1", "1", "name1 0 0 0 0 0 0 0 0 tile1", "wall" };
+	Map m = Map(info);
+
+	TileType t = TileType({ "all" }, { "name1 0 0 0 0 0 0 0 0 tile1" });
+	m.addTile(t);
+
+	std::vector<std::string> v = { "name1", "wall" };
+
+	REQUIRE(m.getTiles() == v);
 
 }
 
@@ -765,7 +814,37 @@ TEST_CASE("Map::setSpace(int xCord, int yCord, string setSpace) general test", "
 //------------------------------------------------------------------------------------------------------------------------
 
 
-TEST_CASE("Map::setSpaces(int xCord, vector<string> spaces) general test", "[Map::setSpaces(int xCord, vector<string> spaces)]"){
+TEST_CASE("Map::setSpace(int xCord, int yCord, string setSpace) general test 1", "[Map::setSpace(int xCord, int yCord, string setSpace)]"){
+	//Test that it is possible to set a tile to wall
+	std::deque<string> info = { "1 1", "1", "name1 0 0 0 0 0 0 0 0 tile1", "name1" };
+	Map m = Map(info);
+	TileType t = TileType({ "name" }, { "wall" });
+
+	m.setSpace(0, 0, "wall");
+	REQUIRE(m.getTile(0, 0).getAll() == t.getAll());
+}
+
+TEST_CASE("Map::setSpace(int xCord, int yCord, string setSpace) general test 2", "[Map::setSpace(int xCord, int yCord, string setSpace)]"){
+	//Test that it is possible to set a tile to a Type made via map construction
+	std::deque<string> info = { "1 1", "1", "name1 0 0 0 0 0 0 0 0 tile1", "wall" };
+	Map m = Map(info);
+	TileType t = TileType({ "all" }, { "name1 0 0 0 0 0 0 0 0 tile1" });
+
+	m.setSpace(0, 0, "name1");
+	REQUIRE(m.getTile(0, 0).getAll() == t.getAll());
+}
+
+TEST_CASE("Map::setSpace(int xCord, int yCord, string setSpace) general test 3", "[Map::setSpace(int xCord, int yCord, string setSpace)]"){
+	//Test that it is possible to set a tile to a Type made after map construction
+
+	std::deque<string> info = { "1 1", "0", "wall" };
+
+	Map m = Map(info);
+	TileType t = TileType({ "all" }, { "name1 0 0 0 0 0 0 0 0 tile1" });
+	m.addTile("name1 0 0 0 0 0 0 0 0 tile1");
+
+	m.setSpace(0, 0, "name1");
+	REQUIRE(m.getTile(0, 0).getAll() == t.getAll());
 
 }
 
@@ -774,7 +853,89 @@ TEST_CASE("Map::setSpaces(int xCord, vector<string> spaces) general test", "[Map
 //------------------------------------------------------------------------------------------------------------------------
 
 
-TEST_CASE("Map::setEncounterCode(int encounter) general test", "[Map::setEncounterCode(int encounter)]"){
+TEST_CASE("Map::setSpaces(int xCord, vector<string> spaces) general test 1", "[Map::setSpaces(int xCord, vector<string> spaces)]"){
+	//Test its possible to set all tiles to the default wall
+
+	std::deque<string> info = { "5 5", "1", "name1 0 0 0 0 0 0 0 0 tile1", 
+		"name1, name1, name1, name1, name1",
+		"name1, name1, name1, name1, name1", 
+		"name1, name1, name1, name1, name1", 
+		"name1, name1, name1, name1, name1", 
+		"name1, name1, name1, name1, name1", };
+
+	Map m = Map(info);
+	TileType t = TileType({ "name" }, { "wall" });
+	std::vector<std::string> v = { "wall", "wall", "wall", "wall", "wall" };
+
+	m.setSpaces(0, v);
+	m.setSpaces(1, v);
+	m.setSpaces(2, v);
+
+	REQUIRE(m.getTile(0, 2).getAll() == t.getAll());
+	REQUIRE(m.getTile(1, 2).getAll() == t.getAll());
+	REQUIRE(m.getTile(2, 2).getAll() == t.getAll());
+}
+
+TEST_CASE("Map::setSpaces(int xCord, vector<string> spaces) general test 2", "[Map::setSpaces(int xCord, vector<string> spaces)]"){
+	//Test its possible to set all tiles to a tile made on construction
+
+	std::deque<string> info = { "5 5", "1", "name1 0 0 0 0 0 0 0 0 tile1",
+		"wall, wall, wall, wall, wall",
+		"wall, wall, wall, wall, wall",
+		"wall, wall, wall, wall, wall",
+		"wall, wall, wall, wall, wall",
+		"wall, wall, wall, wall, wall" };
+
+	Map m = Map(info);
+	TileType t = TileType({ "all" }, { "name1 0 0 0 0 0 0 0 0 tile1" });
+	std::vector<std::string> v = { "name1", "name1", "name1", "name1", "name1" };
+
+	m.setSpaces(0, v);
+	m.setSpaces(1, v);
+	m.setSpaces(2, v);
+
+	REQUIRE(m.getTile(0, 2).getAll() == t.getAll());
+	REQUIRE(m.getTile(1, 2).getAll() == t.getAll());
+	REQUIRE(m.getTile(2, 2).getAll() == t.getAll());
+
+}
+
+TEST_CASE("Map::setSpaces(int xCord, vector<string> spaces) general test 3", "[Map::setSpaces(int xCord, vector<string> spaces)]"){
+	//Test its possible to set all tiles to a tile made after construction
+	std::deque<string> info = { "5 5", "0",
+		"wall, wall, wall, wall, wall",
+		"wall, wall, wall, wall, wall",
+		"wall, wall, wall, wall, wall",
+		"wall, wall, wall, wall, wall",
+		"wall, wall, wall, wall, wall" };
+
+	Map m = Map(info);
+	TileType t = TileType({ "all" }, { "name1 0 0 0 0 0 0 0 0 tile1" });
+	m.addTile(t);
+	std::vector<std::string> v = { "name1", "name1", "name1", "name1", "name1" };
+
+	m.setSpaces(0, v);
+	m.setSpaces(1, v);
+	m.setSpaces(2, v);
+
+	REQUIRE(m.getTile(0, 2).getAll() == t.getAll());
+	REQUIRE(m.getTile(1, 2).getAll() == t.getAll());
+	REQUIRE(m.getTile(2, 2).getAll() == t.getAll());
+}
+
+
+//------------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------------
+
+
+TEST_CASE("Map::setEncounterCode(int encounter) general test 1", "[Map::setEncounterCode(int encounter)]"){
+	//Test is the encounter code is set
+
+	std::deque<string> info = { "1 1", "1", "name1 0 0 0 0 0 0 0 0 tile1", "wall" };
+	Map m = Map(info);
+
+	m.setEncounterCode(10);
+	REQUIRE(m.getEncounterCode() == 10);
 
 }
 
@@ -783,8 +944,36 @@ TEST_CASE("Map::setEncounterCode(int encounter) general test", "[Map::setEncount
 //------------------------------------------------------------------------------------------------------------------------
 
 
-TEST_CASE("Map::addTile(TileType tile) general test", "[Map::addTile(TileType tile)]"){
+TEST_CASE("Map::getTile(int x, int y) general test 1", "[Map::getTile(int x, int y)]"){
+	//Test will return the default wall
 
+	std::deque<string> info = { "1 1", "0", "wall" };
+	Map m = Map(info);
+
+	TileType t = TileType({ "name" }, { "wall" });
+
+	REQUIRE(m.getTile(0,0).getAll() == t.getAll());
+}
+
+TEST_CASE("Map::getTile(int x, int y) general test 2", "[Map::getTile(int x, int y)]"){
+	//Test will return a custom Type
+
+	std::deque<string> info = { "1 1", "1", "name1 0 0 0 0 0 0 0 0 tile1", "name1" };	
+	Map m = Map(info);
+
+	TileType t = TileType({ "all" }, { "name1 0 0 0 0 0 0 0 0 tile1" });
+
+	REQUIRE(m.getTile(0, 0).getAll() == t.getAll());
+}
+
+TEST_CASE("Map::getTile(int x, int y) general test 3", "[Map::getTile(int x, int y)]"){
+	//Test will return a blank Type
+
+	Map m = Map(0, 0);
+
+	TileType t = TileType({}, {});
+
+	REQUIRE(m.getTile(0, 0).getAll() == t.getAll());
 }
 
 
@@ -792,8 +981,12 @@ TEST_CASE("Map::addTile(TileType tile) general test", "[Map::addTile(TileType ti
 //------------------------------------------------------------------------------------------------------------------------
 
 
-TEST_CASE("Map::getTile(int x, int y) general test", "[Map::getTile(int x, int y)]"){
+TEST_CASE("Map::getDimention() general test 1", "[Map::getDimention()]"){
+	//tests a map with a set dimension
 
+	Map m = Map(4, 4);
+	std::vector<int> v = { 4, 4 };
+	REQUIRE(m.getDimention() == v);
 }
 
 
@@ -801,8 +994,26 @@ TEST_CASE("Map::getTile(int x, int y) general test", "[Map::getTile(int x, int y
 //------------------------------------------------------------------------------------------------------------------------
 
 
-TEST_CASE("Map::getDimention() general test", "[Map::getDimention()]"){
+TEST_CASE("Map::getTiles() general test 1", "[Map::getTiles()]"){
+	//Tests with several pre-made Types
 
+	std::deque<string> info = { "1 1", "2", "name1 0 0 0 0 0 0 0 0 tile1", "name2 0 0 0 0 0 0 0 0 tile2", "name1" };
+	Map m = Map(info);
+
+	std::vector<std::string> v = { "name1", "name2", "wall" };
+
+	REQUIRE(m.getTiles() == v);
+}
+
+TEST_CASE("Map::getTiles() general test 2", "[Map::getTiles()]"){
+	//Tests with no pre-made types
+
+	std::deque<string> info = { "1 1", "0", "wall"};
+	Map m = Map(info);
+
+	std::vector<std::string> v = { "wall"};
+
+	REQUIRE(m.getTiles() == v);
 }
 
 
@@ -810,75 +1021,57 @@ TEST_CASE("Map::getDimention() general test", "[Map::getDimention()]"){
 //------------------------------------------------------------------------------------------------------------------------
 
 
-TEST_CASE("Map::getTiles() general test", "[Map::getTiles()]"){
+TEST_CASE("Map::empty() general test 1", "[Map::empty()]"){
+	//tests on an empty map
 
+	Map m = Map(0, 0);
+
+	REQUIRE(m.empty() == true);
 }
 
 
-//------------------------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------------------------
+TEST_CASE("Map::empty() general test 2", "[Map::empty()]"){
+	//tests on a not empty map
 
+	Map m = Map(1, 1);
 
-TEST_CASE("Map::empty() general test", "[Map::empty()]"){
-
+	REQUIRE(m.empty() == false);
 }
 
-
 //------------------------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------------------------------
 
+//100th test case. woo.
+TEST_CASE("Map::readTile(string par) general test 1", "[Map::readTile(string par)]"){
+	//Test with valid tile
+	Map m = Map(1, 1);
 
-TEST_CASE("Map::readTile(string par) general test", "[Map::readTile(string par)]"){
+	m.readTile("name1 0 0 0 0 0 0 0 0 tile1");
 
+	std::vector<std::string> v = { "name1", "wall" };
+	
+	REQUIRE(m.getTiles() == v);
 }
 
+TEST_CASE("Map::readTile(string par) general test 2", "[Map::readTile(string par)]"){
+	//Test with invalid tile
+	Map m = Map(1, 1);
 
-//------------------------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------------------------
+	m.readTile("name1 one 0 0 0 0 0 0 0 tile1");
 
+	std::vector<std::string> v = { "wall" };
 
-TEST_CASE("test creating a map with custom tiles", "[Map_create]"){
-	std::cout << "creating Map";
-	Map m1 = Map(5, 5);
-	TileType t1, t2, t3, t4, t5 = TileType();
-	vector<string> v1{ "name1", "0", "0", "0", "0", "0", "0", "0", "0", "tile1" };
-	vector<string> v2 = { "name2", "1", "1", "1", "1", "1", "1", "122", "132", "tile2" };
-	vector<string> v3 = { "name3", "0", "0", "0", "0", "0", "0", "0", "0", "tile3" };
-	vector<string> v4 = { "name4", "1", "1", "1", "1", "1", "1", "122", "122", "tile4" };
-	vector<string> v5 = { "name5", "1", "1", "1", "1", "1", "1", "122", "122", "tile5" };
-	t1.setAll(v1);
-	t2.setAll(v2);
-	t3.setAll(v3);
-	t4.setAll(v4);
-	t5.setAll(v5);
-	m1.addTile(t1);
-	m1.addTile(t2);
-	m1.addTile(t3);
-	m1.addTile(t4);
-	m1.addTile(t5);
+	REQUIRE(m.getTiles() == v);
+}
 
+TEST_CASE("Map::readTile(string par) general test 3", "[Map::readTile(string par)]"){
+	//Test with already existing tile
+	std::deque<string> info = { "1 1", "1", "name1 0 0 0 0 0 0 0 0 tile1", "name1" };
+	Map m = Map(info);
 
-	REQUIRE(m1.getTile(0, 0).getName() == "wall");
-	m1.setSpace(0, 0, "name1");
-	REQUIRE(m1.getTile(0, 0).getAll() == v1);
+	m.readTile("name1 0 0 0 0 0 0 0 0 tile1");
 
-	m1.setSpace(1, 3, "name2");
-	REQUIRE(m1.getTile(1, 3).getAll() == v2);
-	m1.setSpace(1, 3, "name3");
-	REQUIRE(m1.getTile(1, 3).getAll() == v3);
+	std::vector<std::string> v = { "name1", "wall" };
 
-	m1.setSpace(4, 4, "name4");
-	REQUIRE(m1.getTile(4, 4).getAll() == v4);
-
-	m1.setSpaces(2, vector<string>(5, "name5"));
-	REQUIRE(m1.getTile(2, 0).getAll() == v5);
-	REQUIRE(m1.getTile(2, 1).getAll() == v5);
-	REQUIRE(m1.getTile(2, 2).getAll() == v5);
-	REQUIRE(m1.getTile(2, 3).getAll() == v5);
-	REQUIRE(m1.getTile(2, 4).getAll() == v5);
-
-	m1.setSpace(3, 1, "notExisting");
-	REQUIRE(m1.getTile(3, 1).getName() == "wall");
-
-
+	REQUIRE(m.getTiles() == v);
 }

@@ -80,14 +80,25 @@ int getEncounterCode()
 - Returns the encounterCode.
 --------------------------------------------------------------------------------------------------------------------------------------------------
 
+void addTile(string tile)
+- checks if tile is of correct form for TileType.
+	If so, creates a new TileType with this paramater.
+	If not, throws an error.
+
+-If tile is already added, does nothing.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
 void addTile(TileType tile)
-- Adds the given TileType to the list of TileTypes customTyles.
+- Adds the given TileType to the list of TileTypes customTiles.
+	If tile already exists, does nothing.
 
 --------------------------------------------------------------------------------------------------------------------------------------------------
 
 TileType getTile(int x, int y)
 - Returns the TileType with the name of position x, y in mapComp.
 	If there is no tile at this position, returns an empty TileType
+	If position is larger than the stored dimension, return an empty TileType
 
 --------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -111,7 +122,7 @@ bool empty()
 void readTile(string par)
 - Checks that the given par is the correct form for a TileType.
 
-- If not, complains.
+- If not, does nothing
 
 - If so, passes this to a TileType and adds this to the list of tileTypes.
 

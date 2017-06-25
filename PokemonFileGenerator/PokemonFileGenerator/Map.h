@@ -26,7 +26,10 @@ public:
 	//loads in a Map from file via the contance of that file
 	Map(std::deque<std::string>);
 
-	void setTile(std::string);
+	void addTile(std::string);
+
+	//Adds the given TileType to the avalible TileTypes for this map
+	void addTile(TileType);
 
 	//Sets an individual x,y cordinate to the corresponding tileType specified by the String, checking that
 	//the TileType is registerd in the Map
@@ -39,9 +42,6 @@ public:
 	void setEncounterCode(int);
 
 	int getEncounterCode();
-
-	//Adds the given TileType to the avalible TileTypes for this map
-	void addTile(TileType);
 
 	//Gives the TileType assigned to the given cordinates
 	TileType getTile(int, int);

@@ -88,18 +88,18 @@ Map* getMap(string map)
 
 --------------------------------------------------------------------------------------------------------------------------------------------------
 
-string getNames();
+string getNames()
 - Returns a string containing every loaded map from mapNames with a space between them.
 	No space at beggining or end.
 
 --------------------------------------------------------------------------------------------------------------------------------------------------
 
-std::string getDirectory();
+string getDirectory()
 - Returns the directory.
 
 --------------------------------------------------------------------------------------------------------------------------------------------------
 
-bool testDimention(string line);
+bool testDimention(string line)
 - If line is not 2 evenly spaced non-negative integers, returns false.
 	
 - Otherwise returns true;
@@ -113,17 +113,17 @@ Map generateMap(string fileName)
 
 --------------------------------------------------------------------------------------------------------------------------------------------------
 
-int mapCount();
+int mapCount()
 - Returns the amount of currently loaded maps.
 
 --------------------------------------------------------------------------------------------------------------------------------------------------
 
-vector<string> listOfMaps();
+vector<string> listOfMaps()
 - Returns a vector of the names of currently loaded maps.
 
 --------------------------------------------------------------------------------------------------------------------------------------------------
 
-bool testValidTileType(string line);
+bool testValidTileType(string line)
 - If the given string is not 10 spaced substrings, returns false.
 
 - If the 2nd to 8th substring are not integers, returns false.

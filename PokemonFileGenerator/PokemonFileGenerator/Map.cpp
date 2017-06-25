@@ -89,7 +89,7 @@ Map::Map(std::deque<std::string>  info){
 		for (int i = 2; i < c + 2; i++){
 
 			//next c lines contains the paramaters to a new tiletype
-			setTile(info[i]);
+			addTile(info[i]);
 			currentLine = i;
 		}
 
@@ -106,7 +106,7 @@ Map::Map(std::deque<std::string>  info){
 	}
 }
 
-void Map::setTile(std::string par){
+void Map::addTile(std::string par){
 	TileType newType = TileType();
 
 	if (!newType.testValidTileType(par)){
@@ -117,6 +117,10 @@ void Map::setTile(std::string par){
 	std::vector<std::string> pars = Helper::split(par, ' ');
 	newType.setAll(pars);
 	addTile(newType);
+}
+
+void Map::addTile(TileType tile){
+	customTiles.insert(std::pair<std::string, TileType>(tile.getName(), tile));
 }
 
 void Map::setSpace(int xCord, int yCord, std::string setSpace){	//sets a specific co-ordinate
@@ -145,10 +149,6 @@ int Map::getEncounterCode(){
 	return encounterCode;
 }
 
-void Map::addTile(TileType tile){
-	customTiles.insert(std::pair<std::string, TileType>(tile.getName(), tile));
-}
-	
 TileType Map::getTile(int x, int y){
 	std::vector<int> dims = { x, y };
 	if (getDimention()[0] > dims[0] && getDimention()[1] > dims[1] && x >= 0 && y >= 0){
@@ -185,14 +185,12 @@ void Map::readTile(std::string par){
 	TileType newType = TileType();
 
 	if (newType.testValidTileType(par)){
-		std::cerr << "invalid number of paramaters in map";
-		throw("invalid number of paramarets");
+
+		std::vector<std::string> pars = Helper::split(par, ' ');
+		newType.setAll(pars);
+
+		this->addTile(newType);
 	}
-
-	std::vector<std::string> pars = Helper::split(par, ' ');
-	newType.setAll(pars);
-
-	this->addTile(newType);
 }
 
 void Map::clear(){
