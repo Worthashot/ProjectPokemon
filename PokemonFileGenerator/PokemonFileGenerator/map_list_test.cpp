@@ -6,17 +6,47 @@
 #include <fstream>
 using namespace std;
 
-TEST_CASE("MapList::MapList() general test", "[MapList::MapList()]"){
-	//
+
+TEST_CASE("MapList::MapList(string directory) general test 1", "[MapList::MapList(string directory)]"){
+	//Test creation with no header
+
+	std::string directory = Helper::getDirectory() +"\\PokemonFileGenerator\\Debug\\MapList test\\";
+	_mkdir(directory.c_str());
+
+	MapList l = MapList(directory);
+
+	REQUIRE(l.getDirectory() == directory);
+	REQUIRE(l.getNames().empty());
+	REQUIRE(l.listOfMaps().empty());
 }
 
 
-//------------------------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------------------------
+TEST_CASE("MapList::MapList(string directory) general test 2", "[MapList::MapList(string directory)]"){
+	//Test creation with a header
 
+	std::string directory = Helper::getDirectory() + "\\PokemonFileGenerator\\Debug\\MapList test\\";
+	_mkdir(directory.c_str());
 
-TEST_CASE("MapList::MapList(string directory) general test", "[MapList::MapList(string directory)]"){
-	//As of now, does nothing
+	std::string hs = directory + "header.txt";
+	ofstream h(hs);
+	h << "map data1";
+	h.close();
+
+	std::string h1 = directory + "map data1.txt";
+	ofstream t1(directory + "map data1.txt");
+	t1 << "5 5\n1\nt1 1 1 1 1 1 1 1 1 ts1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1";
+	t1.close();
+
+	MapList l = MapList(directory);
+	std::vector<std::string> v = { "map data1" };
+
+	REQUIRE(l.getDirectory() == directory);
+	REQUIRE(l.getNames() == "map data1");
+	REQUIRE(l.listOfMaps() == v);
+
+	std::remove(hs.c_str());
+	std::remove(h1.c_str());
+
 }
 
 //------------------------------------------------------------------------------------------------------------------------

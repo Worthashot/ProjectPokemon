@@ -7,6 +7,8 @@ MapList()
 
 - If header is there, will run initiateList with the name "header"
 
+- May be redundent. Subject to removal.
+
 --------------------------------------------------------------------------------------------------------------------------------------------------
 
 MapList(string directory)

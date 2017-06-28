@@ -8,6 +8,9 @@
 #include <fstream>
 #include <deque>
 #include <iostream>
+#include <windows.h>
+#include <stdio.h>
+#include <direct.h>
 
 class Helper
 {
@@ -25,5 +28,6 @@ public:
 	static bool isNumber(std::string);
 	static int toInt(std::string);
 	static std::vector<int> toInt(std::vector<std::string> s);
+	static std::string getDirectory();
 };
 

@@ -80,3 +80,11 @@ std::vector<int> Helper::toInt(std::vector<std::string> s){
 	return output;
 }
 
+std::string Helper::getDirectory(){
+	char buffer[_MAX_PATH];
+	GetModuleFileName(NULL, buffer, _MAX_PATH);
+	std::string::size_type pos = std::string(buffer).find_last_of("\\");
+	pos = std::string(buffer).substr(0, pos).find_last_of("\\");
+	pos = std::string(buffer).substr(0, pos).find_last_of("\\");
+	return std::string(buffer).substr(0, pos);
+}

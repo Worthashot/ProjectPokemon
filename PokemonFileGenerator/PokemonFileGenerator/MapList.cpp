@@ -7,7 +7,12 @@ MapList::MapList(){
 	pos = std::string(buffer).substr(0, pos).find_last_of("\\");
 	pos = std::string(buffer).substr(0, pos).find_last_of("\\");
 	std::string dir = std::string(buffer).substr(0, pos);
+
 	directory = dir + "\\ProjectPokemon\\Debug\\Maps\\";
+
+	maps.clear();
+	mapNames.clear();
+
 	_mkdir(directory.c_str());
 
 	if (Helper::doesFileExist(directory + "header.txt")){
@@ -17,7 +22,9 @@ MapList::MapList(){
 
 MapList::MapList(std::string directory){
 	this->directory = directory;
-	
+	maps.clear();
+	mapNames.clear();
+
 	if (Helper::doesFileExist(directory + "header.txt")){
 		initiateList("header.txt");
 	}
@@ -243,7 +250,6 @@ int MapList::mapCount(){
 std::vector<std::string> MapList::listOfMaps(){
 	return mapNames;
 }
-
 
 bool MapList::testValidTileType(std::string line){
 	std::vector<std::string> pars = Helper::split(line, ' ');
