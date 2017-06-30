@@ -20,7 +20,6 @@ TEST_CASE("MapList::MapList(string directory) general test 1", "[MapList::MapLis
 	REQUIRE(l.listOfMaps().empty());
 }
 
-
 TEST_CASE("MapList::MapList(string directory) general test 2", "[MapList::MapList(string directory)]"){
 	//Test creation with a header
 
@@ -49,11 +48,109 @@ TEST_CASE("MapList::MapList(string directory) general test 2", "[MapList::MapLis
 
 }
 
+
 //------------------------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------------------------------
 
 
-TEST_CASE("MapList::initiateList(string headerName) general test", "[MapList::initiateList(string headerName)]"){
+TEST_CASE("MapList::initiateList(string headerName) general test 1", "[MapList::initiateList(string headerName)]"){
+	//Test with the given header name not created
+
+	std::string directory = Helper::getDirectory() + "\\PokemonFileGenerator\\Debug\\MapList initiateList test\\";
+
+	MapList l = MapList(directory);
+
+	REQUIRE_THROWS_WITH(l.initiateList("header.txt"), "cannot open file");
+}
+
+TEST_CASE("MapList::initiateList(string headerName) general test 2", "[MapList::initiateList(string headerName)]"){
+	//Test with every name in the header file created
+
+	std::string directory = Helper::getDirectory() + "\\PokemonFileGenerator\\Debug\\MapList InitiateList test\\";
+	_mkdir(directory.c_str());
+
+	MapList l = MapList(directory);
+
+	std::string hs = directory + "header.txt";
+
+
+	ofstream h(hs);
+	h << "map data1";
+	h.close();
+
+	REQUIRE_THROWS_WITH(l.initiateList("header.txt"), "given map name does not exist");
+
+	std::remove(hs.c_str());
+
+}
+
+TEST_CASE("MapList::initiateList(string headerName) general test 3", "[MapList::initiateList(string headerName)]"){
+	//Test with the first name in the header file not created but all of the other are
+
+	std::string directory = Helper::getDirectory() + "\\PokemonFileGenerator\\Debug\\MapList InitiateList test\\";
+	_mkdir(directory.c_str());
+
+	MapList l = MapList(directory);
+
+	std::vector<std::string> v = { "map data1" };
+
+	std::string hs = directory + "header.txt";
+	std::string h1 = directory + "map data1.txt";
+
+	ofstream h(hs);
+	h << "map data1";
+	h.close();
+
+	ofstream t1(directory + "map data1.txt");
+	t1 << "5 5\n1\nt1 1 1 1 1 1 1 1 1 ts1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1";
+	t1.close();
+
+	l.initiateList("header.txt");
+
+	REQUIRE(l.getDirectory() == directory);
+	REQUIRE(l.getNames() == "map data1");
+	REQUIRE(l.listOfMaps() == v);
+
+	std::remove(hs.c_str());
+	std::remove(h1.c_str());
+}
+
+
+//------------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------------
+
+
+TEST_CASE("MapList::loadMap(string filename, deque<string> queue) general test 1", "[MapList::loadMap(string filename, deque<string> queue)]"){
+	//Test when file is wrong form, returns false and clears queue
+
+}
+
+TEST_CASE("MapList::loadMap(string filename, deque<string> queue) general test 2", "[MapList::loadMap(string filename, deque<string> queue)]"){
+	//Test when file is right form, returns true and writes data to queue
+}
+
+//------------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------------
+
+
+TEST_CASE("MapList::loadMaps(vector<string> mapsToLoad) general test 1", "[MapList::loadMaps(vector<string> mapsToLoad)]"){
+	//Test when list is empty, the map list is cleared of loaded maps
+}
+
+TEST_CASE("MapList::loadMaps(vector<string> mapsToLoad) general test 2", "[MapList::loadMaps(vector<string> mapsToLoad)]"){
+	//Test when list has some elements, the appropriate maps are loaded
+}
+
+TEST_CASE("MapList::loadMaps(vector<string> mapsToLoad) general test 3", "[MapList::loadMaps(vector<string> mapsToLoad)]"){
+	//Test when list had files formated wrong, they are not loaded
+}
+
+
+//------------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------------
+
+
+TEST_CASE("MapList::loadAdjacentMaps(Map currentMap) general test 1", "[MapList::loadAdjacentMaps(Map currentMap)]"){
 	//As of now, does nothing
 }
 
@@ -61,48 +158,44 @@ TEST_CASE("MapList::initiateList(string headerName) general test", "[MapList::in
 //------------------------------------------------------------------------------------------------------------------------
 
 
-TEST_CASE("MapList::loadMap(string filename, deque<string> queue) general test", "[MapList::loadMap(string filename, deque<string> queue)]"){
-	//As of now, does nothing
+TEST_CASE("MapList::loadAdjacentMaps() general test 1", "[MapList::loadAdjacentMaps()]"){
+	//Test all maps are loaded
 }
 
 //------------------------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------------------------------
 
 
-TEST_CASE("MapList::loadMaps(vector<string> mapsToLoad) general test", "[MapList::loadMaps(vector<string> mapsToLoad)]"){
-	//As of now, does nothing
+TEST_CASE("MapList::testMap(string mapName) general test 1", "[MapList::testMap(string mapName)]"){
+	//If the file specified does not exist, returns false.
 }
 
-//------------------------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------------------------
-
-
-TEST_CASE("MapList::loadAdjacentMaps(Map currentMap) general test", "[MapList::loadAdjacentMaps(Map currentMap)]"){
-	//As of now, does nothing
+TEST_CASE("MapList::testMap(string mapName) general test 2", "[MapList::testMap(string mapName)]"){
+	//If the file specified cannot be opened, returns false.
 }
 
-//------------------------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------------------------
-
-
-TEST_CASE("MapList::loadAdjacentMaps() general test", "[MapList::loadAdjacentMaps()]"){
-	//As of now, does nothing
+TEST_CASE("MapList::testMap(string mapName) general test 3", "[MapList::testMap(string mapName)]"){
+	//If the first line of the file is not 2 spaced integers, returns false.
 }
 
-//------------------------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------------------------
-
-
-TEST_CASE("MapList::testMap(string mapName) general test", "[MapList::testMap(string mapName)]"){
-	//As of now, does nothing
+TEST_CASE("MapList::testMap(string mapName) general test 4", "[MapList::testMap(string mapName)]"){
+	//If the second line of the file is not 1 integer, returns false.
 }
 
-//------------------------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------------------------
+TEST_CASE("MapList::testMap(string mapName) general test 5", "[MapList::testMap(string mapName)]"){
+	//If the TileType lines are not TileTypes, returns false
+}
 
+TEST_CASE("MapList::testMap(string mapName) general test 6", "[MapList::testMap(string mapName)]"){
+	//If the map composition lines are not valid size and strings, returns false
+}
 
-TEST_CASE("MapList::getMap(string map) general test", "[MapList::getMap(string map)]"){
-	//As of now, does nothing
+TEST_CASE("MapList::testMap(string mapName) general test 7", "[MapList::testMap(string mapName)]"){
+	//If the file is too large, returns false
+}
+
+TEST_CASE("MapList::testMap(string mapName) general test 8", "[MapList::testMap(string mapName)]"){
+	//If everything is valid, returns true.
 }
 
 
@@ -110,58 +203,102 @@ TEST_CASE("MapList::getMap(string map) general test", "[MapList::getMap(string m
 //------------------------------------------------------------------------------------------------------------------------
 
 
-TEST_CASE("MapList::getNames() general test", "[MapList::getNames()]"){
-	//As of now, does nothing
+TEST_CASE("MapList::getMap(string map) general test 1", "[MapList::getMap(string map)]"){
+	//Tests that a loaded map returns a pointer to it
+}
+
+TEST_CASE("MapList::getMap(string map) general test 2", "[MapList::getMap(string map)]"){
+	//Tests that a not loaded map returns a Null pointer
+}
+
+
+//------------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------------
+
+
+TEST_CASE("MapList::getNames() general test 1", "[MapList::getNames()]"){
+	//Tests the valid string is returned
+}
+
+TEST_CASE("MapList::getNames() general test 2", "[MapList::getNames()]"){
+	//Tests an empty string is returned
+}
+
+
+//------------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------------
+
+
+TEST_CASE("MapList::getDirectory() general test 1", "[MapList::getDirectory()]"){
+	//Tests the directory is returned
+}
+
+
+//------------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------------
+
+
+TEST_CASE("MapList::testDimention(string line) general test 1", "[MapList::testDimention(string line)]"){
+	//Test invalid size dimention returns false
+}
+
+TEST_CASE("MapList::testDimention(string line) general test 2", "[MapList::testDimention(string line)]"){
+	//Test invalid type dimention returns false
+}
+
+TEST_CASE("MapList::testDimention(string line) general test 3", "[MapList::testDimention(string line)]"){
+	//Test invalid value dimention returns false
+}
+
+TEST_CASE("MapList::testDimention(string line) general test 4", "[MapList::testDimention(string line)]"){
+	//Test valid dimention returns true
+}
+
+
+//------------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------------
+
+
+TEST_CASE("MapList::generateMap(string fileName) general test 1", "[MapList::generateMap(string fileName)]"){
+	//test an invalid Map file returns an empty map
+}
+
+TEST_CASE("MapList::generateMap(string fileName) general test 2", "[MapList::generateMap(string fileName)]"){
+	//test a valid Map file returns a map
 }
 
 //------------------------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------------------------------
 
 
-TEST_CASE("MapList::getDirectory() general test", "[MapList::getDirectory()]"){
-	//As of now, does nothing
+TEST_CASE("MapList::mapCount() general test 1", "[MapList::mapCount()]"){
+	//Tests the size of the loaded maps is returnd
 }
 
+
 //------------------------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------------------------------
 
 
-TEST_CASE("MapList::testDimention(string line) general test", "[MapList::testDimention(string line)]"){
-	//As of now, does nothing
+TEST_CASE("MapList::listOfMaps() general test 1", "[MapList::listOfMaps()]"){
+	//Tests the list of loaded maps is returned
 }
 
+
 //------------------------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------------------------------
 
 
-TEST_CASE("MapList::generateMap(string fileName) general test", "[MapList::generateMap(string fileName)]"){
-	//As of now, does nothing
+TEST_CASE("MapList::testValidTileType(string line) general test 1", "[MapList:testValidTileType(string line)]"){
+	//Tests a wrong number of substrings returns false
 }
 
-//------------------------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------------------------
-
-
-TEST_CASE("MapList::mapCount() general test", "[MapList::mapCount()]"){
-	//As of now, does nothing
+TEST_CASE("MapList::testValidTileType(string line) general test 2", "[MapList:testValidTileType(string line)]"){
+	//Test the wrong type of substrings returns false
 }
-
-//------------------------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------------------------
-
-
-TEST_CASE("MapList::listOfMaps() general test", "[MapList::listOfMaps()]"){
-	//As of now, does nothing
+TEST_CASE("MapList::testValidTileType(string line) general test 3", "[MapList:testValidTileType(string line)]"){
+	//Tests if everything is right returns true
 }
-
-//------------------------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------------------------
-
-
-TEST_CASE("MapList::testValidTileType(string line) general test", "[MapList:testValidTileType(string line)]"){
-	//As of now, does nothing
-}
-
 
 
 

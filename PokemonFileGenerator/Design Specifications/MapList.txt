@@ -25,7 +25,7 @@ void initiateList(string headerName)
 
 - Will run loadMap on the first name in MapNames then loadAdjacentMaps with no arguments.
 
-- If loadMap returns false, will end without loading any maps.
+- If loadMap returns false, will throw an error.
 
 --------------------------------------------------------------------------------------------------------------------------------------------------
 

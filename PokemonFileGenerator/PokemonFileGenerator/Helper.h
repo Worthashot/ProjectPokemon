@@ -24,7 +24,8 @@ public:
 	static void lower(std::string&);
 
 	//checks if the sting is a valid number. If so, sets int* to that number. If not, sets int* to null.
-	//static bool isNumber(std::string, int*);
+	//static bool isNumber(std::string, int*)
+	;
 	static bool isNumber(std::string);
 	static int toInt(std::string);
 	static std::vector<int> toInt(std::vector<std::string> s);

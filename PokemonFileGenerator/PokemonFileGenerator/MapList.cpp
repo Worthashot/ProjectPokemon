@@ -25,7 +25,7 @@ MapList::MapList(std::string directory){
 	maps.clear();
 	mapNames.clear();
 
-	if (Helper::doesFileExist(directory + "header.txt")){
+	if (Helper::doesFileExist(directory  +  "header.txt")){
 		initiateList("header.txt");
 	}
 }
@@ -34,7 +34,8 @@ void MapList::initiateList(std::string headerName){
 
 	std::ifstream header(directory + headerName);
 	if (!header.is_open()){
-		return;
+		std::cerr << "cannot open file " + headerName;
+		throw("cannot open file");
 	}
 
 	int i = 0;
@@ -48,6 +49,10 @@ void MapList::initiateList(std::string headerName){
 		std::deque<std::string> queue;
 		if (loadMap(mapNames[0], queue)){
 			loadAdjacentMaps();
+		}
+		else {
+			std::cerr << "given map name " + mapNames[0] + " does not exist";
+			throw("given map name does not exist");
 		}
 	}
 	header.close();
@@ -114,8 +119,8 @@ void MapList::loadMaps(std::vector<std::string> mapsToLoad){
 	for (int i = 0; i < size; i++){
 		if (maps.find(mapsToLoad[i]) == maps.end()){
 			std::deque<std::string> queue;
-			Map mapToInsert = generateMap(mapsToLoad[i]);
-			if (!mapToInsert.empty()){
+			if (loadMap(mapsToLoad[i], queue)){
+				Map mapToInsert = Map(queue);
 				maps.insert(std::pair<std::string, Map>(mapsToLoad[i], mapToInsert));
 			}
 		}
