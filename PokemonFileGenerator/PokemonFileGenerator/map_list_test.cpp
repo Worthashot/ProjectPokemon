@@ -27,11 +27,16 @@ TEST_CASE("MapList::MapList(string directory) general test 2", "[MapList::MapLis
 	_mkdir(directory.c_str());
 
 	std::string hs = directory + "header.txt";
+	std::remove(hs.c_str());
+	
+
 	ofstream h(hs);
 	h << "map data1";
 	h.close();
 
 	std::string h1 = directory + "map data1.txt";
+	std::remove(h1.c_str());
+
 	ofstream t1(directory + "map data1.txt");
 	t1 << "5 5\n1\nt1 1 1 1 1 1 1 1 1 ts1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1";
 	t1.close();
@@ -72,7 +77,7 @@ TEST_CASE("MapList::initiateList(string headerName) general test 2", "[MapList::
 	MapList l = MapList(directory);
 
 	std::string hs = directory + "header.txt";
-
+	std::remove(hs.c_str());
 
 	ofstream h(hs);
 	h << "map data1";
@@ -96,6 +101,9 @@ TEST_CASE("MapList::initiateList(string headerName) general test 3", "[MapList::
 
 	std::string hs = directory + "header.txt";
 	std::string h1 = directory + "map data1.txt";
+
+	std::remove(hs.c_str());
+	std::remove(h1.c_str());
 
 	ofstream h(hs);
 	h << "map data1";
@@ -123,11 +131,56 @@ TEST_CASE("MapList::initiateList(string headerName) general test 3", "[MapList::
 TEST_CASE("MapList::loadMap(string filename, deque<string> queue) general test 1", "[MapList::loadMap(string filename, deque<string> queue)]"){
 	//Test when file is wrong form, returns false and clears queue
 
+	std::string directory = Helper::getDirectory() + "\\PokemonFileGenerator\\Debug\\MapList InitiateList test\\";
+	_mkdir(directory.c_str());
+
+	MapList l = MapList(directory);
+
+	std::string hs = directory + "header.txt";
+	std::string h1 = directory + "map data1.txt";
+
+	std::remove(hs.c_str());
+	std::remove(h1.c_str());
+
+	ofstream t1(directory + "map data1.txt");
+	t1 << "5 \n1\nt1 1 1 1 1 1 1 1 1 ts1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1";
+	t1.close();
+
+	deque<string> queue;
+
+	REQUIRE(l.loadMap("map data1.txt", queue) == false);
+	std::remove(hs.c_str());
+	std::remove(h1.c_str());
 }
 
 TEST_CASE("MapList::loadMap(string filename, deque<string> queue) general test 2", "[MapList::loadMap(string filename, deque<string> queue)]"){
 	//Test when file is right form, returns true and writes data to queue
+	std::string directory = Helper::getDirectory() + "\\PokemonFileGenerator\\Debug\\MapList InitiateList test\\";
+	_mkdir(directory.c_str());
+
+	MapList l = MapList(directory);
+
+	std::string hs = directory + "header.txt";
+	std::string h1 = directory + "map data1.txt";
+
+	std::remove(hs.c_str());
+	std::remove(h1.c_str());
+
+	ofstream t1(directory + "map data1.txt");
+	t1 << "5 5\n1\nt1 1 1 1 1 1 1 1 1 ts1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1";
+	t1.close();
+
+	deque<std::string> queue;
+	deque<std::string> data = { "5 5", "1", "t1 1 1 1 1 1 1 1 1 ts1", "t1 t1 t1 t1 t1",
+		"t1 t1 t1 t1 t1", "t1 t1 t1 t1 t1", "t1 t1 t1 t1 t1", "t1 t1 t1 t1 t1", };
+
+	REQUIRE(l.loadMap("map data1", queue) == true);
+	REQUIRE(queue == data);
+
+	std::remove(hs.c_str());
+	std::remove(h1.c_str());
 }
+
 
 //------------------------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------------------------------
