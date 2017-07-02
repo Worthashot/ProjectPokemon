@@ -60,7 +60,8 @@ bool isNumber(std::string line, int* tileCount){
 bool Helper::isNumber(std::string line){
 	Helper::trim(line);
 	int iLine = atoi(line.c_str());
-	if (iLine == 0 && line != "0"){
+	std::vector<std::string> s = split(line, ' ');
+	if (iLine == 0 && line != "0" || s.size() != 1){
 		return false;
 	}
 	return true;

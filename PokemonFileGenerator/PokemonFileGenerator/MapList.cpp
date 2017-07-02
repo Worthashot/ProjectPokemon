@@ -109,9 +109,13 @@ void MapList::loadMaps(std::vector<std::string> mapsToLoad){
 	int size = mapsToLoad.size();
 
 	//find and delete all no longer necacerry maps
-	for (std::map<std::string, Map>::iterator it = maps.begin(); it != maps.end(); ++it){
-		if (std::find(mapsToLoad.begin(), mapsToLoad.end(), it->first) == mapsToLoad.end()){
-			maps.erase(it);
+	std::map<std::string, Map>::iterator itr = maps.begin();
+	while (itr != maps.end()) {
+		if (std::find(mapsToLoad.begin(), mapsToLoad.end(), itr->first) == mapsToLoad.end()){
+			maps.erase(itr++);  // <--- Note the post-increment!
+		}
+		else {
+			++itr;
 		}
 	}
 
@@ -164,9 +168,12 @@ bool MapList::testMap(std::string mapName){
 
 	//line should be number of custom TileTypes
 	getline(map, line);
+	lineVector = Helper::split(line, ' ');
+
 	if (!Helper::isNumber(line)){
 		return false;
 	}
+
 	tileCount = Helper::toInt(line);
 
 	//each line should be a TileType
@@ -186,8 +193,6 @@ bool MapList::testMap(std::string mapName){
 			return false;
 		}
 	}
-
-	getline(map, line);
 
 	//should be at the end of the file
 	if (!map.eof()){
@@ -267,6 +272,14 @@ bool MapList::testValidTileType(std::string line){
 		}
 	}
 	return true;
+}
+
+std::vector<std::string> MapList::listOfLoadedMaps(){
+	std::vector<std::string> output;
+	for (std::map<std::string, Map>::iterator i = maps.begin(); i != maps.end(); i++){
+		output.push_back(i->first);
+	}
+	return output;
 }
 
 //first lookup header file. This tells the number of maps and their names.

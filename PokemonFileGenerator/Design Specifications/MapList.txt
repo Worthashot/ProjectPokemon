@@ -131,3 +131,9 @@ bool testValidTileType(string line)
 - If the 2nd to 8th substring are not integers, returns false.
 
 - otherwise returns true.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+vector<string> listOfLoadedMaps()
+- Returns the name of every loaded Map
+

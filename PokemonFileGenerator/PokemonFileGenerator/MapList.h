@@ -69,8 +69,7 @@ public:
 	//tests the format of a given string
 	bool testValidTileType(std::string);
 
-
-
+	std::vector<std::string> listOfLoadedMaps();
 
 };
 
