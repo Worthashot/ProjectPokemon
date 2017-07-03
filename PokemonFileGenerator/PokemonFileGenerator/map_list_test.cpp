@@ -451,10 +451,42 @@ TEST_CASE("MapList::testMap(string mapName) general test 8", "[MapList::testMap(
 
 TEST_CASE("MapList::getMap(string map) general test 1", "[MapList::getMap(string map)]"){
 	//Tests that a loaded map returns a pointer to it
+
+	std::string directory = Helper::getDirectory() + "\\PokemonFileGenerator\\Debug\\MapList test\\";
+	_mkdir(directory.c_str());
+
+	std::string hs = directory + "header.txt";
+	std::remove(hs.c_str());
+
+
+	ofstream h(hs);
+	h << "map data1";
+	h.close();
+
+	std::string h1 = directory + "map data1.txt";
+	std::remove(h1.c_str());
+
+	ofstream t1(directory + "map data1.txt");
+	t1 << "5 5\n1\nt1 1 1 1 1 1 1 1 1 ts1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1";
+	t1.close();
+
+	MapList l = MapList(directory);
+
+	REQUIRE(typeid(*l.getMap("map data1")).name() == typeid(Map).name());
+
+	std::remove(hs.c_str());
+	std::remove(h1.c_str());
 }
 
 TEST_CASE("MapList::getMap(string map) general test 2", "[MapList::getMap(string map)]"){
 	//Tests that a not loaded map returns a Null pointer
+
+	std::string directory = Helper::getDirectory() + "\\PokemonFileGenerator\\Debug\\MapList test\\";
+	_mkdir(directory.c_str());
+
+	MapList l = MapList(directory);
+
+	REQUIRE(l.getMap("map data1") == 0);
 }
 
 
@@ -464,10 +496,42 @@ TEST_CASE("MapList::getMap(string map) general test 2", "[MapList::getMap(string
 
 TEST_CASE("MapList::getNames() general test 1", "[MapList::getNames()]"){
 	//Tests the valid string is returned
+
+	std::string directory = Helper::getDirectory() + "\\PokemonFileGenerator\\Debug\\MapList test\\";
+	_mkdir(directory.c_str());
+
+	std::string hs = directory + "header.txt";
+	std::remove(hs.c_str());
+
+
+	ofstream h(hs);
+	h << "map data1";
+	h.close();
+
+	std::string h1 = directory + "map data1.txt";
+	std::remove(h1.c_str());
+
+	ofstream t1(directory + "map data1.txt");
+	t1 << "5 5\n1\nt1 1 1 1 1 1 1 1 1 ts1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1";
+	t1.close();
+
+	MapList l = MapList(directory);
+
+	REQUIRE(l.getNames() == "map data1");
+
+	std::remove(hs.c_str());
+	std::remove(h1.c_str());
 }
 
 TEST_CASE("MapList::getNames() general test 2", "[MapList::getNames()]"){
 	//Tests an empty string is returned
+
+	std::string directory = Helper::getDirectory() + "\\PokemonFileGenerator\\Debug\\MapList test\\";
+	_mkdir(directory.c_str());
+
+	MapList l = MapList(directory);
+
+	REQUIRE(l.getNames().empty() == true);
 }
 
 
@@ -477,6 +541,13 @@ TEST_CASE("MapList::getNames() general test 2", "[MapList::getNames()]"){
 
 TEST_CASE("MapList::getDirectory() general test 1", "[MapList::getDirectory()]"){
 	//Tests the directory is returned
+
+	std::string directory = Helper::getDirectory() + "\\PokemonFileGenerator\\Debug\\MapList test\\";
+	_mkdir(directory.c_str());
+
+	MapList l = MapList(directory);
+
+	REQUIRE(l.getDirectory() == directory);
 }
 
 
@@ -486,18 +557,47 @@ TEST_CASE("MapList::getDirectory() general test 1", "[MapList::getDirectory()]")
 
 TEST_CASE("MapList::testDimention(string line) general test 1", "[MapList::testDimention(string line)]"){
 	//Test invalid size dimention returns false
+
+	std::string directory = Helper::getDirectory() + "\\PokemonFileGenerator\\Debug\\MapList test\\";
+	_mkdir(directory.c_str());
+
+	MapList l = MapList(directory);
+
+	REQUIRE(l.testMap("5") == false);
 }
 
 TEST_CASE("MapList::testDimention(string line) general test 2", "[MapList::testDimention(string line)]"){
 	//Test invalid type dimention returns false
+
+	std::string directory = Helper::getDirectory() + "\\PokemonFileGenerator\\Debug\\MapList test\\";
+	_mkdir(directory.c_str());
+
+	MapList l = MapList(directory);
+
+	REQUIRE(l.testMap("five five") == false);
 }
 
 TEST_CASE("MapList::testDimention(string line) general test 3", "[MapList::testDimention(string line)]"){
 	//Test invalid value dimention returns false
+
+	std::string directory = Helper::getDirectory() + "\\PokemonFileGenerator\\Debug\\MapList test\\";
+	_mkdir(directory.c_str());
+
+	MapList l = MapList(directory);
+
+	REQUIRE(l.testMap("-1 -1") == false);
 }
 
 TEST_CASE("MapList::testDimention(string line) general test 4", "[MapList::testDimention(string line)]"){
 	//Test valid dimention returns true
+
+
+	std::string directory = Helper::getDirectory() + "\\PokemonFileGenerator\\Debug\\MapList test\\";
+	_mkdir(directory.c_str());
+
+	MapList l = MapList(directory);
+
+	REQUIRE(l.testMap("5 5") == false);
 }
 
 
@@ -507,11 +607,46 @@ TEST_CASE("MapList::testDimention(string line) general test 4", "[MapList::testD
 
 TEST_CASE("MapList::generateMap(string fileName) general test 1", "[MapList::generateMap(string fileName)]"){
 	//test an invalid Map file returns an empty map
+
+	std::string directory = Helper::getDirectory() + "\\PokemonFileGenerator\\Debug\\MapList InitiateList test\\";
+	_mkdir(directory.c_str());
+
+	MapList l = MapList(directory);
+
+	std::vector<int> v = { 0, 0 };
+	REQUIRE(l.generateMap("map data1").empty() == true);
+
 }
 
 TEST_CASE("MapList::generateMap(string fileName) general test 2", "[MapList::generateMap(string fileName)]"){
 	//test a valid Map file returns a map
+
+	std::string directory = Helper::getDirectory() + "\\PokemonFileGenerator\\Debug\\MapList InitiateList test\\";
+	_mkdir(directory.c_str());
+
+	std::string hs = directory + "header.txt";
+	std::string h1 = directory + "map data1.txt";
+
+	std::remove(hs.c_str());
+	std::remove(h1.c_str());
+
+	ofstream h(hs);
+	h << "map data1";
+	h.close();
+
+	ofstream t1(directory + "map data1.txt");
+	t1 << "5 5\n1\nt1 1 1 1 1 1 1 1 1 ts1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1";
+	t1.close();
+
+	MapList l = MapList(directory);
+
+	std::vector<int> v = { 5, 5 };
+	REQUIRE(l.generateMap("map data1").getDimention() == v);
+
+	std::remove(hs.c_str());
+	std::remove(h1.c_str());
 }
+
 
 //------------------------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------------------------------
@@ -519,6 +654,32 @@ TEST_CASE("MapList::generateMap(string fileName) general test 2", "[MapList::gen
 
 TEST_CASE("MapList::mapCount() general test 1", "[MapList::mapCount()]"){
 	//Tests the size of the loaded maps is returnd
+
+	std::string directory = Helper::getDirectory() + "\\PokemonFileGenerator\\Debug\\MapList test\\";
+	_mkdir(directory.c_str());
+
+	std::string hs = directory + "header.txt";
+	std::remove(hs.c_str());
+
+
+	ofstream h(hs);
+	h << "map data1";
+	h.close();
+
+	std::string h1 = directory + "map data1.txt";
+	std::remove(h1.c_str());
+
+	ofstream t1(directory + "map data1.txt");
+	t1 << "5 5\n1\nt1 1 1 1 1 1 1 1 1 ts1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1";
+	t1.close();
+
+	MapList l = MapList(directory);
+
+	REQUIRE(l.mapCount() == 1);
+
+
+	std::remove(hs.c_str());
+	std::remove(h1.c_str());
 }
 
 
@@ -527,7 +688,31 @@ TEST_CASE("MapList::mapCount() general test 1", "[MapList::mapCount()]"){
 
 
 TEST_CASE("MapList::listOfMaps() general test 1", "[MapList::listOfMaps()]"){
-	//Tests the list of loaded maps is returned
+	std::string directory = Helper::getDirectory() + "\\PokemonFileGenerator\\Debug\\MapList test\\";
+	_mkdir(directory.c_str());
+
+	std::string hs = directory + "header.txt";
+	std::remove(hs.c_str());
+
+
+	ofstream h(hs);
+	h << "map data1";
+	h.close();
+
+	std::string h1 = directory + "map data1.txt";
+	std::remove(h1.c_str());
+
+	ofstream t1(directory + "map data1.txt");
+	t1 << "5 5\n1\nt1 1 1 1 1 1 1 1 1 ts1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1\nt1 t1 t1 t1 t1";
+	t1.close();
+
+	MapList l = MapList(directory);
+	std::vector<std::string> v = { "map data1" };
+
+	REQUIRE(l.listOfMaps() == v);
+
+	std::remove(hs.c_str());
+	std::remove(h1.c_str());
 }
 
 
@@ -537,21 +722,36 @@ TEST_CASE("MapList::listOfMaps() general test 1", "[MapList::listOfMaps()]"){
 
 TEST_CASE("MapList::testValidTileType(string line) general test 1", "[MapList:testValidTileType(string line)]"){
 	//Tests a wrong number of substrings returns false
+
+	std::string directory = Helper::getDirectory() + "\\PokemonFileGenerator\\Debug\\MapList test\\";
+	_mkdir(directory.c_str());
+
+	MapList l = MapList(directory);
+
+	REQUIRE(l.testValidTileType("t1 1 1 1 1 1 1 1 1 ts1 another") == false);
 }
 
 TEST_CASE("MapList::testValidTileType(string line) general test 2", "[MapList:testValidTileType(string line)]"){
 	//Test the wrong type of substrings returns false
+
+	std::string directory = Helper::getDirectory() + "\\PokemonFileGenerator\\Debug\\MapList test\\";
+	_mkdir(directory.c_str());
+
+	MapList l = MapList(directory);
+
+	REQUIRE(l.testValidTileType("t1 one 1 1 1 1 1 1 1 ts1") == false);
 }
+
 TEST_CASE("MapList::testValidTileType(string line) general test 3", "[MapList:testValidTileType(string line)]"){
 	//Tests if everything is right returns true
+
+	std::string directory = Helper::getDirectory() + "\\PokemonFileGenerator\\Debug\\MapList test\\";
+	_mkdir(directory.c_str());
+
+	MapList l = MapList(directory);
+
+	REQUIRE(l.testValidTileType("t1 1 1 1 1 1 1 1 1 ts1") == true);
 }
-
-
-
-
-
-
-
 
 
 //frst draft file format
