@@ -82,13 +82,11 @@ void TileType::setCutable(int cutable){
 }
 
 void TileType::setLocation(int location){
-	if (doorway){ 
-		this->location = location; 
-	}
+	this->location = location; 
 }
 
 void TileType::setPerson(int person){
-	if (talkable){ npcID = person; }
+	npcID = person;
 }
 
 void TileType::setTileset(std::string tileset){ 
@@ -172,19 +170,12 @@ bool TileType::getCutable(){
 }
 
 int TileType::getLocation(){
-	if (doorway){ return location; 
-	} else {
-		//some sort of logging
-		return 0;
-	}
+	return location; 
 }
 
 int TileType::getPerson(){
-	if (talkable){ return npcID; 
-	} else {
-		//some sort of logging
-		return 0;
-	}
+	return npcID; 
+
 }
 
 std::string TileType::getTileset(){ 

@@ -44,7 +44,7 @@ public:
 	int getPerson();
 	std::string getTileset();
 	std::vector<std::string> getAll();
-	bool testValidTileType(std::string);
+	static bool testValidTileType(std::string);
 
 };
 

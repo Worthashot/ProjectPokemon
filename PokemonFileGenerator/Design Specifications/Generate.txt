@@ -1,0 +1,98 @@
+DESIGN
+--------------------------------------------------------------------------------
+Must alow user to
+-Create a new valid map
+-Edit an old map
+
+CREATE:
+go thorugh each paramater of a map
+check each paramater to see if its valid
+stores each paramater to a queue when written
+after creating a whole valid map, writes the queue to file
+
+MAP CONTENTS:
+Name, what the file will be stored as
+Dimention
+Number of custom tiles
+Each custom tile
+map layout
+
+MAP VALIDATING:
+Name must be unique - will load a list of all other maps to check.
+all other paramaters will be checked as standard.
+
+MAP CREATING:
+Each element of the queue will be checked by process above.
+Each element represents a line of the stored map.
+Writes each element as a new line.
+
+EDIT:
+alowes each paramater to be changed.
+A changed paramater must agree with the paramaters it depends on
+Changes are only made to file at the end and when all paramaters are valid
+
+EDIT VALIDATING:
+Each name must still be unique
+
+A change in dimention must result in a change of map composition to the new size
+
+A change in tile number must result in a change of tile composition to the new number
+
+A change in tile composition may result in a change of map composition
+	Will allow to remove any by selecting the one to remove
+	will check for this
+
+A change in map composition will not be alowed to resize dimention
+	will be allowed to create new map or change individial squares
+	This results in no other changes
+
+Changes needed will be displayed after every action that returns user to paramater selection.
+
+Will keep track of new input in seperate variables and will discard if calceled
+	these new variables are checked when confirming a valid map is made
+
+Will keep track of the changes needed by comparing the new variables to the old and displaying the conflicts to the user
+
+EDIT NAME UNIQUE:
+Keep track of all names and use this
+
+WHAT TO IMPLEMENT
+--------------------------------------------------------------------------------
+Function Generate() which create a Generate instance and ask for user input for paramaters.
+Function Generate(...) which uses arguments for paramaters.
+	these paramaters are mode and directory.
+
+Function setMode(string) which sets the mode, edit or create.	(setter)
+Function getMode() which returns the mode.			(getter)
+Function askMode() which brings up the ui for selecting the mode and validates the input until a valid mode is selected.
+	valid being edit or create,
+
+Function setDirectory(string) which sets the directory.	(setter)
+Function getDirectory() which returns the directory.	(getter)
+Function askDirectory() which brings up the ui for selecting the directory and validates the input until a valid directory is selected.
+	Valid being exists and correct form.
+
+Function Create() which runs each ask paramater
+
+Function setName(String) which sets the name	(setter)
+Function getName() which returns the name	(getter)
+Function askName() which brings up the ui for selecting the name and validates the input until a valid name is selected.
+
+Function setDimention(String) which sets the Dimention	(setter)
+Function getDimention() which returns the Dimention	(getter)
+Function askDimention() which brings up the ui for selecting the Dimention and validates the input until a valid Dimention is selected.
+
+Function setCustomNumber(String) which sets the number of tile types	(setter)
+Function getCustomNumber() which returns the number of tile types	(getter)
+Function askCustomNumber() which brings up the ui for selecting the number of tile types and validates the input until a valid number of tile types 
+is selected.
+
+Function setCustomTile(String) which sets the custom tiles	(setter)
+Function getCustomTile() which returns the custom tiles		(getter)
+Function askCustomTile() which brings up the ui for selecting number of custom tiles and validates the input until valid custom tiles are selected.
+
+Function setMapLayout(String) which sets the map layout	(setter)
+Function getMapLayout() which returns the map layout	(getter)
+Function askMapLayout() which brings up the ui for selecting the map layout and validates the input until a valid map layout is selected.
+
+

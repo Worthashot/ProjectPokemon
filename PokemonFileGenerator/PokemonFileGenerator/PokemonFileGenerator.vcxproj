@@ -65,6 +65,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Generate.cpp" />
+    <ClCompile Include="generate_test.cpp" />
     <ClCompile Include="Helper.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapList.cpp" />
